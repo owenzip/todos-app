@@ -25,11 +25,12 @@
             android:layout_gravity="center"
             android:background="@drawable/user_icon"/>
         <EditText
-            android:id="@+id/edtUsername"
+            android:id="@+id/edtRegisterUsername"
             android:layout_marginLeft="5pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Username"
+            android:textColor="#683bb7"
             android:backgroundTint="#683bb7"/>
     </LinearLayout>
     <LinearLayout
@@ -43,11 +44,13 @@
             android:layout_gravity="center"
             android:background="@drawable/password_icon"/>
         <EditText
-            android:id="@+id/edtPassword"
+            android:id="@+id/edtRegisterPassword"
             android:layout_marginLeft="5pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Password"
+            android:textColor="#ffa102"
+            android:inputType="textPassword"
             android:backgroundTint="#ffa102"/>
     </LinearLayout>
     <LinearLayout
@@ -66,6 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Firstname"
+            android:inputType="text"
+            android:textColor="#50acf9"
             android:backgroundTint="#50acf9"/>
     </LinearLayout>
     <LinearLayout
@@ -84,6 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Lastname"
+            android:inputType="text"
+            android:textColor="#8cc34b"
             android:backgroundTint="#8cc34b"/>
     </LinearLayout>
     <LinearLayout
@@ -92,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnAccept"
             android:layout_width="35pt"
             android:layout_height="35pt"
             android:background="@drawable/register_icon"/>

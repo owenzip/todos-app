@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.gamma.todoapp.MainActivity">
+    tools:context="com.example.gamma.todoapp.TaskActivity">
     <LinearLayout
         android:layout_marginRight="5pt"
         android:layout_marginTop="2pt"
@@ -74,3 +74,4 @@
 
     </LinearLayout>
 </LinearLayout>
+

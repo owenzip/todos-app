@@ -50,10 +50,11 @@
             android:background="@drawable/user_icon"/>
         <EditText
             android:id="@+id/edtUsername"
-            android:layout_marginLeft="5pt"
+            android:layout_marginLeft="2pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Username"
+            android:textColor="#683bb7"
             android:backgroundTint="#683bb7"/>
     </LinearLayout>
     <LinearLayout
@@ -68,10 +69,12 @@
             android:background="@drawable/password_icon"/>
         <EditText
             android:id="@+id/edtPassword"
-            android:layout_marginLeft="5pt"
+            android:layout_marginLeft="2pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Password"
+            android:textColor="#ffa102"
+            android:inputType="textPassword"
             android:backgroundTint="#ffa102"/>
     </LinearLayout>
     <LinearLayout
@@ -96,15 +99,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#616e74"
-            android:text="You don't have an Account "
+            android:text="You don't have an Account    "
             />
-        <TextView
-            android:id="@+id/txvRegister"
-            android:layout_marginLeft="5pt"
-            android:layout_width="wrap_content"
-            android:textSize="10pt"
-            android:textColor="#07a9f4"
-            android:layout_height="wrap_content"
-            android:text="Register"/>
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="50pt"
+            android:layout_height="15pt"
+            android:text="Register"
+            android:textColor="#ffffff"
+            android:textSize="5pt"
+            android:background="#616e74"/>
     </LinearLayout>
 </LinearLayout>
