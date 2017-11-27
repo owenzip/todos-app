@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                 },new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(RegisterActivity.this, "Some error occurred -> "+volleyError, Toast.LENGTH_LONG).show();;
+                        Toast.makeText(RegisterActivity.this, "Some error occurred : "+volleyError, Toast.LENGTH_LONG).show();;
                     }
                 }) {
                     @Override

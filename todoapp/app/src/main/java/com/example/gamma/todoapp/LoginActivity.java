@@ -23,11 +23,9 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String url = "http://192.168.1.209:8080/users/login";
-    Button btnLogin;
-    Button btnRegister;
-    EditText edtUsername;
-    EditText edtPassword;
+    String urlLogin = "http://192.168.1.209:8080/users/login";
+    Button btnLogin,btnRegister;
+    EditText edtUsername,edtPassword,edtAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = (Button) findViewById(R.id.btnRegister);
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
+        edtAdd = (EditText) findViewById(R.id.edtAdd);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>(){
+                StringRequest request = new StringRequest(Request.Method.POST, urlLogin, new Response.Listener<String>(){
                     @Override
                     public void onResponse(String s) {
                         if(s.equals("true")){
@@ -64,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 },new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(LoginActivity.this, "Some error occurred -> "+volleyError, Toast.LENGTH_LONG).show();;
+                        Toast.makeText(LoginActivity.this, "Some error occurred : "+volleyError, Toast.LENGTH_LONG).show();;
                     }
                 }) {
                     @Override
@@ -75,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                         return parameters;
                     }
                 };
-
                 RequestQueue rQueue = Volley.newRequestQueue(LoginActivity.this);
                 rQueue.add(request);
             }
