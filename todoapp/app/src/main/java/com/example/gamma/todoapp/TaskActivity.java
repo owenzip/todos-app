@@ -4,22 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,27 +29,24 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 public class TaskActivity extends AppCompatActivity {
-
-    private String tag = TaskActivity.class.getSimpleName();
-    private String urlFindAndClearAll= "http://192.168.1.209:8080/users/10/tasks";
-    private String urlFindCompleted = "http://192.168.1.209:8080/users/10/tasks/true";
-    private String urlFindActive = "http://192.168.1.209:8080/users/10/tasks/false";
-    private String urlPutStatus = "http://localhost:8080/tasks";
-    private List<Task> list = new ArrayList<Task>();
-    private ListView listView;
-    private CheckBox ckbStatus;
-    private TextView txvCompleted,txvAll,txvActive,txvClear;
-    private TaskAdapter adapter = new TaskAdapter(this,list);
+    String userId = LoginActivity.userId;
+    String urlGetAndDelete = String.format("http://192.168.1.209:8080/users/%1$s/tasks",userId);
+    String urlFindCompleted = String.format("http://192.168.1.209:8080/users/%1$s/tasks/true",userId);
+    String urlFindActive = String.format("http://192.168.1.209:8080/users/%1$s/tasks/false",userId);
+    List<Task> list = new ArrayList<Task>();
+    ListView listView;
+    CheckBox ckbStatus;
+    Button btnMenu;
+    TextView txvCompleted,txvAll,txvActive,txvClear,edtAdd;
+    TaskAdapter adapter = new TaskAdapter(this,list);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-
+        edtAdd = (EditText) findViewById(R.id.edtAdd);
         listView = (ListView) findViewById(R.id.lsvTasks);
         listView.setAdapter(adapter);
         loadTaskActivity();
@@ -56,11 +54,63 @@ public class TaskActivity extends AppCompatActivity {
         evenOnClickCompleted();
         eventOnClickAvtive();
         eventOnClickClear();
-        //eventOnClickStatus();
+        eventOnClickAddTask();
+    }
+
+    public void eventOnClickAddTask(){
+        final String urlAdd = "http://192.168.1.209:8080/tasks";
+        btnMenu = (Button) findViewById(R.id.btnMenu);
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.removeAll(list);
+                StringRequest request = new StringRequest(Request.Method.POST, urlAdd, new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String s) {
+                        Toast.makeText(TaskActivity.this, "Add successful", Toast.LENGTH_LONG).show();
+                        adapter.notifyDataSetChanged();
+                    }
+                },new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("userid", userId);
+                        parameters.put("task", edtAdd.getText().toString());
+                        return parameters;
+                    }
+                };
+                TaskController.getPermission().addToRequestQueue(request);
+                loadTaskActivity();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.task_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.password:
+                Toast.makeText(TaskActivity.this, "Pass", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.logOut:
+                Toast.makeText(TaskActivity.this, "Log Out", Toast.LENGTH_LONG).show();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void loadTaskActivity(){
-        JsonArrayRequest jsonreq = new JsonArrayRequest(urlFindAndClearAll,new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET,urlGetAndDelete,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
@@ -69,8 +119,9 @@ public class TaskActivity extends AppCompatActivity {
                         Task tasks = new Task();
                         tasks.setTask(obj.getString("task"));
                         tasks.setStatus(obj.getString("status"));
-                        //tasks.setTaskId(obj.getString("taskId"));
+                        tasks.setTaskId(obj.getString("taskId"));
                         list.add(tasks);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -80,11 +131,7 @@ public class TaskActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AlertDialog.Builder add = new AlertDialog.Builder(TaskActivity.this);
-                add.setMessage(error.getMessage()).setCancelable(true);
-                AlertDialog alert = add.create();
-                alert.setTitle("Disconnected");
-                alert.show();
+                Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
             }
         });
         TaskController.getPermission().addToRequestQueue(jsonreq);
@@ -116,11 +163,7 @@ public class TaskActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        AlertDialog.Builder add = new AlertDialog.Builder(TaskActivity.this);
-                        add.setMessage(error.getMessage()).setCancelable(true);
-                        AlertDialog alert = add.create();
-                        alert.setTitle("Disconnected");
-                        alert.show();
+                        Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
                     }
                 });
                 TaskController.getPermission().addToRequestQueue(jsonreq);
@@ -167,11 +210,7 @@ public class TaskActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        AlertDialog.Builder add = new AlertDialog.Builder(TaskActivity.this);
-                        add.setMessage(error.getMessage()).setCancelable(true);
-                        AlertDialog alert = add.create();
-                        alert.setTitle("Disconnected");
-                        alert.show();
+                        Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
                     }
                 });
                 TaskController.getPermission().addToRequestQueue(jsonreq);
@@ -184,113 +223,21 @@ public class TaskActivity extends AppCompatActivity {
         txvClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.DELETE, urlFindAndClearAll, new Response.Listener<JSONObject>() {
+                adapter.notifyDataSetChanged();
+                JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.DELETE, urlGetAndDelete, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        adapter.notifyDataSetChanged();
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        AlertDialog.Builder add = new AlertDialog.Builder(TaskActivity.this);
-                        add.setMessage(error.getMessage()).setCancelable(true);
-                        AlertDialog alert = add.create();
-                        alert.setTitle("Disconnected");
-                        alert.show();
+                        Toast.makeText(TaskActivity.this, "Delete completed", Toast.LENGTH_LONG).show();
                     }
                 });
                 TaskController.getPermission().addToRequestQueue(jsonreq);
             }
         });
-    }
-    /*
-    public void eventOnClickStatus(){
-        ckbStatus = (CheckBox) findViewById(R.id.ckbStatus);
-        ckbStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked)
-                    checkBoxChecked();
-                else
-                    checkBoxNoneChecked();
-            }
-        });
-    }*/
-
-    public void checkBoxChecked(){
-        StringRequest putRequest = new StringRequest(Request.Method.PUT, urlPutStatus, new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Reponse",response);
-                adapter.notifyDataSetChanged();
-            }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                AlertDialog.Builder add = new AlertDialog.Builder(TaskActivity.this);
-                add.setMessage(error.getMessage()).setCancelable(true);
-                AlertDialog alert = add.create();
-                alert.setTitle("Disconnected");
-                alert.show();
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                adapter.notifyDataSetChanged();
-                Task tasks = new Task();
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("taskId",tasks.getTaskId());
-                params.put("status","true");
-                return params;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(putRequest);
-        adapter.notifyDataSetChanged();
-    }
-
-    public void checkBoxNoneChecked(){
-        StringRequest putRequest = new StringRequest(Request.Method.PUT, urlPutStatus,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Reponse",response);
-                        adapter.notifyDataSetChanged();
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        AlertDialog.Builder add = new AlertDialog.Builder(TaskActivity.this);
-                        add.setMessage(error.getMessage()).setCancelable(true);
-                        AlertDialog alert = add.create();
-                        alert.setTitle("Disconnected");
-                        alert.show();
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                adapter.notifyDataSetChanged();
-                Task tasks = new Task();
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("taskId",tasks.getTaskId());
-                params.put("status","false");
-                return params;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(putRequest);
-        adapter.notifyDataSetChanged();
     }
 }
 
