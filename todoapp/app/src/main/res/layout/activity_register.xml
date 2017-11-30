@@ -6,102 +6,134 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.gamma.todoapp.RegisterActivity">
-    <TextView
-        android:layout_marginTop="10pt"
-        android:layout_width="wrap_content"
-        android:textSize="15pt"
-        android:textColor="#2598f3"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:text="Register"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50pt">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginTop="15pt"
+            android:layout_marginLeft="25pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12pt"
+            android:fontFamily="monospace"
+            android:textColor="#465b65"
+            android:text="Register ," />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="25pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:textColor="#8e9fa7"
+            android:fontFamily="monospace"
+            android:text="Thank you for using" />
+    </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10pt"
-        android:layout_width="120pt"
+        android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
-        <ImageView
-            android:layout_width="13pt"
-            android:layout_height="13pt"
-            android:layout_gravity="center"
-            android:background="@drawable/user_icon"/>
         <EditText
+            android:textColorHint="#8e9fa7"
+            android:textSize="7pt"
+            android:fontFamily="monospace"
             android:id="@+id/edtRegisterUsername"
-            android:layout_marginLeft="5pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Username"
-            android:textColor="#683bb7"
-            android:backgroundTint="#683bb7"/>
+            android:textColor="#465b65"
+            android:backgroundTint="#169ccc"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="120pt"
+        android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
-        <ImageView
-            android:layout_width="13pt"
-            android:layout_height="13pt"
-            android:layout_gravity="center"
-            android:background="@drawable/password_icon"/>
         <EditText
+            android:textColorHint="#8e9fa7"
+            android:textSize="7pt"
+            android:fontFamily="monospace"
             android:id="@+id/edtRegisterPassword"
-            android:layout_marginLeft="5pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Password"
-            android:textColor="#ffa102"
+            android:textColor="#465b65"
             android:inputType="textPassword"
-            android:backgroundTint="#ffa102"/>
+            android:backgroundTint="#169ccc"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="120pt"
+        android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
-        <ImageView
-            android:layout_width="13pt"
-            android:layout_height="13pt"
-            android:layout_gravity="center"
-            android:background="@drawable/firstname_icon"/>
         <EditText
+            android:textColorHint="#8e9fa7"
+            android:textSize="7pt"
+            android:fontFamily="monospace"
+            android:id="@+id/edtRegisterConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Confirm Password"
+            android:textColor="#465b65"
+            android:inputType="textPassword"
+            android:backgroundTint="#169ccc"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="130pt"
+        android:layout_height="25pt"
+        android:layout_gravity="center">
+        <EditText
+            android:textColorHint="#8e9fa7"
+            android:textSize="7pt"
+            android:fontFamily="monospace"
             android:id="@+id/edtFirstname"
-            android:layout_marginLeft="5pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Firstname"
             android:inputType="text"
-            android:textColor="#50acf9"
-            android:backgroundTint="#50acf9"/>
+            android:textColor="#465b65"
+            android:backgroundTint="#169ccc"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="120pt"
+        android:fontFamily="monospace"
+        android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
-        <ImageView
-            android:layout_width="13pt"
-            android:layout_height="13pt"
-            android:layout_gravity="center"
-            android:background="@drawable/lastname_icon"/>
         <EditText
+            android:textColorHint="#8e9fa7"
+            android:textSize="7pt"
+            android:fontFamily="monospace"
             android:id="@+id/edtLastname"
-            android:layout_marginLeft="5pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Lastname"
             android:inputType="text"
-            android:textColor="#8cc34b"
-            android:backgroundTint="#8cc34b"/>
+            android:textColor="#465b65"
+            android:backgroundTint="#169ccc"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="15pt"
-        android:layout_gravity="center"
+    <TextView
+        android:id="@+id/txvNotificationRegister"
+        android:layout_marginTop="5pt"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
+        android:layout_height="wrap_content"
+        android:textColor="#fa4141"
+        android:textSize="6pt"
+        android:layout_marginLeft="23pt"
+        android:fontFamily="monospace"
+        android:text=""
+        />
+        <TextView
             android:id="@+id/btnAccept"
-            android:layout_width="35pt"
-            android:layout_height="35pt"
-            android:background="@drawable/register_icon"/>
-    </LinearLayout>
+            android:layout_marginLeft="25pt"
+            android:layout_marginTop="10pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#169ccc"
+            android:textStyle="bold"
+            android:textSize="10pt"
+            android:fontFamily="monospace"
+            android:text="Accept" />
 </LinearLayout>

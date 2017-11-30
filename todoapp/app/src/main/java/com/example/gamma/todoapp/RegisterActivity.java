@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,11 +23,8 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
 
     String url = "http://192.168.1.209:8080/users";
-    EditText edtRegisterUsername;
-    EditText edtRegisterPassword;
-    EditText edtFirstname;
-    EditText edtLastname;
-    Button btnAccept;
+    EditText edtRegisterUsername,edtRegisterPassword,edtFirstname,edtLastname,edtRegisterConfirmPassword;
+    TextView btnAccept,txvNofiticationRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,44 +33,61 @@ public class RegisterActivity extends AppCompatActivity {
 
         edtRegisterUsername = (EditText) findViewById(R.id.edtRegisterUsername);
         edtRegisterPassword = (EditText) findViewById(R.id.edtRegisterPassword);
+        edtRegisterConfirmPassword = (EditText) findViewById(R.id.edtRegisterConfirmPassword);
+        txvNofiticationRegister = (TextView) findViewById(R.id.txvNotificationRegister);
         edtFirstname = (EditText) findViewById(R.id.edtFirstname);
         edtLastname = (EditText) findViewById(R.id.edtLastname);
-        btnAccept = (Button) findViewById(R.id.btnAccept);
+        btnAccept = (TextView) findViewById(R.id.btnAccept);
 
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String s) {
-                        if(s.equals("true")){
-                            Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(RegisterActivity.this,TaskActivity.class));
-                        }
-                        else{
-                            Toast.makeText(RegisterActivity.this, "Can't Register", Toast.LENGTH_LONG).show();
-                        }
+                if (edtRegisterUsername.length()<3)
+                    txvNofiticationRegister.setText("Username must be greater than 3");
+                else if (edtRegisterPassword.length() < 5)
+                    txvNofiticationRegister.setText("Password's not strong enough");
+                else if (edtFirstname.length() < 2 || edtLastname.length() < 2)
+                    txvNofiticationRegister.setText("Firstname or Lastname is required");
+                else {
+                    if (edtRegisterPassword.getText().toString().equals(edtRegisterConfirmPassword.getText().toString())) {
+                        checkRegister();
                     }
-                },new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(RegisterActivity.this, "Some error occurred : "+volleyError, Toast.LENGTH_LONG).show();;
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> parameters = new HashMap<String, String>();
-                        parameters.put("username", edtRegisterUsername.getText().toString());
-                        parameters.put("password", edtRegisterPassword.getText().toString());
-                        parameters.put("firstname", edtFirstname.getText().toString());
-                        parameters.put("lastname", edtLastname.getText().toString());
-                        return parameters;
-                    }
-                };
-
-                RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
-                rQueue.add(request);
+                    else
+                        txvNofiticationRegister.setText("Password do not match");
+                }
             }
         });
+    }
+
+    public void checkRegister(){
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                if (s.equals("true")) {
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                } else {
+                    txvNofiticationRegister.setText("Some error occured , check your network connection");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                txvNofiticationRegister.setText("Some error occured , check your network connection");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("username", edtRegisterUsername.getText().toString());
+                parameters.put("password", edtRegisterPassword.getText().toString());
+                parameters.put("firstname", edtFirstname.getText().toString());
+                parameters.put("lastname", edtLastname.getText().toString());
+                return parameters;
+            }
+        };
+
+        RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
+        rQueue.add(request);
     }
 }

@@ -31,24 +31,27 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class TaskActivity extends AppCompatActivity {
+
     String userId = LoginActivity.userId;
     String urlGetAndDelete = String.format("http://192.168.1.209:8080/users/%1$s/tasks",userId);
     String urlFindCompleted = String.format("http://192.168.1.209:8080/users/%1$s/tasks/true",userId);
     String urlFindActive = String.format("http://192.168.1.209:8080/users/%1$s/tasks/false",userId);
+    TextView txvCompleted,txvAll,txvActive,txvClear,edtAdd,txvNofiticationTask;
     List<Task> list = new ArrayList<Task>();
-    ListView listView;
-    CheckBox ckbStatus;
-    Button btnMenu;
-    TextView txvCompleted,txvAll,txvActive,txvClear,edtAdd;
+    ListView listView; Button btnMenu;
     TaskAdapter adapter = new TaskAdapter(this,list);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+
         edtAdd = (EditText) findViewById(R.id.edtAdd);
+        btnMenu = (Button) findViewById(R.id.btnMenu);
         listView = (ListView) findViewById(R.id.lsvTasks);
+        txvNofiticationTask = (TextView) findViewById(R.id.txvNotificationTask);
         listView.setAdapter(adapter);
+
         loadTaskActivity();
         eventOnClickAll();
         evenOnClickCompleted();
@@ -57,23 +60,52 @@ public class TaskActivity extends AppCompatActivity {
         eventOnClickAddTask();
     }
 
+    public void loadTaskActivity(){
+        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET,urlGetAndDelete,new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                list.removeAll(list);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        Task tasks = new Task();
+                        tasks.setTask(obj.getString("task"));
+                        tasks.setStatus(obj.getString("status"));
+                        tasks.setTaskId(obj.getString("taskId"));
+                        list.add(tasks);
+                        adapter.notifyDataSetChanged();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                txvNofiticationTask.setText("Network Disconnection");
+            }
+        });
+        TaskController.getPermission().addToRequestQueue(jsonreq);
+    }
+
     public void eventOnClickAddTask(){
+
         final String urlAdd = "http://192.168.1.209:8080/tasks";
-        btnMenu = (Button) findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list.removeAll(list);
+
                 StringRequest request = new StringRequest(Request.Method.POST, urlAdd, new Response.Listener<String>(){
                     @Override
                     public void onResponse(String s) {
-                        Toast.makeText(TaskActivity.this, "Add successful", Toast.LENGTH_LONG).show();
-                        adapter.notifyDataSetChanged();
+                        loadTaskActivity();
+                        edtAdd.setText("");
                     }
                 },new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
+                        txvNofiticationTask.setText("Some error occurred");
                     }
                 }) {
                     @Override
@@ -85,68 +117,22 @@ public class TaskActivity extends AppCompatActivity {
                     }
                 };
                 TaskController.getPermission().addToRequestQueue(request);
-                loadTaskActivity();
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.task_menu, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.password:
-                Toast.makeText(TaskActivity.this, "Pass", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.logOut:
-                Toast.makeText(TaskActivity.this, "Log Out", Toast.LENGTH_LONG).show();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
-    public void loadTaskActivity(){
-        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET,urlGetAndDelete,new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject obj = response.getJSONObject(i);
-                        Task tasks = new Task();
-                        tasks.setTask(obj.getString("task"));
-                        tasks.setStatus(obj.getString("status"));
-                        tasks.setTaskId(obj.getString("taskId"));
-                        list.add(tasks);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
-            }
-        });
-        TaskController.getPermission().addToRequestQueue(jsonreq);
-    }
 
     public void eventOnClickAvtive(){
         txvActive = (TextView) findViewById(R.id.txvActive);
         txvActive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list.removeAll(list);
-                adapter.notifyDataSetChanged();
+
                 JsonArrayRequest jsonreq = new JsonArrayRequest(urlFindActive,new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        list.removeAll(list);
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject obj = response.getJSONObject(i);
@@ -154,16 +140,16 @@ public class TaskActivity extends AppCompatActivity {
                                 tasks.setTask(obj.getString("task"));
                                 tasks.setStatus(obj.getString("status"));
                                 list.add(tasks);
+                                adapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                        adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
+                        txvNofiticationTask.setText("Some error occurred");
                     }
                 });
                 TaskController.getPermission().addToRequestQueue(jsonreq);
@@ -176,8 +162,6 @@ public class TaskActivity extends AppCompatActivity {
         txvAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list.removeAll(list);
-                adapter.notifyDataSetChanged();
                 loadTaskActivity();
             }
         });
@@ -189,11 +173,10 @@ public class TaskActivity extends AppCompatActivity {
         txvCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list.removeAll(list);
-                adapter.notifyDataSetChanged();
                 JsonArrayRequest jsonreq = new JsonArrayRequest(urlFindCompleted,new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        list.removeAll(list);
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject obj = response.getJSONObject(i);
@@ -201,19 +184,20 @@ public class TaskActivity extends AppCompatActivity {
                                 tasks.setTask(obj.getString("task"));
                                 tasks.setStatus(obj.getString("status"));
                                 list.add(tasks);
+                                adapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                        adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(TaskActivity.this, "Error occurred", Toast.LENGTH_LONG).show();
+                        txvNofiticationTask.setText("Some error occurred");
                     }
                 });
                 TaskController.getPermission().addToRequestQueue(jsonreq);
+
             }
         });
     }
@@ -223,19 +207,23 @@ public class TaskActivity extends AppCompatActivity {
         txvClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.notifyDataSetChanged();
-                JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.DELETE, urlGetAndDelete, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
 
+                StringRequest request = new StringRequest(Request.Method.DELETE,urlGetAndDelete, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("Deleted")){
+                            list.removeAll(list);
+                            adapter.notifyDataSetChanged();
+                            loadTaskActivity();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(TaskActivity.this, "Delete completed", Toast.LENGTH_LONG).show();
+                        txvNofiticationTask.setText("Some error occurred");
                     }
                 });
-                TaskController.getPermission().addToRequestQueue(jsonreq);
+                TaskController.getPermission().addToRequestQueue(request);
             }
         });
     }

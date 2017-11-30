@@ -8,106 +8,125 @@
     tools:context="com.example.gamma.todoapp.LoginActivity">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15pt"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="45pt"
-                android:layout_height="45pt"
-                android:background="@drawable/logo_icon"/>
-
-            <LinearLayout
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="50pt">
                 <TextView
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15pt"
+                    android:layout_marginLeft="25pt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10pt"
+                    android:textSize="12pt"
+                    android:fontFamily="monospace"
                     android:textColor="#465b65"
-                    android:text="Welcome to" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15pt"
-                    android:textStyle="bold"
-                    android:textColor="#05a9f4"
-                    android:text="TODO APP" />
-            </LinearLayout>
+                    android:text="Todos" />
         </LinearLayout>
     <LinearLayout
-        android:layout_width="120pt"
+        android:layout_marginTop="20pt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginLeft="25pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:fontFamily="monospace"
+            android:textColor="#465b65"
+            android:text="Welcome back ," />
+        <TextView
+            android:layout_marginLeft="25pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:textColor="#8e9fa7"
+            android:fontFamily="monospace"
+            android:text="Sign in to continue" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="130pt"
         android:layout_marginTop="10pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
-        <ImageView
-            android:layout_width="13pt"
-            android:layout_height="13pt"
-            android:layout_gravity="center"
-            android:background="@drawable/user_icon"/>
         <EditText
+            android:textColorHint="#8e9fa7"
             android:id="@+id/edtUsername"
-            android:layout_marginLeft="2pt"
-            android:layout_width="match_parent"
+            android:layout_width="130pt"
             android:layout_height="match_parent"
             android:hint="Username"
-            android:textColor="#683bb7"
-            android:backgroundTint="#683bb7"/>
+            android:textSize="7pt"
+            android:fontFamily="monospace"
+            android:textColor="#465b65"
+            android:backgroundTint="#169ccc"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="120pt"
+        android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
-        <ImageView
-            android:layout_width="13pt"
-            android:layout_height="13pt"
-            android:layout_gravity="center"
-            android:background="@drawable/password_icon"/>
         <EditText
             android:id="@+id/edtPassword"
-            android:layout_marginLeft="2pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Password"
-            android:textColor="#ffa102"
+            android:textSize="7pt"
+            android:textColor="#465b65"
+            android:fontFamily="monospace"
+            android:textColorHint="#8e9fa7"
             android:inputType="textPassword"
-            android:backgroundTint="#ffa102"/>
+            android:backgroundTint="#169ccc"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="20pt"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="35pt"
-            android:layout_height="35pt"
-            android:background="@drawable/login_icon"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="20pt"
+    <TextView
+        android:id="@+id/txvNotificationLogin"
+        android:layout_marginTop="3pt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:textColor="#fa4141"
+        android:textSize="6pt"
+        android:layout_marginLeft="23pt"
+        android:fontFamily="monospace"
+        android:text=""
+        />
+    <LinearLayout
+        android:layout_marginTop="20pt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="25pt"
+            android:id="@+id/btnLogin"
+            android:fontFamily="monospace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:textColor="#169ccc"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10pt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
         android:orientation="horizontal">
         <TextView
-            android:layout_gravity="center"
+            android:layout_marginTop="20pt"
+            android:layout_marginLeft="25pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#616e74"
-            android:text="You don't have an Account    "
-            />
-        <Button
+            android:textSize="6pt"
+            android:fontFamily="monospace"
+            android:text="Don't have an Account ?" />
+        <TextView
             android:id="@+id/btnRegister"
-            android:layout_width="50pt"
-            android:layout_height="15pt"
-            android:text="Register"
-            android:textColor="#ffffff"
-            android:textSize="5pt"
-            android:background="#616e74"/>
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="20pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#616e74"
+            android:textStyle="bold"
+            android:textSize="7pt"
+            android:fontFamily="monospace"
+            android:text="Register" />
     </LinearLayout>
 </LinearLayout>

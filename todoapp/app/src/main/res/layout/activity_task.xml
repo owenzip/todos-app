@@ -6,89 +6,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context="com.example.gamma.todoapp.TaskActivity">
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#dbe0e2">
-
         <LinearLayout
-            android:layout_marginRight="5pt"
-            android:layout_marginTop="2pt"
-            android:layout_width="wrap_content"
-            android:layout_height="25pt"
+            android:background="#465b65"
+            android:layout_width="match_parent"
+            android:layout_height="20pt"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <EditText
+                android:layout_marginTop="5pt"
+                android:layout_marginLeft="10pt"
+                android:background="@drawable/custom_edittext"
                 android:textColor="#465b65"
                 android:id="@+id/edtAdd"
                 android:layout_width="130pt"
                 android:layout_height="match_parent"
-                android:hint="  Add items here"
-                android:textColorHint="#849aa4"
-                android:backgroundTint="#617e8c"/>
+                android:hint=" Add items here"
+                android:textColorHint="#8e9fa7"
+                android:textSize="7pt"
+                android:fontFamily="monospace"
+                android:backgroundTint="#ffffff"/>
             <Button
+                android:layout_marginLeft="5pt"
+                android:layout_marginTop="2pt"
                 android:id="@+id/btnMenu"
                 android:layout_gravity="center"
-                android:layout_width="25pt"
-                android:layout_height="25pt"
-                android:background="@drawable/menu_icon"/>
+                android:layout_width="15pt"
+                android:layout_height="15pt"
+                android:background="@drawable/icon_add"/>
 
         </LinearLayout>
-    </android.support.v7.widget.Toolbar>
-
     <LinearLayout
-        android:background="#dbe0e2"
         android:layout_width="match_parent"
-        android:layout_height="15pt"
+        android:layout_height="20pt"
+        android:background="#465b65"
         android:orientation="horizontal">
+
         <TextView
-            android:layout_marginTop="2pt"
+            android:textStyle="bold"
+            android:layout_marginTop="8pt"
             android:id="@+id/txvClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15pt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear Completed"
-            android:textStyle="bold"
-            android:textColor="#465b65"
-            android:textSize="7pt"/>
+            android:fontFamily="monospace"
+            android:text="Clear"
+            android:textColor="#ffffff"
+            android:textSize="7pt" />
+
         <TextView
-            android:layout_marginTop="2pt"
+            android:textStyle="bold"
+            android:layout_marginTop="8pt"
             android:id="@+id/txvCompleted"
-            android:layout_marginLeft="18pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="25pt"
+            android:fontFamily="monospace"
             android:text="Completed"
-            android:textStyle="bold"
-            android:textColor="#465b65"
-            android:textSize="7pt"
-            />
+            android:textColor="#ffffff"
+            android:textSize="7pt" />
+
         <TextView
-            android:layout_marginTop="2pt"
+            android:textStyle="bold"
+            android:layout_marginTop="8pt"
             android:id="@+id/txvActive"
-            android:layout_marginLeft="5pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="7pt"
+            android:fontFamily="monospace"
             android:text="Active"
-            android:textStyle="bold"
-            android:textColor="#465b65"
-            android:textSize="7pt"/>
+            android:textColor="#ffffff"
+            android:textSize="7pt" />
+
         <TextView
-            android:layout_marginTop="2pt"
+            android:layout_marginTop="8pt"
             android:id="@+id/txvAll"
-            android:layout_marginLeft="5pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="7pt"
+            android:fontFamily="monospace"
             android:text="All"
             android:textStyle="bold"
-            android:textColor="#465b65"
-            android:textSize="7pt"/>
+            android:textColor="#ffffff"
+            android:textSize="7pt" />
     </LinearLayout>
     <ListView
         android:id="@+id/lsvTasks"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200pt">
     </ListView>
+    <TextView
+        android:id="@+id/txvNotificationTask"
+        android:layout_marginTop="3pt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fa4141"
+        android:layout_gravity="center"
+        android:textSize="6pt"
+        android:fontFamily="monospace"
+        android:text=""
+        />
 </LinearLayout>
 
