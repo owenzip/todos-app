@@ -1,3 +1,9 @@
+/*
+ * TaskAdapter.java
+ * Create by Nhut Nguyen
+ * Date 31/11/2017
+ */
+
 package com.example.gamma.todoapp;
 
 import android.app.Activity;
@@ -10,26 +16,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*Class using for Adapter of Testview Task*/
 public class TaskAdapter extends BaseAdapter {
 
     private List<Task> dataList;
@@ -74,41 +74,43 @@ public class TaskAdapter extends BaseAdapter {
         edtTask.setText(task.getTask());
         ckbStatus.setChecked(Boolean.parseBoolean(task.getStatus()));
 
+        //Event Strike Text when load Task
         if (ckbStatus.isChecked()){
             edtTask.setPaintFlags(edtTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
         txvStatus.setText(task.getTaskId());
         edtTask.setInputType(InputType.TYPE_NULL);
-
+        //Event change text color when load Task
         edtTask.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-
                 edtTask.setTextColor(Color.GRAY);
                 edtTask.setInputType(InputType.TYPE_CLASS_TEXT);
                 return true;
             }
         });
 
+        //Even update task when User click Edittext Task
         edtTask.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //When User press key Enter
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
                     edtTask.setTextColor(Color.parseColor("#465b65"));
                     edtTask.setInputType(InputType.TYPE_NULL);
                     String urlUpdateTask = String.format("http://192.168.1.209:8080/tasks/%1$s",txvStatus.getText().toString());
                     StringRequest request = new StringRequest(Request.Method.PUT, urlUpdateTask, new Response.Listener<String>(){
                         @Override
                         public void onResponse(String s) {
-
+                            //Can't return because Data saved
                         }
                     },new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            //Can't nofitication because had nofitication at LoginActivity
                         }
                     }) {
+                        //Get task, status from Adapter and keep stable
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> parameters = new HashMap<String, String>();
@@ -124,23 +126,26 @@ public class TaskAdapter extends BaseAdapter {
             }
         });
 
+        //Event User checked Checkbox
         ckbStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                //When User checked
                 if (isChecked){
-                    edtTask.setPaintFlags(edtTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    edtTask.setPaintFlags(edtTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);   //Set Strike Text
                     StringRequest request = new StringRequest(Request.Method.PUT, urlAdd, new Response.Listener<String>(){
                         @Override
                         public void onResponse(String s) {
-
+                            //Can't return because Data saved
                         }
                     },new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            //Can't nofitication because had nofitication at LoginActivity
                         }
                     }) {
+                        //Get TaskId, Status from Adapter and keep stable
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> parameters = new HashMap<String, String>();
@@ -151,8 +156,9 @@ public class TaskAdapter extends BaseAdapter {
                     };
                     TaskController.getPermission().addToRequestQueue(request);
                 }
-                else{
-                    edtTask.setPaintFlags(0);
+                //When user not checked
+                else {
+                    edtTask.setPaintFlags(0);   //Remove Strike Text
                     StringRequest request = new StringRequest(Request.Method.PUT, urlAdd, new Response.Listener<String>(){
                         @Override
                         public void onResponse(String s) {
@@ -164,6 +170,7 @@ public class TaskAdapter extends BaseAdapter {
 
                         }
                     }) {
+                        //Get TaskId, Status from Adapter and keep stable
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> parameters = new HashMap<String, String>();

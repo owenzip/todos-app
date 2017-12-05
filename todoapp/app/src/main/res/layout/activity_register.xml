@@ -19,7 +19,7 @@
             android:textSize="12pt"
             android:fontFamily="monospace"
             android:textColor="#465b65"
-            android:text="Register ," />
+            android:text="Register," />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -114,21 +114,16 @@
             android:textColor="#465b65"
             android:backgroundTint="#169ccc"/>
     </LinearLayout>
-    <TextView
-        android:id="@+id/txvNotificationRegister"
-        android:layout_marginTop="5pt"
+    <LinearLayout
+        android:id="@+id/layAnimRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#fa4141"
-        android:textSize="6pt"
-        android:layout_marginLeft="23pt"
-        android:fontFamily="monospace"
-        android:text=""
-        />
-        <TextView
+        android:orientation="vertical">
+
+    <TextView
+            android:layout_marginTop="10pt"
             android:id="@+id/btnAccept"
             android:layout_marginLeft="25pt"
-            android:layout_marginTop="10pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#169ccc"
@@ -136,4 +131,16 @@
             android:textSize="10pt"
             android:fontFamily="monospace"
             android:text="Accept" />
+    <TextView
+        android:id="@+id/txvNotificationRegister"
+        android:layout_marginTop="3pt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fa4141"
+        android:textSize="6pt"
+        android:layout_marginLeft="25pt"
+        android:fontFamily="monospace"
+        android:text=""
+        />
+    </LinearLayout>
 </LinearLayout>

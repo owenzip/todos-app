@@ -75,21 +75,12 @@
             android:inputType="textPassword"
             android:backgroundTint="#169ccc"/>
     </LinearLayout>
-    <TextView
-        android:id="@+id/txvNotificationLogin"
-        android:layout_marginTop="3pt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fa4141"
-        android:textSize="6pt"
-        android:layout_marginLeft="23pt"
-        android:fontFamily="monospace"
-        android:text=""
-        />
     <LinearLayout
+        android:id="@+id/layAnimLogin"
         android:layout_marginTop="20pt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             android:layout_marginLeft="25pt"
             android:id="@+id/btnLogin"
@@ -100,6 +91,17 @@
             android:textSize="10pt"
             android:textStyle="bold"
             android:textColor="#169ccc"/>
+        <TextView
+            android:id="@+id/txvAnim"
+            android:layout_marginTop="3pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fa4141"
+            android:textSize="6pt"
+            android:layout_marginLeft="25pt"
+            android:fontFamily="monospace"
+            android:text=""
+            />
     </LinearLayout>
 
     <LinearLayout

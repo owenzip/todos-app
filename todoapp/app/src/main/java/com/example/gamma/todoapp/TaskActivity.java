@@ -7,7 +7,10 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +32,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
+@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class TaskActivity extends AppCompatActivity {
 
     String userId = LoginActivity.userId;
@@ -120,8 +123,6 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     public void eventOnClickAvtive(){
         txvActive = (TextView) findViewById(R.id.txvActive);

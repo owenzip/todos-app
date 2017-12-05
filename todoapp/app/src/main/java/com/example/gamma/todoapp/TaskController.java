@@ -1,3 +1,9 @@
+/*
+ * Taskcontroller.java
+ * Create by Nhut Nguyen
+ * Date 28/11/2017
+ */
+
 package com.example.gamma.todoapp;
 
 import android.app.Application;
@@ -6,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+/*Class using for control Response*/
 public class TaskController extends Application {
 
     public static final String TAG = TaskController.class.getSimpleName();

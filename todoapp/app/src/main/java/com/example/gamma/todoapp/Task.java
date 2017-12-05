@@ -1,6 +1,11 @@
+/*
+ * Task.java
+ * Create by Nhut Nguyen
+ * Date 30/11/2017
+ */
 package com.example.gamma.todoapp;
 
-
+/*Class for get and set table Task*/
 public class Task {
     private String task;
     private String status;
@@ -11,9 +16,7 @@ public class Task {
         return task;
     }
 
-    public void setTask(String task) {
-        this.task = task;
-    }
+    public void setTask(String task) { this.task = task; }
 
     public String getStatus() {
         return status;
