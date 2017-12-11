@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -29,7 +30,7 @@ import java.util.Map;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class RegisterActivity extends AppCompatActivity {
 
-    String url = "http://192.168.1.209:8080/users";
+    String url = "http://192.168.1.207:8080/users";
     EditText edtRegisterUsername,edtRegisterPassword,edtFirstname,edtLastname,edtRegisterConfirmPassword;
     TextView btnAccept,txvNofiticationRegister;
     ViewGroup layAnimRegister;
@@ -116,6 +117,20 @@ public class RegisterActivity extends AppCompatActivity {
                 parameters.put("firstname", edtFirstname.getText().toString());
                 parameters.put("lastname", edtLastname.getText().toString());
                 return parameters;
+            }
+            //Check authentication REST API
+            HashMap<String, String> createBasicAuthHeader(String username, String password) {
+                HashMap<String, String> headerMap = new HashMap<String, String>();
+
+                String credentials = username + ":" + password;
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
+
+                return headerMap;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return createBasicAuthHeader("admin", "admin");
             }
         };
         TaskController.getPermission().addToRequestQueue(request);

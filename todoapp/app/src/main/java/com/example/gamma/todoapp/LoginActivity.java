@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
     //Get UserId by Username when User login successful
     public void getUserId(){
         String username = edtUsername.getText().toString();
-        String urlUserId = String.format("http://192.168.1.209:8080/users?username=%1$s",username);
+        String urlUserId = String.format("http://192.168.1.207:8080/users?username=%1$s",username);
         StringRequest request = new StringRequest(Request.Method.GET, urlUserId, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -100,14 +101,29 @@ public class LoginActivity extends AppCompatActivity {
                 txvAnimNofi.setText("Username's not found");
                 animTextNofi();
             }
-        });
+        }){
+            //Check authentication REST API
+            HashMap<String, String> createBasicAuthHeader(String username, String password) {
+                HashMap<String, String> headerMap = new HashMap<String, String>();
+
+                String credentials = username + ":" + password;
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
+
+                return headerMap;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return createBasicAuthHeader("admin", "admin");
+            }
+        };
         TaskController.getPermission().addToRequestQueue(request);
     }
 
     //Check Login by Username and Password
     public void checkLogin(){
 
-        String urlLogin = "http://192.168.1.209:8080/users/login";
+        String urlLogin = "http://192.168.1.207:8080/users/login";
         StringRequest request = new StringRequest(Request.Method.POST, urlLogin, new Response.Listener<String>(){
             @Override
             public void onResponse(String s) {
@@ -136,6 +152,21 @@ public class LoginActivity extends AppCompatActivity {
                 parameters.put("username", edtUsername.getText().toString());
                 parameters.put("password", edtPassword.getText().toString());
                 return parameters;
+            }
+
+            //Check authentication REST API
+            HashMap<String, String> createBasicAuthHeader(String username, String password) {
+                HashMap<String, String> headerMap = new HashMap<String, String>();
+
+                String credentials = username + ":" + password;
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
+
+                return headerMap;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return createBasicAuthHeader("admin", "admin");
             }
         };
         TaskController.getPermission().addToRequestQueue(request);
