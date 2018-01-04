@@ -1,9 +1,8 @@
-/*
+/**
  * TaskAdapter.java
  * Create by Nhut Nguyen
  * Date 31/11/2017
  */
-
 package com.example.gamma.todoapp;
 
 import android.app.Activity;
@@ -21,24 +20,25 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/*Class using for Adapter of Testview Task*/
+/* Class using for Adapter of Testview Task */
 public class TaskAdapter extends BaseAdapter {
 
     private List<Task> dataList;
     private LayoutInflater inflater;
     private Activity activity;
-    String urlAdd = "http://192.168.1.207:8080/tasks";
 
-    public TaskAdapter(Activity activity, List<Task> dataItem){
+    public TaskAdapter(Activity activity, List<Task> dataItem) {
         this.activity = activity;
         this.dataList = dataItem;
     }
@@ -76,7 +76,7 @@ public class TaskAdapter extends BaseAdapter {
         ckbStatus.setChecked(Boolean.parseBoolean(task.getStatus()));
 
         //Event Strike Text when load Task
-        if (ckbStatus.isChecked()){
+        if (ckbStatus.isChecked()) {
             edtTask.setPaintFlags(edtTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
@@ -97,15 +97,15 @@ public class TaskAdapter extends BaseAdapter {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //When User press key Enter
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    edtTask.setTextColor(Color.parseColor("#465b65"));
+                    edtTask.setTextColor(Color.parseColor(Constant.COLOR_EDT_TASK));
                     edtTask.setInputType(InputType.TYPE_NULL);
-                    String urlUpdateTask = String.format("http://192.168.1.207:8080/tasks/%1$s",txvStatus.getText().toString());
-                    StringRequest request = new StringRequest(Request.Method.PUT, urlUpdateTask, new Response.Listener<String>(){
+                    String urlUpdateTask = String.format(Constant.URL_UPDATE_TASK, txvStatus.getText().toString());
+                    StringRequest request = new StringRequest(Request.Method.PUT, urlUpdateTask, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
                             //Can't return because Data saved
                         }
-                    },new Response.ErrorListener(){
+                    }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             //Can't nofitication because had nofitication at LoginActivity
@@ -120,19 +120,9 @@ public class TaskAdapter extends BaseAdapter {
                             return parameters;
                         }
 
-                        //Check authentication REST API
-                        HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                            HashMap<String, String> headerMap = new HashMap<String, String>();
-
-                            String credentials = username + ":" + password;
-                            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                            headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                            return headerMap;
-                        }
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
-                            return createBasicAuthHeader("admin", "admin");
+                            return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
                         }
                     };
                     TaskController.getPermission().addToRequestQueue(request);
@@ -148,14 +138,14 @@ public class TaskAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 //When User checked
-                if (isChecked){
+                if (isChecked) {
                     edtTask.setPaintFlags(edtTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);   //Set Strike Text
-                    StringRequest request = new StringRequest(Request.Method.PUT, urlAdd, new Response.Listener<String>(){
+                    StringRequest request = new StringRequest(Request.Method.PUT, Constant.URL_ADD_TASK, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
                             //Can't return because Data saved
                         }
-                    },new Response.ErrorListener(){
+                    }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             //Can't nofitication because had nofitication at LoginActivity
@@ -170,19 +160,9 @@ public class TaskAdapter extends BaseAdapter {
                             return parameters;
                         }
 
-                        //Check authentication REST API
-                        HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                            HashMap<String, String> headerMap = new HashMap<String, String>();
-
-                            String credentials = username + ":" + password;
-                            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                            headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                            return headerMap;
-                        }
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
-                            return createBasicAuthHeader("admin", "admin");
+                            return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
                         }
                     };
                     TaskController.getPermission().addToRequestQueue(request);
@@ -190,12 +170,12 @@ public class TaskAdapter extends BaseAdapter {
                 //When user not checked
                 else {
                     edtTask.setPaintFlags(0);   //Remove Strike Text
-                    StringRequest request = new StringRequest(Request.Method.PUT, urlAdd, new Response.Listener<String>(){
+                    StringRequest request = new StringRequest(Request.Method.PUT, Constant.URL_ADD_TASK, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
 
                         }
-                    },new Response.ErrorListener(){
+                    }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
@@ -205,24 +185,14 @@ public class TaskAdapter extends BaseAdapter {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> parameters = new HashMap<String, String>();
-                            parameters.put("taskid",txvStatus.getText().toString());
+                            parameters.put("taskid", txvStatus.getText().toString());
                             parameters.put("status", "false");
                             return parameters;
                         }
 
-                        //Check authentication REST API
-                        HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                            HashMap<String, String> headerMap = new HashMap<String, String>();
-
-                            String credentials = username + ":" + password;
-                            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                            headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                            return headerMap;
-                        }
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
-                            return createBasicAuthHeader("admin", "admin");
+                            return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
                         }
                     };
                     TaskController.getPermission().addToRequestQueue(request);

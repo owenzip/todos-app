@@ -1,9 +1,15 @@
+/**
+ * TaskActivity.java
+ * Create by Nhut Nguyen
+ * Date 02/12/2017
+ */
 package com.example.gamma.todoapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,49 +19,48 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
+import butterknife.BindView;
+
+/* Class using for controller Task */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class TaskActivity extends AppCompatActivity {
 
     String userId = LoginActivity.userId;
-    String urlGetAndDelete = String.format("http://192.168.1.207:8080/users/%1$s/tasks",userId);
-    String urlFindCompleted = String.format("http://192.168.1.207:8080/users/%1$s/tasks/true",userId);
-    String urlFindActive = String.format("http://192.168.1.207:8080/users/%1$s/tasks/false",userId);
-    TextView txvCompleted,txvAll,txvActive,txvClear,edtAdd,txvNofiticationTask;
+    String urlGetAndDelete = String.format(Constant.URL_GET_AND_DELETE, userId);
+    String urlFindCompleted = String.format(Constant.URL_GET_TASK_COMPLETED, userId);
+    String urlFindActive = String.format(Constant.URL_GET_TASK_ACTIVE, userId);
     List<Task> list = new ArrayList<Task>();
-    ListView listView; Button btnMenu;
-    TaskAdapter adapter = new TaskAdapter(this,list);
+    TaskAdapter adapter = new TaskAdapter(this, list);
+
+    @BindView(R.id.edtAdd) EditText edtAdd;
+    @BindView(R.id.txvCompleted) TextView txvCompleted;
+    @BindView(R.id.txvAll) TextView txvAll;
+    @BindView(R.id.txvActive) TextView txvActive;
+    @BindView(R.id.txvClear) TextView txvClear;
+    @BindView(R.id.txvNotificationTask) TextView txvNofiticationTask;
+    @BindView(R.id.btnMenu) Button btnMenu;
+    @BindView(R.id.lsvTasks) ListView listView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        edtAdd = (EditText) findViewById(R.id.edtAdd);
-        btnMenu = (Button) findViewById(R.id.btnMenu);
-        listView = (ListView) findViewById(R.id.lsvTasks);
-        txvNofiticationTask = (TextView) findViewById(R.id.txvNotificationTask);
         listView.setAdapter(adapter);
-
         loadTaskActivity();
         eventOnClickAll();
         evenOnClickCompleted();
@@ -64,11 +69,11 @@ public class TaskActivity extends AppCompatActivity {
         eventOnClickAddTask();
     }
 
-    public void loadTaskActivity(){
-        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET,urlGetAndDelete,new Response.Listener<JSONArray>() {
+    public void loadTaskActivity() {
+        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET, urlGetAndDelete, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                list.removeAll(list);
+                list.clear();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
@@ -89,39 +94,28 @@ public class TaskActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 txvNofiticationTask.setText("Network Disconnection");
             }
-        }){
-            //Check authentication REST API
-            HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                HashMap<String, String> headerMap = new HashMap<String, String>();
+        }) {
 
-                String credentials = username + ":" + password;
-                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                return headerMap;
-            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return createBasicAuthHeader("admin", "admin");
+                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
             }
         };
         TaskController.getPermission().addToRequestQueue(jsonreq);
     }
 
-    public void eventOnClickAddTask(){
+    public void eventOnClickAddTask() {
 
-        final String urlAdd = "http://192.168.1.207:8080/tasks";
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                StringRequest request = new StringRequest(Request.Method.POST, urlAdd, new Response.Listener<String>(){
+                StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_ADD_TASK, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
                         loadTaskActivity();
                         edtAdd.setText("");
                     }
-                },new Response.ErrorListener(){
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         txvNofiticationTask.setText("Some error occurred");
@@ -134,19 +128,10 @@ public class TaskActivity extends AppCompatActivity {
                         parameters.put("task", edtAdd.getText().toString());
                         return parameters;
                     }
-                    //Check authentication REST API
-                    HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                        HashMap<String, String> headerMap = new HashMap<String, String>();
 
-                        String credentials = username + ":" + password;
-                        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                        headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                        return headerMap;
-                    }
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        return createBasicAuthHeader("admin", "admin");
+                        return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
                     }
                 };
                 TaskController.getPermission().addToRequestQueue(request);
@@ -154,16 +139,15 @@ public class TaskActivity extends AppCompatActivity {
         });
     }
 
-    public void eventOnClickAvtive(){
-        txvActive = (TextView) findViewById(R.id.txvActive);
+    public void eventOnClickAvtive() {
         txvActive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                JsonArrayRequest jsonreq = new JsonArrayRequest(urlFindActive,new Response.Listener<JSONArray>() {
+                JsonArrayRequest jsonreq = new JsonArrayRequest(urlFindActive, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        list.removeAll(list);
+                        list.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject obj = response.getJSONObject(i);
@@ -182,29 +166,19 @@ public class TaskActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         txvNofiticationTask.setText("Some error occurred");
                     }
-                }){
-                    //Check authentication REST API
-                    HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                        HashMap<String, String> headerMap = new HashMap<String, String>();
+                }) {
 
-                        String credentials = username + ":" + password;
-                        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                        headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                        return headerMap;
-                    }
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        return createBasicAuthHeader("admin", "admin");
+                        return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
                     }
                 };
                 TaskController.getPermission().addToRequestQueue(jsonreq);
             }
         });
     }
-    public void eventOnClickAll(){
 
-        txvAll = (TextView) findViewById(R.id.txvAll);
+    public void eventOnClickAll() {
         txvAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,16 +187,14 @@ public class TaskActivity extends AppCompatActivity {
         });
     }
 
-    public void evenOnClickCompleted(){
-
-        txvCompleted = (TextView) findViewById(R.id.txvCompleted);
+    public void evenOnClickCompleted() {
         txvCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JsonArrayRequest jsonreq = new JsonArrayRequest(urlFindCompleted,new Response.Listener<JSONArray>() {
+                JsonArrayRequest jsonreq = new JsonArrayRequest(urlFindCompleted, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        list.removeAll(list);
+                        list.clear();
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject obj = response.getJSONObject(i);
@@ -241,20 +213,11 @@ public class TaskActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         txvNofiticationTask.setText("Some error occurred");
                     }
-                }){
-                    //Check authentication REST API
-                    HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                        HashMap<String, String> headerMap = new HashMap<String, String>();
+                }) {
 
-                        String credentials = username + ":" + password;
-                        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                        headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                        return headerMap;
-                    }
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        return createBasicAuthHeader("admin", "admin");
+                        return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
                     }
                 };
                 TaskController.getPermission().addToRequestQueue(jsonreq);
@@ -263,17 +226,16 @@ public class TaskActivity extends AppCompatActivity {
         });
     }
 
-    public void eventOnClickClear(){
-        txvClear = (TextView) findViewById(R.id.txvClear);
+    public void eventOnClickClear() {
         txvClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                StringRequest request = new StringRequest(Request.Method.DELETE,urlGetAndDelete, new Response.Listener<String>() {
+                StringRequest request = new StringRequest(Request.Method.DELETE, urlGetAndDelete, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.equals("Deleted")){
-                            list.removeAll(list);
+                        if (response.equals("Deleted")) {
+                            list.clear();
                             adapter.notifyDataSetChanged();
                             loadTaskActivity();
                         }
@@ -283,20 +245,11 @@ public class TaskActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         txvNofiticationTask.setText("Some error occurred");
                     }
-                }){
-                    //Check authentication REST API
-                    HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                        HashMap<String, String> headerMap = new HashMap<String, String>();
+                }) {
 
-                        String credentials = username + ":" + password;
-                        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                        headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                        return headerMap;
-                    }
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        return createBasicAuthHeader("admin", "admin");
+                        return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
                     }
                 };
                 TaskController.getPermission().addToRequestQueue(request);

@@ -12,26 +12,42 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
-import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import java.util.HashMap;
 import java.util.Map;
 
-/*Class using for CheckLogin*/
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/* Class using for CheckLogin */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class LoginActivity extends AppCompatActivity {
 
     public static String userId;
-    TextView btnLogin,btnRegister,txvAnimNofi;
-    EditText edtUsername,edtPassword,edtAdd;
+
+    @BindView(R.id.btnLogin)
+    TextView btnLogin;
+    @BindView(R.id.btnRegister)
+    TextView btnRegister;
+    @BindView(R.id.txvAnim)
+    TextView txvAnimNofi;
+    @BindView(R.id.edtUsername)
+    EditText edtUsername;
+    @BindView(R.id.edtPassword)
+    EditText edtPassword;
+    @BindView(R.id.layAnimLogin)
     ViewGroup layAnimLogin;
 
     @Override
@@ -39,57 +55,43 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+    }
 
-        btnLogin = (TextView) findViewById(R.id.btnLogin);
-        btnRegister = (TextView) findViewById(R.id.btnRegister);
-        edtUsername = (EditText) findViewById(R.id.edtUsername);
-        edtPassword = (EditText) findViewById(R.id.edtPassword);
-        edtAdd = (EditText) findViewById(R.id.edtAdd);
-        txvAnimNofi = (TextView) findViewById(R.id.txvAnim);
-        layAnimLogin = (ViewGroup) findViewById(R.id.layAnimLogin);
+    @OnClick(R.id.btnRegister)
+    public void onClickBtnRegister(View view) {
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
 
-        //Event click Register button
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @OnClick(R.id.btnLogin)
+    public void onClickBtnLogin(View view) {
 
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        //Event click Login button
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (edtUsername.length() <= 3){
-                    txvAnimNofi.setText("Username's required");
-                    animTextNofi();
-                } else if (edtPassword.length() <= 3){
-                    txvAnimNofi.setText("Password's required");
-                    animTextNofi();
-                } else {
-                    getUserId();
-                    checkLogin();
-                }
-            }
-        });
+        if (edtUsername.length() <= 3) {
+            txvAnimNofi.setText("Username's required");
+            animTextNofi();
+        } else if (edtPassword.length() <= 3) {
+            txvAnimNofi.setText("Password's required");
+            animTextNofi();
+        } else {
+            getUserId();
+            checkLogin();
+        }
     }
 
     //Animation nofitication Text
-    public void animTextNofi(){
+    public void animTextNofi() {
 
         boolean visible = false;
         TransitionManager.beginDelayedTransition(layAnimLogin);
-        visible = !visible;
-        txvAnimNofi.setVisibility(visible ? View.VISIBLE : View.GONE);
+        txvAnimNofi.setVisibility(View.VISIBLE);
     }
 
     //Get UserId by Username when User login successful
-    public void getUserId(){
+    public void getUserId() {
+
         String username = edtUsername.getText().toString();
-        String urlUserId = String.format("http://192.168.1.207:8080/users?username=%1$s",username);
+        String urlUserId = String.format(Constant.URL_GET_USERID, username);
         StringRequest request = new StringRequest(Request.Method.GET, urlUserId, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -101,43 +103,32 @@ public class LoginActivity extends AppCompatActivity {
                 txvAnimNofi.setText("Username's not found");
                 animTextNofi();
             }
-        }){
-            //Check authentication REST API
-            HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                HashMap<String, String> headerMap = new HashMap<String, String>();
+        }) {
 
-                String credentials = username + ":" + password;
-                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                return headerMap;
-            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return createBasicAuthHeader("admin", "admin");
+                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
             }
         };
         TaskController.getPermission().addToRequestQueue(request);
     }
 
     //Check Login by Username and Password
-    public void checkLogin(){
+    public void checkLogin() {
 
-        String urlLogin = "http://192.168.1.207:8080/users/login";
-        StringRequest request = new StringRequest(Request.Method.POST, urlLogin, new Response.Listener<String>(){
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
 
                 //If response Json return = true => Login successful
-                if(s.equals("true")){
-                    startActivity(new Intent(LoginActivity.this,TaskActivity.class));
-                }
-                else{
+                if (s.equals("true")) {
+                    startActivity(new Intent(LoginActivity.this, TaskActivity.class));
+                } else {
                     txvAnimNofi.setText("Login failed , please try again");
                     animTextNofi();
                 }
             }
-        },new Response.ErrorListener(){
+        }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -154,19 +145,9 @@ public class LoginActivity extends AppCompatActivity {
                 return parameters;
             }
 
-            //Check authentication REST API
-            HashMap<String, String> createBasicAuthHeader(String username, String password) {
-                HashMap<String, String> headerMap = new HashMap<String, String>();
-
-                String credentials = username + ":" + password;
-                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                return headerMap;
-            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return createBasicAuthHeader("admin", "admin");
+                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
             }
         };
         TaskController.getPermission().addToRequestQueue(request);
