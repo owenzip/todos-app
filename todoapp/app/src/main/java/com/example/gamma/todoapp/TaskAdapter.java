@@ -9,8 +9,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +31,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+
 /* Class using for Adapter of Testview Task */
 public class TaskAdapter extends BaseAdapter {
+
+    @BindView(R.id.edtTasks) EditText edtTask;
+    @BindView(R.id.txvStatus) TextView txvStatus;
+    @BindView(R.id.ckbStatus) CheckBox ckbStatus;
 
     private List<Task> dataList;
     private LayoutInflater inflater;
     private Activity activity;
+    private AppCompatActivity appCompatActivity;
 
     public TaskAdapter(Activity activity, List<Task> dataItem) {
         this.activity = activity;
@@ -61,20 +68,17 @@ public class TaskAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        final Task task = dataList.get(position);
+
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
             convertView = inflater.inflate(R.layout.task_layout, null);
 
-        final EditText edtTask = (EditText) convertView.findViewById(R.id.edtTasks);
-        final CheckBox ckbStatus = (CheckBox) convertView.findViewById(R.id.ckbStatus);
-        final TextView txvStatus = (TextView) convertView.findViewById(R.id.txvStatus);
-        final Task task = dataList.get(position);
-
         edtTask.setLongClickable(true);
         edtTask.setText(task.getTask());
-        ckbStatus.setChecked(Boolean.parseBoolean(task.getStatus()));
 
+        ckbStatus.setChecked(Boolean.parseBoolean(task.getStatus()));
         //Event Strike Text when load Task
         if (ckbStatus.isChecked()) {
             edtTask.setPaintFlags(edtTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -97,7 +101,7 @@ public class TaskAdapter extends BaseAdapter {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //When User press key Enter
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    edtTask.setTextColor(Color.parseColor(Constant.COLOR_EDT_TASK));
+                    edtTask.setTextColor(appCompatActivity.getResources().getColor(R.color.colorEdtText));
                     edtTask.setInputType(InputType.TYPE_NULL);
                     String urlUpdateTask = String.format(Constant.URL_UPDATE_TASK, txvStatus.getText().toString());
                     StringRequest request = new StringRequest(Request.Method.PUT, urlUpdateTask, new Response.Listener<String>() {

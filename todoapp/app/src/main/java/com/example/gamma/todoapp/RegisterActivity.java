@@ -11,7 +11,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
-import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -63,13 +62,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Check Edittext
         if (edtRegisterUsername.length() < 3) {
-            txvNofiticationRegister.setText("Username must be greater than 3");
+            txvNofiticationRegister.setText(R.string.user_notstrong);
+            txvNofiticationRegister.setTextColor(getResources().getColor(R.color.colorEdtText));
             animTextNofi();
         } else if (edtRegisterPassword.length() < 5) {
-            txvNofiticationRegister.setText("Password's not strong enough");
+            txvNofiticationRegister.setText(R.string.pass_notstrong);
             animTextNofi();
         } else if (edtFirstname.length() < 2 || edtLastname.length() < 2) {
-            txvNofiticationRegister.setText("Firstname or Lastname is required");
+            txvNofiticationRegister.setText(R.string.firstlast_required);
             animTextNofi();
         }
         //Check Register
@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (edtRegisterPassword.getText().toString().equals(edtRegisterConfirmPassword.getText().toString())) {
                 checkRegister();
             } else {
-                txvNofiticationRegister.setText("Password do not match");
+                txvNofiticationRegister.setText(R.string.pass_notmatch);
                 animTextNofi();
             }
         }
@@ -97,18 +97,17 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
                 //If response return = true else Register successful
-                if (s.equals("true")) {
-                    //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    txvNofiticationRegister.setText("Register Completed");
+                if (s.equals("Successful")) {
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 } else {
-                    txvNofiticationRegister.setText("Some error occured , check your network connection");
+                    txvNofiticationRegister.setText(R.string.error_connection);
                     animTextNofi();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                txvNofiticationRegister.setText("Some error occured , check your network connection");
+            public void onErrorResponse(VolleyError error) {
+                txvNofiticationRegister.setText(R.string.error_system + error.toString());
                 animTextNofi();
             }
         }) {

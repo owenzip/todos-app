@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -60,18 +59,18 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnRegister)
     public void onClickBtnRegister(View view) {
-        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.btnLogin)
     public void onClickBtnLogin(View view) {
 
-
         if (edtUsername.length() <= 3) {
-            txvAnimNofi.setText("Username's required");
+            txvAnimNofi.setText(R.string.user_required);
             animTextNofi();
         } else if (edtPassword.length() <= 3) {
-            txvAnimNofi.setText("Password's required");
+            txvAnimNofi.setText(R.string.pass_required);
             animTextNofi();
         } else {
             getUserId();
@@ -81,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //Animation nofitication Text
     public void animTextNofi() {
-
         boolean visible = false;
         TransitionManager.beginDelayedTransition(layAnimLogin);
         txvAnimNofi.setVisibility(View.VISIBLE);
@@ -100,11 +98,10 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvAnimNofi.setText("Username's not found");
+                txvAnimNofi.setText(R.string.user_notfound);
                 animTextNofi();
             }
         }) {
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
@@ -124,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (s.equals("true")) {
                     startActivity(new Intent(LoginActivity.this, TaskActivity.class));
                 } else {
-                    txvAnimNofi.setText("Login failed , please try again");
+                    txvAnimNofi.setText(R.string.error_connection);
                     animTextNofi();
                 }
             }
@@ -132,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvAnimNofi.setText("Some error occured , check your network connection");
+                txvAnimNofi.setText(R.string.error_system + error.toString());
                 animTextNofi();
             }
         }) {
