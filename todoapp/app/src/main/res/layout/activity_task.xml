@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_width="15pt"
                 android:layout_height="15pt"
-                android:background="@drawable/icon_add"/>
+                android:background="@drawable/ic_add"/>
 
         </LinearLayout>
     <LinearLayout

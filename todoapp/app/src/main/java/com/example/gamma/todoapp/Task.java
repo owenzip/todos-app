@@ -8,40 +8,40 @@ package com.example.gamma.todoapp;
 /* Model Task */
 public class Task {
 
-    private String task;
-    private String status;
-    private String taskId;
-    private String userId;
+    private String mTask;
+    private String mStatus;
+    private String mTaskId;
+    private String mUserId;
 
     public String getTask() {
-        return task;
+        return mTask;
     }
 
     public void setTask(String task) {
-        this.task = task;
+        this.mTask = task;
     }
 
     public String getStatus() {
-        return status;
+        return mStatus;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.mStatus = status;
     }
 
     public String getTaskId() {
-        return taskId;
+        return mTaskId;
     }
 
     public void setTaskId(String taskId) {
-        this.taskId = taskId;
+        this.mTaskId = taskId;
     }
 
     public String getUserId() {
-        return userId;
+        return mUserId;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.mUserId = userId;
     }
 }

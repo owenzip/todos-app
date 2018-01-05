@@ -17,24 +17,24 @@ import com.android.volley.toolbox.Volley;
 public class TaskController extends Application {
 
     public static final String TAG = TaskController.class.getSimpleName();
-    private RequestQueue queue;
-    private static TaskController controller;
+    private RequestQueue mRequestQueue;
+    private static TaskController mTaskController;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        controller = this;
+        mTaskController = this;
     }
 
     public static synchronized TaskController getPermission() {
-        return controller;
+        return mTaskController;
     }
 
     public RequestQueue getRequestQueue() {
-        if (queue == null) {
-            queue = Volley.newRequestQueue(getApplicationContext());
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        return queue;
+        return mRequestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> req, String tag) {
@@ -48,8 +48,8 @@ public class TaskController extends Application {
     }
 
     public void cancelPendingRequests(Object tag) {
-        if (queue != null) {
-            queue.cancelAll(tag);
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(tag);
         }
     }
 }

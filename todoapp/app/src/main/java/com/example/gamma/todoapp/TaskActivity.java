@@ -39,9 +39,8 @@ import butterknife.OnClick;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class TaskActivity extends AppCompatActivity {
 
-    String userId = LoginActivity.userId;
-    List<Task> list = new ArrayList<Task>();
-    TaskAdapter adapter = new TaskAdapter(this, list);
+    List<Task> mTaskList = new ArrayList<Task>();
+    TaskAdapter mTaskAdapter = new TaskAdapter(this, mTaskList);
 
     @BindView(R.id.edtAdd)
     EditText edtAdd;
@@ -65,15 +64,15 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
-        listView.setAdapter(adapter);
+        listView.setAdapter(mTaskAdapter);
         loadTaskActivity();
     }
 
     public void loadTaskActivity() {
-        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET, String.format(Constant.URL_GET_AND_DELETE, userId), new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET, String.format(Constant.URL_GET_AND_DELETE, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                list.clear();
+                mTaskList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
@@ -81,8 +80,8 @@ public class TaskActivity extends AppCompatActivity {
                         tasks.setTask(obj.getString("task"));
                         tasks.setStatus(obj.getString("status"));
                         tasks.setTaskId(obj.getString("taskId"));
-                        list.add(tasks);
-                        adapter.notifyDataSetChanged();
+                        mTaskList.add(tasks);
+                        mTaskAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -121,7 +120,7 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("userid", userId);
+                parameters.put("userid", LoginActivity.sUserId);
                 parameters.put("task", edtAdd.getText().toString());
                 return parameters;
             }
@@ -136,18 +135,18 @@ public class TaskActivity extends AppCompatActivity {
     @OnClick(R.id.txvActive)
     public void onClickAvtive(View view) {
 
-        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_ACTIVE, userId), new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_ACTIVE, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                list.clear();
+                mTaskList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
                         Task tasks = new Task();
                         tasks.setTask(obj.getString("task"));
                         tasks.setStatus(obj.getString("status"));
-                        list.add(tasks);
-                        adapter.notifyDataSetChanged();
+                        mTaskList.add(tasks);
+                        mTaskAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -175,18 +174,18 @@ public class TaskActivity extends AppCompatActivity {
     @OnClick(R.id.txvCompleted)
     public void onClickCompleted(View view) {
 
-        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_COMPLETED, userId), new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_COMPLETED, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                list.clear();
+                mTaskList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
                         Task tasks = new Task();
                         tasks.setTask(obj.getString("task"));
                         tasks.setStatus(obj.getString("status"));
-                        list.add(tasks);
-                        adapter.notifyDataSetChanged();
+                        mTaskList.add(tasks);
+                        mTaskAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -209,12 +208,12 @@ public class TaskActivity extends AppCompatActivity {
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
 
-        StringRequest request = new StringRequest(Request.Method.DELETE, String.format(Constant.URL_GET_AND_DELETE, userId), new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.DELETE, String.format(Constant.URL_GET_AND_DELETE, LoginActivity.sUserId), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equals("Deleted")) {
-                    list.clear();
-                    adapter.notifyDataSetChanged();
+                    mTaskList.clear();
+                    mTaskAdapter.notifyDataSetChanged();
                     loadTaskActivity();
                 }
             }

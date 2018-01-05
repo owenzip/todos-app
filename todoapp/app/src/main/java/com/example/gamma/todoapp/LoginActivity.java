@@ -34,8 +34,6 @@ import butterknife.OnClick;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class LoginActivity extends AppCompatActivity {
 
-    public static String userId;
-
     @BindView(R.id.btnLogin)
     TextView btnLogin;
     @BindView(R.id.btnRegister)
@@ -48,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtPassword;
     @BindView(R.id.layAnimLogin)
     ViewGroup layAnimLogin;
+
+    public static String sUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +89,10 @@ public class LoginActivity extends AppCompatActivity {
     public void getUserId() {
 
         String username = edtUsername.getText().toString();
-        String urlUserId = String.format(Constant.URL_GET_USERID, username);
-        StringRequest request = new StringRequest(Request.Method.GET, urlUserId, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, String.format(Constant.URL_GET_USERID, username), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                userId = response;
+                sUserId = response;
             }
         }, new Response.ErrorListener() {
             @Override

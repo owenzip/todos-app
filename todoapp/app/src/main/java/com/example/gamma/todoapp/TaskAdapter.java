@@ -36,28 +36,31 @@ import butterknife.BindView;
 /* Class using for Adapter of Testview Task */
 public class TaskAdapter extends BaseAdapter {
 
-    @BindView(R.id.edtTasks) EditText edtTask;
-    @BindView(R.id.txvStatus) TextView txvStatus;
-    @BindView(R.id.ckbStatus) CheckBox ckbStatus;
+    @BindView(R.id.edtTasks)
+    EditText edtTask;
+    @BindView(R.id.txvStatus)
+    TextView txvStatus;
+    @BindView(R.id.ckbStatus)
+    CheckBox ckbStatus;
 
-    private List<Task> dataList;
-    private LayoutInflater inflater;
-    private Activity activity;
-    private AppCompatActivity appCompatActivity;
+    private List<Task> mTaskList;
+    private LayoutInflater mInflater;
+    private Activity mActivity;
+    AppCompatActivity appCompatActivity;
 
     public TaskAdapter(Activity activity, List<Task> dataItem) {
-        this.activity = activity;
-        this.dataList = dataItem;
+        this.mActivity = activity;
+        this.mTaskList = dataItem;
     }
 
     @Override
     public int getCount() {
-        return dataList.size();
+        return mTaskList.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return dataList.get(location);
+        return mTaskList.get(location);
     }
 
     @Override
@@ -68,12 +71,12 @@ public class TaskAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Task task = dataList.get(position);
+        final Task task = mTaskList.get(position);
 
-        if (inflater == null)
-            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (mInflater == null)
+            mInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.task_layout, null);
+            convertView = mInflater.inflate(R.layout.item_task, null);
 
         edtTask.setLongClickable(true);
         edtTask.setText(task.getTask());

@@ -9,14 +9,15 @@ package com.example.gamma.todoapp;
 public class Constant {
 
     // API url
-    public static final String URL_GET_USERID = "http://192.168.1.207:8080/users?username=%1$s";
-    public static final String URL_LOGIN = "http://192.168.1.207:8080/oauth/token";
-    public static final String URL_REGISTER = "http://192.168.1.207:8080/users/register";
-    public static final String URL_GET_AND_DELETE = "http://192.168.1.207:8080/users/%1$s/tasks";
-    public static final String URL_GET_TASK_COMPLETED = "http://192.168.1.207:8080/users/%1$s/tasks/true";
-    public static final String URL_GET_TASK_ACTIVE = "http://192.168.1.207:8080/users/%1$s/tasks/false";
-    public static final String URL_ADD_TASK = "http://192.168.1.207:8080/tasks";
-    public static final String URL_UPDATE_TASK = "http://192.168.1.207:8080/tasks/%1$s";
+    public static final String URL_SERVER = "http://192.168.1.207:8080";
+    public static final String URL_GET_USERID = URL_SERVER + "/users?username=%1$s";
+    public static final String URL_LOGIN = URL_SERVER + "/oauth/token";
+    public static final String URL_REGISTER = URL_SERVER + "/users/register";
+    public static final String URL_GET_AND_DELETE = URL_SERVER + "/users/%1$s/tasks";
+    public static final String URL_GET_TASK_COMPLETED = URL_SERVER + "/users/%1$s/tasks/true";
+    public static final String URL_GET_TASK_ACTIVE = URL_SERVER + "/users/%1$s/tasks/false";
+    public static final String URL_ADD_TASK = URL_SERVER + "/tasks";
+    public static final String URL_UPDATE_TASK = URL_SERVER + "/tasks/%1$s";
 
     // Constant Auth
     public static final String BASIC_AUTH_USERNAME = "clientid";
