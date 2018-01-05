@@ -42,29 +42,16 @@ public class TaskActivity extends AppCompatActivity {
     List<Task> mTaskList = new ArrayList<Task>();
     TaskAdapter mTaskAdapter = new TaskAdapter(this, mTaskList);
 
-    @BindView(R.id.edtAdd)
-    EditText edtAdd;
-    @BindView(R.id.txvCompleted)
-    TextView txvCompleted;
-    @BindView(R.id.txvAll)
-    TextView txvAll;
-    @BindView(R.id.txvActive)
-    TextView txvActive;
-    @BindView(R.id.txvClear)
-    TextView txvClear;
-    @BindView(R.id.txvNotificationTask)
-    TextView txvNofiticationTask;
-    @BindView(R.id.btnMenu)
-    Button btnMenu;
-    @BindView(R.id.lsvTasks)
-    ListView listView;
+    @BindView(R.id.edtAdd) EditText mEdtAdd;
+    @BindView(R.id.txvNotificationTask) TextView mTxvNofiticationTask;
+    @BindView(R.id.lsvTasks) ListView mLsvTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
-        listView.setAdapter(mTaskAdapter);
+        mLsvTask.setAdapter(mTaskAdapter);
         loadTaskActivity();
     }
 
@@ -91,10 +78,9 @@ public class TaskActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
+                mTxvNofiticationTask.setText(getString(R.string.error_system) + error);
             }
         }) {
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
@@ -109,19 +95,19 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
                 loadTaskActivity();
-                edtAdd.setText("");
+                mEdtAdd.setText("");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
+                mTxvNofiticationTask.setText(getString(R.string.error_system) + error);
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("userid", LoginActivity.sUserId);
-                parameters.put("task", edtAdd.getText().toString());
+                parameters.put("task", mEdtAdd.getText().toString());
                 return parameters;
             }
             @Override
@@ -134,7 +120,6 @@ public class TaskActivity extends AppCompatActivity {
 
     @OnClick(R.id.txvActive)
     public void onClickAvtive(View view) {
-
         JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_ACTIVE, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -155,7 +140,7 @@ public class TaskActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
+                mTxvNofiticationTask.setText(getString(R.string.error_system) + error);
             }
         }) {
             @Override
@@ -173,7 +158,6 @@ public class TaskActivity extends AppCompatActivity {
 
     @OnClick(R.id.txvCompleted)
     public void onClickCompleted(View view) {
-
         JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_COMPLETED, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -194,7 +178,7 @@ public class TaskActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
+                mTxvNofiticationTask.setText(R.string.error_system + error.toString());
             }
         }) {
             @Override
@@ -207,7 +191,6 @@ public class TaskActivity extends AppCompatActivity {
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
-
         StringRequest request = new StringRequest(Request.Method.DELETE, String.format(Constant.URL_GET_AND_DELETE, LoginActivity.sUserId), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -220,10 +203,9 @@ public class TaskActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
+                mTxvNofiticationTask.setText(getString(R.string.error_system) + error);
             }
         }) {
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);

@@ -33,22 +33,13 @@ import butterknife.OnClick;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.edtRegisterUsername)
-    EditText edtRegisterUsername;
-    @BindView(R.id.edtRegisterPassword)
-    EditText edtRegisterPassword;
-    @BindView(R.id.edtRegisterConfirmPassword)
-    EditText edtRegisterConfirmPassword;
-    @BindView(R.id.edtFirstname)
-    EditText edtFirstname;
-    @BindView(R.id.edtLastname)
-    EditText edtLastname;
-    @BindView(R.id.btnAccept)
-    TextView btnAccept;
-    @BindView(R.id.txvNotificationRegister)
-    TextView txvNofiticationRegister;
-    @BindView(R.id.layAnimRegister)
-    ViewGroup layAnimRegister;
+    @BindView(R.id.edtRegisterUsername) EditText mEdtRegisterUsername;
+    @BindView(R.id.edtRegisterPassword) EditText mEdtRegisterPassword;
+    @BindView(R.id.edtRegisterConfirmPassword) EditText mEdtRegisterConfirmPassword;
+    @BindView(R.id.edtFirstname) EditText mEdtFirstname;
+    @BindView(R.id.edtLastname) EditText mEdtLastname;
+    @BindView(R.id.txvNotificationRegister) TextView mTxvNofiticationRegister;
+    @BindView(R.id.layAnimRegister) ViewGroup mLayAnimRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,40 +50,34 @@ public class RegisterActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnAccept)
     public void onClickBtnAccept(View view) {
-
         //Check Edittext
-        if (edtRegisterUsername.length() < 3) {
-            txvNofiticationRegister.setText(R.string.user_notstrong);
-            txvNofiticationRegister.setTextColor(getResources().getColor(R.color.colorEdtText));
+        if (mEdtRegisterUsername.length() < 3) {
+            mTxvNofiticationRegister.setText(R.string.user_notstrong);
             animTextNofi();
-        } else if (edtRegisterPassword.length() < 5) {
-            txvNofiticationRegister.setText(R.string.pass_notstrong);
+        } else if (mEdtRegisterUsername.length() < 5) {
+            mTxvNofiticationRegister.setText(R.string.pass_notstrong);
             animTextNofi();
-        } else if (edtFirstname.length() < 2 || edtLastname.length() < 2) {
-            txvNofiticationRegister.setText(R.string.firstlast_required);
+        } else if (mEdtFirstname.length() < 2 || mEdtLastname.length() < 2) {
+            mTxvNofiticationRegister.setText(R.string.firstlast_required);
             animTextNofi();
         }
         //Check Register
         else {
-            if (edtRegisterPassword.getText().toString().equals(edtRegisterConfirmPassword.getText().toString())) {
+            if (mEdtRegisterPassword.getText().toString().equals(mEdtRegisterConfirmPassword.getText().toString())) {
                 checkRegister();
             } else {
-                txvNofiticationRegister.setText(R.string.pass_notmatch);
+                mTxvNofiticationRegister.setText(R.string.pass_notmatch);
                 animTextNofi();
             }
         }
     }
-
     //Animation nofitication Text
     public void animTextNofi() {
-        boolean visible = false;
-        TransitionManager.beginDelayedTransition(layAnimRegister);
-        txvNofiticationRegister.setVisibility(View.VISIBLE);
+        TransitionManager.beginDelayedTransition(mLayAnimRegister);
+        mTxvNofiticationRegister.setVisibility(View.VISIBLE);
     }
-
     //Check Register
     public void checkRegister() {
-
         StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_REGISTER, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -100,14 +85,14 @@ public class RegisterActivity extends AppCompatActivity {
                 if (s.equals("Successful")) {
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 } else {
-                    txvNofiticationRegister.setText(R.string.error_connection);
+                    mTxvNofiticationRegister.setText(R.string.error_connection);
                     animTextNofi();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvNofiticationRegister.setText(R.string.error_system + error.toString());
+                mTxvNofiticationRegister.setText(getString(R.string.error_system) + error);
                 animTextNofi();
             }
         }) {
@@ -115,10 +100,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("username", edtRegisterUsername.getText().toString());
-                parameters.put("password", edtRegisterPassword.getText().toString());
-                parameters.put("firstname", edtFirstname.getText().toString());
-                parameters.put("lastname", edtLastname.getText().toString());
+                parameters.put("username", mEdtRegisterUsername.getText().toString());
+                parameters.put("password", mEdtRegisterPassword.getText().toString());
+                parameters.put("firstname", mEdtFirstname.getText().toString());
+                parameters.put("lastname", mEdtLastname.getText().toString());
                 return parameters;
             }
         };

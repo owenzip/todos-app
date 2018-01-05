@@ -34,24 +34,15 @@ import butterknife.OnClick;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.btnLogin)
-    TextView btnLogin;
-    @BindView(R.id.btnRegister)
-    TextView btnRegister;
-    @BindView(R.id.txvAnim)
-    TextView txvAnimNofi;
-    @BindView(R.id.edtUsername)
-    EditText edtUsername;
-    @BindView(R.id.edtPassword)
-    EditText edtPassword;
-    @BindView(R.id.layAnimLogin)
-    ViewGroup layAnimLogin;
+    @BindView(R.id.txvAnim) TextView mTxvAnimNofi;
+    @BindView(R.id.edtUsername) EditText mEdtUsername;
+    @BindView(R.id.edtPassword) EditText mEdtPassword;
+    @BindView(R.id.layAnimLogin) ViewGroup mLayAnimLogin;
 
     public static String sUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -65,30 +56,25 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnLogin)
     public void onClickBtnLogin(View view) {
-
-        if (edtUsername.length() <= 3) {
-            txvAnimNofi.setText(R.string.user_required);
+        if (mEdtUsername.length() <= 3) {
+            mTxvAnimNofi.setText(R.string.user_required);
             animTextNofi();
-        } else if (edtPassword.length() <= 3) {
-            txvAnimNofi.setText(R.string.pass_required);
+        } else if (mEdtPassword.length() <= 3) {
+            mTxvAnimNofi.setText(R.string.pass_required);
             animTextNofi();
         } else {
             getUserId();
             checkLogin();
         }
     }
-
     //Animation nofitication Text
     public void animTextNofi() {
-        boolean visible = false;
-        TransitionManager.beginDelayedTransition(layAnimLogin);
-        txvAnimNofi.setVisibility(View.VISIBLE);
+        TransitionManager.beginDelayedTransition(mLayAnimLogin);
+        mTxvAnimNofi.setVisibility(View.VISIBLE);
     }
-
     //Get UserId by Username when User login successful
     public void getUserId() {
-
-        String username = edtUsername.getText().toString();
+        String username = mEdtUsername.getText().toString();
         StringRequest request = new StringRequest(Request.Method.GET, String.format(Constant.URL_GET_USERID, username), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -97,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvAnimNofi.setText(R.string.user_notfound);
+                mTxvAnimNofi.setText(R.string.user_notfound);
                 animTextNofi();
             }
         }) {
@@ -108,10 +94,8 @@ public class LoginActivity extends AppCompatActivity {
         };
         TaskController.getPermission().addToRequestQueue(request);
     }
-
     //Check Login by Username and Password
     public void checkLogin() {
-
         StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -120,15 +104,14 @@ public class LoginActivity extends AppCompatActivity {
                 if (s.equals("true")) {
                     startActivity(new Intent(LoginActivity.this, TaskActivity.class));
                 } else {
-                    txvAnimNofi.setText(R.string.error_connection);
+                    mTxvAnimNofi.setText(R.string.error_connection);
                     animTextNofi();
                 }
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
-                txvAnimNofi.setText(R.string.error_system + error.toString());
+                mTxvAnimNofi.setText(getString(R.string.error_system) + error);
                 animTextNofi();
             }
         }) {
@@ -136,11 +119,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("username", edtUsername.getText().toString());
-                parameters.put("password", edtPassword.getText().toString());
+                parameters.put("username", mEdtUsername.getText().toString());
+                parameters.put("password", mEdtPassword.getText().toString());
                 return parameters;
             }
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
