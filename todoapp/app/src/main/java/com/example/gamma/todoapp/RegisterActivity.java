@@ -16,39 +16,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /* Class using for User Register */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.edtRegisterUsername)
-    EditText edtRegisterUsername;
-    @BindView(R.id.edtRegisterPassword)
-    EditText edtRegisterPassword;
-    @BindView(R.id.edtRegisterConfirmPassword)
-    EditText edtRegisterConfirmPassword;
-    @BindView(R.id.edtFirstname)
-    EditText edtFirstname;
-    @BindView(R.id.edtLastname)
-    EditText edtLastname;
-    @BindView(R.id.btnAccept)
-    TextView btnAccept;
-    @BindView(R.id.txvNotificationRegister)
-    TextView txvNofiticationRegister;
-    @BindView(R.id.layAnimRegister)
-    ViewGroup layAnimRegister;
+    @BindView(R.id.edtRegisterUsername) EditText mEdtRegisterUsername;
+    @BindView(R.id.edtRegisterPassword) EditText mEdtRegisterPassword;
+    @BindView(R.id.edtRegisterConfirmPassword) EditText mEdtRegisterConfirmPassword;
+    @BindView(R.id.edtFirstname) EditText mEdtFirstname;
+    @BindView(R.id.edtLastname) EditText mEdtLastname;
+    @BindView(R.id.txvNotificationRegister) TextView mTxvNofiticationRegister;
+    @BindView(R.id.layAnimRegister) ViewGroup mLayAnimRegister;
+    private ApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,69 +45,56 @@ public class RegisterActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnAccept)
     public void onClickBtnAccept(View view) {
-
+        mApiService = ApiUtils.getApiInterface();
+        String username = mEdtRegisterUsername.getText().toString();
+        String password = mEdtRegisterPassword.getText().toString();
+        String firstname = mEdtFirstname.getText().toString();
+        String lastname = mEdtLastname.getText().toString();
         //Check Edittext
-        if (edtRegisterUsername.length() < 3) {
-            txvNofiticationRegister.setText(R.string.user_notstrong);
-            txvNofiticationRegister.setTextColor(getResources().getColor(R.color.colorEdtText));
+        if (mEdtRegisterUsername.length() < 3) {
+            mTxvNofiticationRegister.setText(R.string.notstrong_user);
             animTextNofi();
-        } else if (edtRegisterPassword.length() < 5) {
-            txvNofiticationRegister.setText(R.string.pass_notstrong);
+        } else if (mEdtRegisterPassword.length() < 5) {
+            mTxvNofiticationRegister.setText(R.string.notstrong_password);
             animTextNofi();
-        } else if (edtFirstname.length() < 2 || edtLastname.length() < 2) {
-            txvNofiticationRegister.setText(R.string.firstlast_required);
+        } else if (mEdtFirstname.length() < 2 || mEdtLastname.length() < 2) {
+            mTxvNofiticationRegister.setText(R.string.required_name);
             animTextNofi();
         }
         //Check Register
         else {
-            if (edtRegisterPassword.getText().toString().equals(edtRegisterConfirmPassword.getText().toString())) {
-                checkRegister();
+            if (mEdtRegisterPassword.getText().toString().equals(mEdtRegisterConfirmPassword.getText().toString())) {
+                register(username, password, firstname, lastname);
             } else {
-                txvNofiticationRegister.setText(R.string.pass_notmatch);
+                mTxvNofiticationRegister.setText(R.string.notmatch_password);
                 animTextNofi();
             }
         }
     }
-
     //Animation nofitication Text
     public void animTextNofi() {
-        boolean visible = false;
-        TransitionManager.beginDelayedTransition(layAnimRegister);
-        txvNofiticationRegister.setVisibility(View.VISIBLE);
+        TransitionManager.beginDelayedTransition(mLayAnimRegister);
+        mTxvNofiticationRegister.setVisibility(View.VISIBLE);
     }
+    // Register
+    public void register(String username, String password, String firstname, String lastname) {
+        mApiService.register(username, password, firstname, lastname).enqueue(new Callback<User>() {
 
-    //Check Register
-    public void checkRegister() {
-
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_REGISTER, new Response.Listener<String>() {
             @Override
-            public void onResponse(String s) {
-                //If response return = true else Register successful
-                if (s.equals("Successful")) {
-                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                } else {
-                    txvNofiticationRegister.setText(R.string.error_connection);
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.toString() == "Successful") {
+                    mTxvNofiticationRegister.setTextColor(getResources().getColor(R.color.colorAccept));
+                    mTxvNofiticationRegister.setText(R.string.success_register);
                     animTextNofi();
+                } else {
+                    mTxvNofiticationRegister.setText(R.string.error_register);
                 }
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                txvNofiticationRegister.setText(R.string.error_system + error.toString());
-                animTextNofi();
+            public void onFailure(Call<User> call, Throwable t) {
+                t.printStackTrace();
             }
-        }) {
-            //Get Username, Password, Firstname, Lastname from Register
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("username", edtRegisterUsername.getText().toString());
-                parameters.put("password", edtRegisterPassword.getText().toString());
-                parameters.put("firstname", edtFirstname.getText().toString());
-                parameters.put("lastname", edtLastname.getText().toString());
-                return parameters;
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(request);
+        });
     }
 }

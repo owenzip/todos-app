@@ -1,13 +1,16 @@
 <resources>
+    <!--Nofitication-->
     <string name="app_name">Todo App</string>
-    <string name="user_required">Username is required</string>
-    <string name="user_notfound">Username is not found</string>
-    <string name="user_notstrong">Username must be greater than 3</string>
-    <string name="pass_required">Password is required</string>
-    <string name="pass_notstrong">Password is not strong enough</string>
-    <string name="pass_notmatch">Password do not match</string>
-    <string name="firstlast_required">Firstname or Lastname is required</string>
-    <string name="login_faled">Login faled , please try again</string>
-    <string name="error_connection">Some error occurred , check your network connection</string>
-    <string name="error_system">Some error occurred </string>
+    <string name="required_user">Username is required</string>
+    <string name="notfound_user">Username is not found</string>
+    <string name="notstrong_user">Username must be greater than 3</string>
+    <string name="required_password">Password is required</string>
+    <string name="notstrong_password">Password is not strong enough</string>
+    <string name="notmatch_password">Password do not match</string>
+    <string name="required_name">Firstname or Lastname is required</string>
+    <!--Error-->
+    <string name="error_login">Login faled , please try again</string>
+    <string name="error_register">Register failed , please try again</string>
+    <!--Success-->
+    <string name="success_register">Register successful</string>
 </resources>

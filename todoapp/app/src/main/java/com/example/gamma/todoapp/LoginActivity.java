@@ -16,42 +16,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /* Class using for CheckLogin */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.btnLogin)
-    TextView btnLogin;
-    @BindView(R.id.btnRegister)
-    TextView btnRegister;
-    @BindView(R.id.txvAnim)
-    TextView txvAnimNofi;
-    @BindView(R.id.edtUsername)
-    EditText edtUsername;
-    @BindView(R.id.edtPassword)
-    EditText edtPassword;
-    @BindView(R.id.layAnimLogin)
-    ViewGroup layAnimLogin;
-
+    @BindView(R.id.txvAnim) TextView mTxvNofiticationLogin;
+    @BindView(R.id.edtUsername) EditText mEdtUsername;
+    @BindView(R.id.edtPassword) EditText mEdtPassword;
+    @BindView(R.id.layAnimLogin) ViewGroup mLayAnimLogin;
+    private ApiService mApiService;
     public static String sUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -65,87 +49,46 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnLogin)
     public void onClickBtnLogin(View view) {
-
-        if (edtUsername.length() <= 3) {
-            txvAnimNofi.setText(R.string.user_required);
+        mApiService = ApiUtils.getApiInterface();
+        String username = mEdtUsername.getText().toString();
+        String password = mEdtPassword.getText().toString();
+        if (mEdtUsername.length() <= 3) {
+            mTxvNofiticationLogin.setText(R.string.required_user);
             animTextNofi();
-        } else if (edtPassword.length() <= 3) {
-            txvAnimNofi.setText(R.string.pass_required);
+        } else if (mEdtPassword.length() <= 3) {
+            mTxvNofiticationLogin.setText(R.string.required_password);
             animTextNofi();
         } else {
-            getUserId();
-            checkLogin();
+            login(username,password,Constant.GRANT_TYPE);
         }
     }
 
     //Animation nofitication Text
     public void animTextNofi() {
-        boolean visible = false;
-        TransitionManager.beginDelayedTransition(layAnimLogin);
-        txvAnimNofi.setVisibility(View.VISIBLE);
+        TransitionManager.beginDelayedTransition(mLayAnimLogin);
+        mTxvNofiticationLogin.setVisibility(View.VISIBLE);
     }
 
-    //Get UserId by Username when User login successful
-    public void getUserId() {
+    // Check login
+    public void login(String username, String password, String grantType){
 
-        String username = edtUsername.getText().toString();
-        StringRequest request = new StringRequest(Request.Method.GET, String.format(Constant.URL_GET_USERID, username), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                sUserId = response;
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                txvAnimNofi.setText(R.string.user_notfound);
-                animTextNofi();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(request);
-    }
+        mApiService.login(username, password, grantType).enqueue(new Callback<User>() {
 
-    //Check Login by Username and Password
-    public void checkLogin() {
-
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_LOGIN, new Response.Listener<String>() {
             @Override
-            public void onResponse(String s) {
-
-                //If response Json return = true => Login successful
-                if (s.equals("true")) {
-                    startActivity(new Intent(LoginActivity.this, TaskActivity.class));
-                } else {
-                    txvAnimNofi.setText(R.string.error_connection);
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.code()==200) {
+                    mTxvNofiticationLogin.setTextColor(getResources().getColor(R.color.colorAccept));
+                    mTxvNofiticationLogin.setText(R.string.success_register);
                     animTextNofi();
+                } else {
+                    mTxvNofiticationLogin.setText(R.string.error_register);
                 }
             }
-        }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-                txvAnimNofi.setText(R.string.error_system + error.toString());
-                animTextNofi();
+            public void onFailure(Call<User> call, Throwable t) {
+                mTxvNofiticationLogin.setText(R.string.error_register);
             }
-        }) {
-            //Get Username and Password from Edittext
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("username", edtUsername.getText().toString());
-                parameters.put("password", edtPassword.getText().toString());
-                return parameters;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(request);
+        });
     }
 }

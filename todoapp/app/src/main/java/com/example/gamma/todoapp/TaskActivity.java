@@ -23,13 +23,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
+//
+//import com.android.volley.AuthFailureError;
+//import com.android.volley.Request;
+//import com.android.volley.Response;
+//import com.android.volley.VolleyError;
+//import com.android.volley.toolbox.JsonArrayRequest;
+//import com.android.volley.toolbox.StringRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,170 +65,166 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
         listView.setAdapter(mTaskAdapter);
-        loadTaskActivity();
+//        loadTaskActivity();
     }
 
-    public void loadTaskActivity() {
-        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET, String.format(Constant.URL_GET_AND_DELETE, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                mTaskList.clear();
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject obj = response.getJSONObject(i);
-                        Task tasks = new Task();
-                        tasks.setTask(obj.getString("task"));
-                        tasks.setStatus(obj.getString("status"));
-                        tasks.setTaskId(obj.getString("taskId"));
-                        mTaskList.add(tasks);
-                        mTaskAdapter.notifyDataSetChanged();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
-            }
-        }) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(jsonreq);
-    }
+//    public void loadTaskActivity() {
+//        JsonArrayRequest jsonreq = new JsonArrayRequest(Request.Method.GET, String.format(Constant.URL_GET_AND_DELETE, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                mTaskList.clear();
+//                for (int i = 0; i < response.length(); i++) {
+//                    try {
+//                        JSONObject obj = response.getJSONObject(i);
+//                        Task tasks = new Task();
+//                        tasks.setTask(obj.getString("task"));
+//                        tasks.setStatus(obj.getString("status"));
+//                        tasks.setTaskId(obj.getString("taskId"));
+//                        mTaskList.add(tasks);
+//                        mTaskAdapter.notifyDataSetChanged();
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                txvNofiticationTask.setText(getString(R.string.error_system) + error);
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
+//            }
+//        };
+//        TaskController.getPermission().addToRequestQueue(jsonreq);
+//    }
 
     @OnClick(R.id.btnMenu)
     public void onClickAddTask(View view) {
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_ADD_TASK, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                loadTaskActivity();
-                edtAdd.setText("");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("userid", LoginActivity.sUserId);
-                parameters.put("task", edtAdd.getText().toString());
-                return parameters;
-            }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(request);
+//        StringRequest request = new StringRequest(Request.Method.POST, Constant.URL_ADD_TASK, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String s) {
+//                loadTaskActivity();
+//                edtAdd.setText("");
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                txvNofiticationTask.setText(getString(R.string.error_system) + error);
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> parameters = new HashMap<String, String>();
+//                parameters.put("userid", LoginActivity.sUserId);
+//                parameters.put("task", edtAdd.getText().toString());
+//                return parameters;
+//            }
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
+//            }
+//        };
+//        TaskController.getPermission().addToRequestQueue(request);
     }
 
     @OnClick(R.id.txvActive)
     public void onClickAvtive(View view) {
-
-        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_ACTIVE, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                mTaskList.clear();
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject obj = response.getJSONObject(i);
-                        Task tasks = new Task();
-                        tasks.setTask(obj.getString("task"));
-                        tasks.setStatus(obj.getString("status"));
-                        mTaskList.add(tasks);
-                        mTaskAdapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(jsonreq);
+//        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_ACTIVE, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                mTaskList.clear();
+//                for (int i = 0; i < response.length(); i++) {
+//                    try {
+//                        JSONObject obj = response.getJSONObject(i);
+//                        Task tasks = new Task();
+//                        tasks.setTask(obj.getString("task"));
+//                        tasks.setStatus(obj.getString("status"));
+//                        mTaskList.add(tasks);
+//                        mTaskAdapter.notifyDataSetChanged();
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                txvNofiticationTask.setText(getString(R.string.error_system) + error);
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
+//            }
+//        };
+//        TaskController.getPermission().addToRequestQueue(jsonreq);
     }
 
     @OnClick(R.id.txvAll)
     public void onClickAll(View view) {
-        loadTaskActivity();
+//        loadTaskActivity();
     }
 
     @OnClick(R.id.txvCompleted)
     public void onClickCompleted(View view) {
-
-        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_COMPLETED, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                mTaskList.clear();
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject obj = response.getJSONObject(i);
-                        Task tasks = new Task();
-                        tasks.setTask(obj.getString("task"));
-                        tasks.setStatus(obj.getString("status"));
-                        mTaskList.add(tasks);
-                        mTaskAdapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(jsonreq);
+//        JsonArrayRequest jsonreq = new JsonArrayRequest(String.format(Constant.URL_GET_TASK_COMPLETED, LoginActivity.sUserId), new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                mTaskList.clear();
+//                for (int i = 0; i < response.length(); i++) {
+//                    try {
+//                        JSONObject obj = response.getJSONObject(i);
+//                        Task tasks = new Task();
+//                        tasks.setTask(obj.getString("task"));
+//                        tasks.setStatus(obj.getString("status"));
+//                        mTaskList.add(tasks);
+//                        mTaskAdapter.notifyDataSetChanged();
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                txvNofiticationTask.setText(getString(R.string.error_system) + error);
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
+//            }
+//        };
+//        TaskController.getPermission().addToRequestQueue(jsonreq);
     }
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
-
-        StringRequest request = new StringRequest(Request.Method.DELETE, String.format(Constant.URL_GET_AND_DELETE, LoginActivity.sUserId), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response.equals("Deleted")) {
-                    mTaskList.clear();
-                    mTaskAdapter.notifyDataSetChanged();
-                    loadTaskActivity();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                txvNofiticationTask.setText(R.string.error_system + error.toString());
-            }
-        }) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
-            }
-        };
-        TaskController.getPermission().addToRequestQueue(request);
+//        StringRequest request = new StringRequest(Request.Method.DELETE, String.format(Constant.URL_GET_AND_DELETE, LoginActivity.sUserId), new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                if (response.equals("Deleted")) {
+//                    mTaskList.clear();
+//                    mTaskAdapter.notifyDataSetChanged();
+//                    loadTaskActivity();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                txvNofiticationTask.setText(getString(R.string.error_system) + error);
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                return Authentication.createBasicAuthHeader(Constant.BASIC_AUTH_USERNAME, Constant.BASIC_AUTH_PASSWORD);
+//            }
+//        };
+//        TaskController.getPermission().addToRequestQueue(request);
+//    }
     }
 }
