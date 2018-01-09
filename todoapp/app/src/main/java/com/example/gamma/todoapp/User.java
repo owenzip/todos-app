@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 /*Model User table*/
 public class User {
+
     @SerializedName("userId")
     @Expose
     private int userId;

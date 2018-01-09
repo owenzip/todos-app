@@ -76,19 +76,24 @@ public class RegisterActivity extends AppCompatActivity {
         mTxvNofiticationRegister.setVisibility(View.VISIBLE);
     }
     //Check register
-    public void checkRegister(String username, String password, String firstname, String lastname){
+        public void checkRegister(String username, String password, String firstname, String lastname){
         mApiservice.register(username, password, firstname, lastname).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.body().toString() == "Successful") {
+                if (response.isSuccessful()) {
                     mTxvNofiticationRegister.setTextColor(getResources().getColor(R.color.colorAccept));
-                    mTxvNofiticationRegister.setText(R.string.success_register);
+                    mTxvNofiticationRegister.setText(response.body().toString());
+                    animTextNofi();
+                } else {
+                    mTxvNofiticationRegister.setText(R.string.error_register);
+                    animTextNofi();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                    mTxvNofiticationRegister.setText(R.string.error_register);
+                mTxvNofiticationRegister.setText(R.string.error_register);
+                animTextNofi();
             }
         });
     }

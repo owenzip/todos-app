@@ -5,12 +5,16 @@
  */
 package com.example.gamma.todoapp;
 
+import android.text.TextUtils;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Credentials;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -19,7 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /*Class configure Retrofit*/
 public class RetrofitClient {
+
     private static Retrofit retrofit = null;
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     public static Retrofit getClient(String baseUrl) {
         if (retrofit == null) {

@@ -15,9 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /* Class using for CheckLogin */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -50,12 +56,16 @@ public class LoginActivity extends AppCompatActivity {
             mTxvAnimNofi.setText(R.string.pass_required);
             animTextNofi();
         } else {
-            // ckech login here (coming soon)...
+            // check login here (coming soon) ...
         }
     }
     //Animation nofitication Text
     public void animTextNofi() {
         TransitionManager.beginDelayedTransition(mLayAnimLogin);
         mTxvAnimNofi.setVisibility(View.VISIBLE);
+    }
+    //Check login
+    public void checkLogin() {
+        // Coming soon...
     }
 }
