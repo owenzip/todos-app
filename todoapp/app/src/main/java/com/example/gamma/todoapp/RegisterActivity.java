@@ -5,7 +5,6 @@
  */
 package com.example.gamma.todoapp;
 
-import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.edtLastname) EditText mEdtLastname;
     @BindView(R.id.txvNotificationRegister) TextView mTxvNofiticationRegister;
     @BindView(R.id.layAnimRegister) ViewGroup mLayAnimRegister;
-    private ApiService mApiService;
+    ApiService mApiservice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,31 +40,32 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
     }
-
+    //Event click Register
     @OnClick(R.id.btnAccept)
     public void onClickBtnAccept(View view) {
-        mApiService = ApiUtils.getApiInterface();
-        String username = mEdtRegisterUsername.getText().toString();
-        String password = mEdtRegisterPassword.getText().toString();
-        String firstname = mEdtFirstname.getText().toString();
-        String lastname = mEdtLastname.getText().toString();
         //Check Edittext
         if (mEdtRegisterUsername.length() < 3) {
-            mTxvNofiticationRegister.setText(R.string.notstrong_user);
+            mTxvNofiticationRegister.setText(R.string.user_notstrong);
             animTextNofi();
-        } else if (mEdtRegisterPassword.length() < 5) {
-            mTxvNofiticationRegister.setText(R.string.notstrong_password);
+        } else if (mEdtRegisterUsername.length() < 5) {
+            mTxvNofiticationRegister.setText(R.string.pass_notstrong);
             animTextNofi();
         } else if (mEdtFirstname.length() < 2 || mEdtLastname.length() < 2) {
-            mTxvNofiticationRegister.setText(R.string.required_name);
+            mTxvNofiticationRegister.setText(R.string.firstlast_required);
             animTextNofi();
         }
         //Check Register
         else {
             if (mEdtRegisterPassword.getText().toString().equals(mEdtRegisterConfirmPassword.getText().toString())) {
-                register(username, password, firstname, lastname);
+                String username = mEdtRegisterUsername.getText().toString();
+                String password = mEdtRegisterPassword.getText().toString();
+                String firstname = mEdtFirstname.getText().toString();
+                String lastname = mEdtLastname.getText().toString();
+                mApiservice = ApiUtils.getApiInterface();
+
+                checkRegister(username, password, firstname, lastname);
             } else {
-                mTxvNofiticationRegister.setText(R.string.notmatch_password);
+                mTxvNofiticationRegister.setText(R.string.pass_notmatch);
                 animTextNofi();
             }
         }
@@ -76,24 +75,20 @@ public class RegisterActivity extends AppCompatActivity {
         TransitionManager.beginDelayedTransition(mLayAnimRegister);
         mTxvNofiticationRegister.setVisibility(View.VISIBLE);
     }
-    // Register
-    public void register(String username, String password, String firstname, String lastname) {
-        mApiService.register(username, password, firstname, lastname).enqueue(new Callback<User>() {
-
+    //Check register
+    public void checkRegister(String username, String password, String firstname, String lastname){
+        mApiservice.register(username, password, firstname, lastname).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.toString() == "Successful") {
+                if (response.body().toString() == "Successful") {
                     mTxvNofiticationRegister.setTextColor(getResources().getColor(R.color.colorAccept));
                     mTxvNofiticationRegister.setText(R.string.success_register);
-                    animTextNofi();
-                } else {
-                    mTxvNofiticationRegister.setText(R.string.error_register);
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                t.printStackTrace();
+                    mTxvNofiticationRegister.setText(R.string.error_register);
             }
         });
     }

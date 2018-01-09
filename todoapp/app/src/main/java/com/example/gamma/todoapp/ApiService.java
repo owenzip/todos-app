@@ -1,16 +1,16 @@
+/**
+ * ApiService.java
+ * Create by Nhut Nguyen
+ * Date 09/01/2018
+ */
 package com.example.gamma.todoapp;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
-/**
- * Created by gamma on 09/01/18.
- */
-
+/*Controller API*/
 public interface ApiService {
 
     @POST(Constant.URL_REGISTER)

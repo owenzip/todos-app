@@ -1,12 +1,14 @@
+/**
+ * User.java
+ * Create by Nhut Nguyen
+ * Date 09/01/2018
+ */
 package com.example.gamma.todoapp;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by gamma on 09/01/18.
- */
-
+/*Model User table*/
 public class User {
     @SerializedName("userId")
     @Expose
@@ -29,7 +31,6 @@ public class User {
     private String lastname;
 
     public User(String username, String password, String firstname, String lastname) {
-        this.userId = userId;
         this.username = username;
         this.password = password;
         this.firstname = firstname;

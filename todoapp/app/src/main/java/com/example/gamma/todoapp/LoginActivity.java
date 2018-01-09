@@ -1,9 +1,8 @@
-/*
+/**
  * LoginActivity.java
  * Create by Nhut Nguyen
  * Date 29/11/2017
  */
-
 package com.example.gamma.todoapp;
 
 import android.content.Intent;
@@ -19,20 +18,15 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /* Class using for CheckLogin */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.txvAnim) TextView mTxvNofiticationLogin;
+    @BindView(R.id.txvAnim) TextView mTxvAnimNofi;
     @BindView(R.id.edtUsername) EditText mEdtUsername;
     @BindView(R.id.edtPassword) EditText mEdtPassword;
     @BindView(R.id.layAnimLogin) ViewGroup mLayAnimLogin;
-    private ApiService mApiService;
-    public static String sUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,49 +40,22 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
-
+    //Event click Login
     @OnClick(R.id.btnLogin)
     public void onClickBtnLogin(View view) {
-        mApiService = ApiUtils.getApiInterface();
-        String username = mEdtUsername.getText().toString();
-        String password = mEdtPassword.getText().toString();
         if (mEdtUsername.length() <= 3) {
-            mTxvNofiticationLogin.setText(R.string.required_user);
+            mTxvAnimNofi.setText(R.string.user_required);
             animTextNofi();
         } else if (mEdtPassword.length() <= 3) {
-            mTxvNofiticationLogin.setText(R.string.required_password);
+            mTxvAnimNofi.setText(R.string.pass_required);
             animTextNofi();
         } else {
-            login(username,password,Constant.GRANT_TYPE);
+            // ckech login here (coming soon)...
         }
     }
-
     //Animation nofitication Text
     public void animTextNofi() {
         TransitionManager.beginDelayedTransition(mLayAnimLogin);
-        mTxvNofiticationLogin.setVisibility(View.VISIBLE);
-    }
-
-    // Check login
-    public void login(String username, String password, String grantType){
-
-        mApiService.login(username, password, grantType).enqueue(new Callback<User>() {
-
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.code()==200) {
-                    mTxvNofiticationLogin.setTextColor(getResources().getColor(R.color.colorAccept));
-                    mTxvNofiticationLogin.setText(R.string.success_register);
-                    animTextNofi();
-                } else {
-                    mTxvNofiticationLogin.setText(R.string.error_register);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                mTxvNofiticationLogin.setText(R.string.error_register);
-            }
-        });
+        mTxvAnimNofi.setVisibility(View.VISIBLE);
     }
 }

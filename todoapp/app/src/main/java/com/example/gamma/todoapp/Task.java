@@ -6,7 +6,7 @@
 package com.example.gamma.todoapp;
 import com.google.gson.annotations.SerializedName;
 
-/* Model Task */
+/* Model Task table*/
 public class Task {
 
     @SerializedName("task")

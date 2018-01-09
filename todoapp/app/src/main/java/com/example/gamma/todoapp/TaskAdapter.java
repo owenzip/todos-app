@@ -11,25 +11,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-
-//import com.android.volley.AuthFailureError;
-//import com.android.volley.Request;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import butterknife.BindView;
 
@@ -43,7 +33,7 @@ public class TaskAdapter extends BaseAdapter {
     private List<Task> mTaskList;
     private LayoutInflater mInflater;
     private Activity mActivity;
-
+    AppCompatActivity appCompatActivity;
 
     public TaskAdapter(Activity activity, List<Task> dataItem) {
         this.mActivity = activity;
