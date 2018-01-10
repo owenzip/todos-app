@@ -8,56 +8,55 @@ package com.example.gamma.todoapp;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 /* Model Task table*/
 public class Task {
 
-    @SerializedName(Constant.TASK_TASK)
+    @SerializedName("taskId")
     @Expose
-    private String mTask;
+    private Integer taskId;
 
-    @SerializedName(Constant.TASK_STATUS)
+    @SerializedName("task")
     @Expose
-    private String mStatus;
+    private String task;
 
-    @SerializedName(Constant.TASK_ID)
+    @SerializedName("status")
     @Expose
-    private String mTaskId;
+    private String status;
 
-    @SerializedName(Constant.TASK_USERID)
+    @SerializedName("userId")
     @Expose
-    private String mUserId;
+    private Integer userId;
+
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
 
     public String getTask() {
-        return mTask;
+        return task;
     }
 
     public void setTask(String task) {
-        this.mTask = task;
+        this.task = task;
     }
 
     public String getStatus() {
-        return mStatus;
+        return status;
     }
 
     public void setStatus(String status) {
-        this.mStatus = status;
+        this.status = status;
     }
 
-    public String getTaskId() {
-        return mTaskId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setTaskId(String taskId) {
-        this.mTaskId = taskId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getUserId() {
-        return mUserId;
-    }
-
-    public void setUserId(String userId) {
-        this.mUserId = userId;
-    }
 }

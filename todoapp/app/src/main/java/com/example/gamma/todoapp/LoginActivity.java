@@ -81,16 +81,16 @@ public class LoginActivity extends AppCompatActivity {
         mTxvAnimNofi.setVisibility(View.VISIBLE);
     }
 
-    //Check login
+    //Check login and Get AccessToken
     public void checkLogin(final String username, String password, String grantType) {
         mApiService.login(RetrofitClient.getAuthBasic(), username, password, grantType).enqueue(new Callback<AccessToken>() {
-
             @Override
             public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
                 if (response.isSuccessful()) {
                     String username = mEdtUsername.getText().toString();
                     mAccessToken = response.body().getAccessToken();
                     getUserId(Constant.AUTH_VALUE + mAccessToken, username);
+
                 } else {
                     mTxvAnimNofi.setText(R.string.error_login);
                     animTextNofi();
@@ -104,12 +104,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Get UserId when user login success
     public void getUserId(String accessToken, String username) {
         Call<User> call = mApiService.getUserId(accessToken, username);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     mUserId = response.body().getmUserId();
                     Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
                     intent.putExtra(Constant.INTENT_TOKEN, mAccessToken);
@@ -117,13 +118,13 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else {
-                    Toast.makeText(LoginActivity.this,R.string.error_login,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.error_login, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this,"Error : " + t, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Error : " + t, Toast.LENGTH_SHORT).show();
             }
         });
     }

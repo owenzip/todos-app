@@ -55,6 +55,7 @@
             android:layout_height="match_parent"
             android:hint="Username"
             android:textSize="7pt"
+            android:text="admin"
             android:fontFamily="monospace"
             android:textColor="@color/colorText"
             android:backgroundTint="#169ccc"/>

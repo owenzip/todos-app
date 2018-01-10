@@ -13,4 +13,5 @@
     <string name="success_register">Register successful</string>
     <string name="error_login">Login failed , please try again</string>
     <string name="error_system">Some error occurred : </string>
+    <string name="delete_success">Deleted successful</string>
 </resources>

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,7 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.edtFirstname) EditText mEdtFirstname;
     @BindView(R.id.edtLastname) EditText mEdtLastname;
     @BindView(R.id.txvNotificationRegister) TextView mTxvNofiticationRegister;
-    @BindView(R.id.layAnimRegister) ViewGroup mLayAnimRegister;
+    @BindView(R.id.layAnimRegister)
+    ViewGroup mLayAnimRegister;
     ApiService mApiservice;
 
     @Override
@@ -79,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //Check register
-    public void checkRegister(String username, String password, String firstname, String lastname){
+    public void checkRegister(String username, String password, String firstname, String lastname) {
         mApiservice.register(username, password, firstname, lastname).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

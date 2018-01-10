@@ -8,7 +8,7 @@ package com.example.gamma.todoapp;
 /* Class constant variables in application */
 public class Constant {
     // API url
-    public static final String URL_SERVER = "http://192.168.1.209:8080";
+    public static final String URL_SERVER = "http://192.168.1.7:8080";
     public static final String URL_GET_USERID = URL_SERVER + "/users";
     public static final String URL_LOGIN = URL_SERVER + "/oauth/token";
     public static final String URL_REGISTER = URL_SERVER + "/users/register";
@@ -39,7 +39,7 @@ public class Constant {
     public static final String TASK_ID = "taskId";
     public static final String TASK_TASK = "task";
     public static final String TASK_STATUS = "status";
-    public static final String TASK_USERID = "userId";
+    public static final String TASK_USERID = "userid";
 
     // Another
     public static final String CHARSET_UTF8 = "UTF-8";

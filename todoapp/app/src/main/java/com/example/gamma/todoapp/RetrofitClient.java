@@ -31,7 +31,6 @@ public class RetrofitClient {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
             Gson gson = gsonBuilder.create();
-
             OkHttpClient.Builder client = new OkHttpClient.Builder();
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -50,7 +49,7 @@ public class RetrofitClient {
         return sRetrofit;
     }
 
-    /*Get Basic Auth in header request*/
+    /*Create Basic Auth with Base64*/
     public static String getAuthBasic() {
         byte[] data = new byte[0];
         try {

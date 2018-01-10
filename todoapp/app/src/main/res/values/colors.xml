@@ -6,4 +6,5 @@
     <color name="colorText">#465b65</color>
     <color name="colorNofiText">#d7473d</color>
     <color name="colorAccept">#169ccc</color>
+    <color name="colorLongClick">#b8c9d1</color>
 </resources>
