@@ -62,7 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String firstname = mEdtFirstname.getText().toString();
                 String lastname = mEdtLastname.getText().toString();
                 mApiservice = ApiUtils.getApiInterface();
-
                 checkRegister(username, password, firstname, lastname);
             } else {
                 mTxvNofiticationRegister.setText(R.string.pass_notmatch);

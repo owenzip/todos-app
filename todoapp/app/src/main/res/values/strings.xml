@@ -11,4 +11,5 @@
     <string name="error_connection">Some error occurred , check your network connection</string>
     <string name="error_register">Register failed , please try again</string>
     <string name="success_register">Register successful</string>
+    <string name="error_login">Login failed , please try again</string>
 </resources>
