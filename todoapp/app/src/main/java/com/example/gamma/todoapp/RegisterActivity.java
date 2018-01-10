@@ -40,9 +40,11 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
     }
+
     //Event click Register
     @OnClick(R.id.btnAccept)
     public void onClickBtnAccept(View view) {
+
         //Check Edittext
         if (mEdtRegisterUsername.length() < 3) {
             mTxvNofiticationRegister.setText(R.string.user_notstrong);
@@ -69,13 +71,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
+
     //Animation nofitication Text
     public void animTextNofi() {
         TransitionManager.beginDelayedTransition(mLayAnimRegister);
         mTxvNofiticationRegister.setVisibility(View.VISIBLE);
     }
+
     //Check register
-        public void checkRegister(String username, String password, String firstname, String lastname){
+    public void checkRegister(String username, String password, String firstname, String lastname){
         mApiservice.register(username, password, firstname, lastname).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

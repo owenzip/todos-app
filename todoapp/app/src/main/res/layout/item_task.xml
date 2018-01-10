@@ -17,7 +17,7 @@
                 android:textColor="#f0f0f0"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:id="@+id/txvStatus"
+                android:id="@+id/txvTaskId"
                 android:layout_width="0pt"
                 android:layout_height="0pt"
                 />

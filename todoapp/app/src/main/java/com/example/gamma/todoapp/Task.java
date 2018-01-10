@@ -4,29 +4,30 @@
  * Date 30/11/2017
  */
 package com.example.gamma.todoapp;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 /* Model Task table*/
 public class Task {
 
-    @SerializedName("task")
+    @SerializedName(Constant.TASK_TASK)
+    @Expose
     private String mTask;
 
-    @SerializedName("status")
+    @SerializedName(Constant.TASK_STATUS)
+    @Expose
     private String mStatus;
 
-    @SerializedName("taskId")
+    @SerializedName(Constant.TASK_ID)
+    @Expose
     private String mTaskId;
 
-    @SerializedName("userId")
+    @SerializedName(Constant.TASK_USERID)
+    @Expose
     private String mUserId;
-
-    public Task(String mTask, String mStatus, String mTaskId, String mUserId) {
-        this.mTask = mTask;
-        this.mStatus = mStatus;
-        this.mTaskId = mTaskId;
-        this.mUserId = mUserId;
-    }
 
     public String getTask() {
         return mTask;

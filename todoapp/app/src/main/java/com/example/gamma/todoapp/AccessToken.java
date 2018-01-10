@@ -1,13 +1,14 @@
+/**
+ * AccessToken.java
+ * Create by Nhut Nguyen
+ * Date 10/01/2018
+ */
 package com.example.gamma.todoapp;
-
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by gamma on 09/01/18.
- */
-
+/*  Class POJO request oauth/token */
 public class AccessToken {
 
     @SerializedName("access_token")
@@ -70,6 +71,4 @@ public class AccessToken {
     public void setJti(String jti) {
         this.jti = jti;
     }
-
-
 }

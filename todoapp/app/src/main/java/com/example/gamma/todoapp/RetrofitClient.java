@@ -5,16 +5,15 @@
  */
 package com.example.gamma.todoapp;
 
-import android.text.TextUtils;
+import android.util.Base64;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Credentials;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -24,11 +23,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /*Class configure Retrofit*/
 public class RetrofitClient {
 
-    private static Retrofit retrofit = null;
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    private static Retrofit sRetrofit = null;
 
+    /*Configure Retrofit and Okhttp*/
     public static Retrofit getClient(String baseUrl) {
-        if (retrofit == null) {
+        if (sRetrofit == null) {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
             Gson gson = gsonBuilder.create();
@@ -41,13 +40,24 @@ public class RetrofitClient {
             client.connectTimeout(30, TimeUnit.SECONDS);
             OkHttpClient okHttpClient = client.build();
 
-            retrofit = new Retrofit.Builder()
+            sRetrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .baseUrl(baseUrl)
                     .client(okHttpClient)
                     .build();
         }
-        return retrofit;
+        return sRetrofit;
+    }
+
+    /*Get Basic Auth in header request*/
+    public static String getAuthBasic() {
+        byte[] data = new byte[0];
+        try {
+            data = (Constant.BASIC_USERNAME + ":" + Constant.BASIC_PASSWORD).getBytes(Constant.CHARSET_UTF8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Constant.BASIC_VALUE + Base64.encodeToString(data, Base64.NO_WRAP);
     }
 }

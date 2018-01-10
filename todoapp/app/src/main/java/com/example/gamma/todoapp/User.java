@@ -11,70 +11,72 @@ import com.google.gson.annotations.SerializedName;
 /*Model User table*/
 public class User {
 
-    @SerializedName("userId")
+    @SerializedName(Constant.USER_ID)
     @Expose
-    private int userId;
+    private int mUserId;
 
-    @SerializedName("username")
+    @SerializedName(Constant.USER_NAME)
     @Expose
-    private String username;
+    private String mUsername;
 
-    @SerializedName("password")
+    @SerializedName(Constant.USER_PASS)
     @Expose
-    private String password;
+    private String mPassword;
 
-    @SerializedName("firstname")
+    @SerializedName(Constant.USER_FIRSTNAME)
     @Expose
-    private String firstname;
+    private String mFirstname;
 
-    @SerializedName("lastname")
+    @SerializedName(Constant.USER_LASTNAME)
     @Expose
-    private String lastname;
+    private String mLastname;
 
-    public User(String username, String password, String firstname, String lastname) {
-        this.username = username;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public User(int mUserId, String mUsername, String mPassword, String mFirstname, String mLastname) {
+        this.mUserId = mUserId;
+        this.mUsername = mUsername;
+        this.mPassword = mPassword;
+        this.mFirstname = mFirstname;
+        this.mLastname = mLastname;
     }
 
-    public long getUserId() {
-        return userId;
+
+    public int getmUserId() {
+        return mUserId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setmUserId(int mUserId) {
+        this.mUserId = mUserId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getmUsername() {
+        return mUsername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setmUsername(String mUsername) {
+        this.mUsername = mUsername;
     }
 
-    public String getPassword() {
-        return password;
+    public String getmPassword() {
+        return mPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setmPassword(String mPassword) {
+        this.mPassword = mPassword;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getmFirstname() {
+        return mFirstname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setmFirstname(String mFirstname) {
+        this.mFirstname = mFirstname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getmLastname() {
+        return mLastname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setmLastname(String mLastname) {
+        this.mLastname = mLastname;
     }
 }

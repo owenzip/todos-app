@@ -5,18 +5,23 @@
  */
 package com.example.gamma.todoapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,13 +41,16 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.edtPassword) EditText mEdtPassword;
     @BindView(R.id.layAnimLogin) ViewGroup mLayAnimLogin;
     ApiService mApiService;
-    private static String mToken;
+    int mUserId;
+    String mAccessToken;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
     }
 
     @OnClick(R.id.btnRegister)
@@ -51,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Event click Login
     @OnClick(R.id.btnLogin)
     public void onClickBtnLogin(View view) {
         if (mEdtUsername.length() <= 3) {
@@ -63,10 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             String username = mEdtUsername.getText().toString();
             String password = mEdtPassword.getText().toString();
-             String grantType = "password";
-
             mApiService = ApiUtils.getApiInterface();
-            checkLogin(username,password,grantType);
+            checkLogin(username, password, Constant.GRANT_TYPE_VALUE);
         }
     }
 
@@ -77,62 +82,48 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //Check login
-    public void checkLogin(String username, String password, String grantType) {
-        mApiService.login(username, password, grantType).enqueue(new Callback<AccessToken>() {
+    public void checkLogin(final String username, String password, String grantType) {
+        mApiService.login(RetrofitClient.getAuthBasic(), username, password, grantType).enqueue(new Callback<AccessToken>() {
+
             @Override
             public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                if (response.isSuccessful()){
-                    Toast.makeText(LoginActivity.this,response.body().getAccessToken(),Toast.LENGTH_SHORT).show();
-                    mToken = response.body().getAccessToken();
+                if (response.isSuccessful()) {
+                    String username = mEdtUsername.getText().toString();
+                    mAccessToken = response.body().getAccessToken();
+                    getUserId(Constant.AUTH_VALUE + mAccessToken, username);
                 } else {
-                    Toast.makeText(LoginActivity.this,R.string.error_login,Toast.LENGTH_SHORT).show();
+                    mTxvAnimNofi.setText(R.string.error_login);
+                    animTextNofi();
                 }
             }
 
             @Override
             public void onFailure(Call<AccessToken> call, Throwable t) {
-                Toast.makeText(LoginActivity.this,"Error : "+t,Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.error_system) + t, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-//    public void checkUserLogin() {
-//
-//        String username = mEdtUsername.getText().toString();
-//        String password = mEdtPassword.getText().toString();
-//        String grantType = "password";
-//        mApiService = ApiUtils.getApiInterface();
-//
-//        CheckLogin checkLogin = new CheckLogin(username,password,grantType);
-//        mApiService.userLogin(checkLogin).enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(Call<User> call, Response<User> response) {
-//                Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<User> call, Throwable t) {
-//                Toast.makeText(LoginActivity.this,"Error : "+t,Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
-    public void getTestUserWithToken() {
-        Call<ResponseBody> call = mApiService.testGetUser(mToken);
-        call.enqueue(new Callback<ResponseBody>() {
+    public void getUserId(String accessToken, String username) {
+        Call<User> call = mApiService.getUserId(accessToken, username);
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(LoginActivity.this,response.body().toString(),Toast.LENGTH_SHORT).show();
-                    mToken = response.body().toString();
+                    mUserId = response.body().getmUserId();
+                    Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+                    intent.putExtra(Constant.INTENT_TOKEN, mAccessToken);
+                    intent.putExtra(Constant.INTENT_USERID, mUserId);
+                    startActivity(intent);
+
                 } else {
                     Toast.makeText(LoginActivity.this,R.string.error_login,Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(LoginActivity.this,"Error : "+t,Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,"Error : " + t, Toast.LENGTH_SHORT).show();
             }
         });
     }
