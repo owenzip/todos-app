@@ -5,32 +5,26 @@
  */
 package com.example.gamma.todoapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
-import android.util.Base64;
-import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.ref.WeakReference;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
+
 
 /* Class using for CheckLogin */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -42,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.layAnimLogin) ViewGroup mLayAnimLogin;
     ApiService mApiService;
     int mUserId;
-    String mAccessToken;
+    public static String mAccessToken;
 
 
     @Override
@@ -50,6 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        mApiService = ApiUtils.getApiInterface();
+
+        Intent intent = getIntent();
+        String usernameRegister = intent.getStringExtra(Constant.INTENT_USER_REGISTER);
+        String passwordRegister = intent.getStringExtra(Constant.INTENT_PASS_REGISTER);
+
+        mEdtUsername.setText(usernameRegister);
+        mEdtPassword.setText(passwordRegister);
 
     }
 
@@ -106,8 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Get UserId when user login success
     public void getUserId(String accessToken, String username) {
-        Call<User> call = mApiService.getUserId(accessToken, username);
-        call.enqueue(new Callback<User>() {
+        mApiService.getUserId(accessToken, username).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
@@ -116,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra(Constant.INTENT_TOKEN, mAccessToken);
                     intent.putExtra(Constant.INTENT_USERID, mUserId);
                     startActivity(intent);
-
                 } else {
                     Toast.makeText(LoginActivity.this, R.string.error_login, Toast.LENGTH_SHORT).show();
                 }

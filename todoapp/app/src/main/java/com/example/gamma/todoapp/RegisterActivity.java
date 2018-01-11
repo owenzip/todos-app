@@ -5,6 +5,7 @@
  */
 package com.example.gamma.todoapp;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -86,19 +87,18 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    mTxvNofiticationRegister.setTextColor(getResources().getColor(R.color.colorAccept));
-                    mTxvNofiticationRegister.setText(response.body().toString());
-                    animTextNofi();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.putExtra(Constant.INTENT_USER_REGISTER, mEdtRegisterUsername.getText().toString());
+                    intent.putExtra(Constant.INTENT_PASS_REGISTER, mEdtRegisterPassword.getText().toString());
+                    startActivity(intent);
                 } else {
                     mTxvNofiticationRegister.setText(R.string.error_register);
-                    animTextNofi();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                mTxvNofiticationRegister.setText(R.string.error_register);
-                animTextNofi();
+                mTxvNofiticationRegister.setText(getString(R.string.error_system) + t);
             }
         });
     }

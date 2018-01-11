@@ -2,46 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#dfdddd"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2.5pt"
+            android:background="#dfdddd" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="23pt"
+            android:background="#ffffff"
             android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="5pt"
+                android:layout_height="match_parent"
+                android:background="#dfdddd" />
+
             <TextView
-                android:layout_marginLeft="2pt"
-                android:textColor="#f0f0f0"
-                android:gravity="center"
-                android:layout_gravity="center"
                 android:id="@+id/txvTaskId"
-                android:layout_width="0pt"
-                android:layout_height="0pt"
-                />
+                android:layout_width="10pt"
+                android:layout_height="10pt" />
+
             <EditText
-                android:layout_marginLeft="10pt"
                 android:id="@+id/edtTasks"
-                android:layout_gravity="center"
                 android:layout_width="125pt"
-                android:textColor="#616e74"
                 android:layout_height="25pt"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10pt"
+                android:backgroundTint="#f0f0f0"
                 android:text="This is my new tasks"
-                android:backgroundTint="#f0f0f0" />
+                android:textColor="#616e74" />
 
             <CheckBox
-                android:layout_marginLeft="10pt"
                 android:id="@+id/ckbStatus"
-                android:backgroundTint="#616e74"
                 android:layout_width="20pt"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8pt"
+                android:backgroundTint="#616e74" />
+
+            <LinearLayout
+                android:layout_width="5pt"
+                android:layout_height="match_parent"
+                android:background="#dfdddd" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0.1pt"
-            android:background="#dbe0e2">
-        </LinearLayout>
+            android:layout_height="1pt"
+            android:background="#dfdddd"></LinearLayout>
     </LinearLayout>
 </LinearLayout>

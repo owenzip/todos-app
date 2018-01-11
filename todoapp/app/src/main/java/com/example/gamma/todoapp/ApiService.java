@@ -13,6 +13,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -53,4 +54,12 @@ public interface ApiService {
     @POST(Constant.URL_ADD_TASK)
     @FormUrlEncoded
     Call<Task> addTask(@Header(Constant.AUTH_KEY) String authToken, @Field(Constant.TASK_USERID) int userId, @Field(Constant.TASK_TASK) String task);
+
+    @PUT(Constant.URL_UPDATE_TASK)
+    @FormUrlEncoded
+    Call<ResponseBody> updateTask(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId,@Field(Constant.TASK_TASK) String task, @Field(Constant.TASK_STATUS) String status);
+
+    @PUT(Constant.URL_UPDATE_TASK)
+    @FormUrlEncoded
+    Call<ResponseBody> updateStatus(@Header(Constant.AUTH_KEY) String authToken, @Field(Constant.TASK_ID) String taskId, @Field(Constant.TASK_STATUS) String status);
 }

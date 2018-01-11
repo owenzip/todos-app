@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,10 @@ public class TaskActivity extends AppCompatActivity {
     @BindView(R.id.edtAdd) EditText mEdtAdd;
     @BindView(R.id.txvNotificationTask) TextView mTxvNofiticationTask;
     @BindView(R.id.lsvTasks) ListView mLsvTask;
+    @BindView(R.id.layTabClear) LinearLayout mLayTabClear;
+    @BindView(R.id.layTabAll) LinearLayout mLayTabAll;
+    @BindView(R.id.layTabActive) LinearLayout mLayTabActive;
+    @BindView(R.id.layTabCompleted) LinearLayout mLayTabCompleted;
 
     List<Task> mListTask = new ArrayList<Task>();
     TaskAdapter mTaskAdapter = new TaskAdapter(TaskActivity.this, mListTask);
@@ -90,11 +95,21 @@ public class TaskActivity extends AppCompatActivity {
 
     @OnClick(R.id.txvAll)
     public void onClickTxvAll(View view) {
+        mLayTabAll.setVisibility(View.VISIBLE);
+        mLayTabCompleted.setVisibility(View.GONE);
+        mLayTabActive.setVisibility(View.GONE);
+        mLayTabCompleted.setVisibility(View.GONE);
+
         getAllTask();
     }
 
     @OnClick(R.id.txvActive)
     public void onClickTxvActive(View view) {
+        mLayTabAll.setVisibility(View.GONE);
+        mLayTabClear.setVisibility(View.GONE);
+        mLayTabActive.setVisibility(View.VISIBLE);
+        mLayTabCompleted.setVisibility(View.GONE);
+
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
         mApiService.getTaskActive(Constant.AUTH_VALUE + mAccessToken, mUserId).enqueue(new Callback<ResponseBody>() {
@@ -126,6 +141,11 @@ public class TaskActivity extends AppCompatActivity {
 
     @OnClick(R.id.txvCompleted)
     public void onClickCompleted(View view) {
+        mLayTabCompleted.setVisibility(View.VISIBLE);
+        mLayTabAll.setVisibility(View.GONE);
+        mLayTabClear.setVisibility(View.GONE);
+        mLayTabActive.setVisibility(View.GONE);
+
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
         mApiService.getTaskCompleted(Constant.AUTH_VALUE + mAccessToken, mUserId).enqueue(new Callback<ResponseBody>() {
@@ -156,12 +176,17 @@ public class TaskActivity extends AppCompatActivity {
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
+        mLayTabClear.setVisibility(View.VISIBLE);
+        mLayTabAll.setVisibility(View.GONE);
+        mLayTabCompleted.setVisibility(View.GONE);
+        mLayTabActive.setVisibility(View.GONE);
+
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
         mApiService.deleteTaskCompleted(Constant.AUTH_VALUE + mAccessToken, mUserId).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(getApplicationContext(), getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.clear_success), Toast.LENGTH_SHORT).show();
             }
 
             @Override
