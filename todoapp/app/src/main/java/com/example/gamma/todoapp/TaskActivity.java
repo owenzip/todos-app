@@ -36,7 +36,6 @@ import retrofit2.Response;
 public class TaskActivity extends AppCompatActivity {
 
     @BindView(R.id.edtAdd) EditText mEdtAdd;
-    @BindView(R.id.txvNotificationTask) TextView mTxvNofiticationTask;
     @BindView(R.id.lsvTasks) ListView mLsvTask;
     @BindView(R.id.layTabClear) LinearLayout mLayTabClear;
     @BindView(R.id.layTabAll) LinearLayout mLayTabAll;
@@ -55,7 +54,7 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
         mLsvTask.setAdapter(mTaskAdapter);
-
+        // Get User Id & Access Token
         Intent intent = getIntent();
         mAccessToken = intent.getStringExtra(Constant.INTENT_TOKEN);
         mUserId = intent.getExtras().getInt(Constant.INTENT_USERID);
@@ -204,6 +203,7 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Task> call, Response<Task> response) {
                 getAllTask();
+                Toast.makeText(getApplicationContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
             }
 
             @Override

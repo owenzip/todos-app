@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:textSize="12pt"
             android:fontFamily="monospace"
-            android:textColor="@color/colorText"
-            android:text="Register," />
+            android:textColor="@color/colorTextStandard"
+            android:text="@string/register_logo" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,9 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="8pt"
-            android:textColor="#8e9fa7"
+            android:textColor="@color/colorTextHint"
             android:fontFamily="monospace"
-            android:text="Thank you for using" />
+            android:text="@string/register_title" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10pt"
@@ -39,63 +39,63 @@
         android:layout_height="25pt"
         android:layout_gravity="center">
         <EditText
-            android:textColorHint="#8e9fa7"
+            android:textColorHint="@color/colorTextHint"
             android:textSize="7pt"
             android:fontFamily="monospace"
             android:id="@+id/edtRegisterUsername"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Username"
-            android:textColor="@color/colorText"
-            android:backgroundTint="#169ccc"/>
+            android:hint="@string/hint_username"
+            android:textColor="@color/colorTextStandard"
+            android:backgroundTint="@color/colorAccept"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
         <EditText
-            android:textColorHint="#8e9fa7"
+            android:textColorHint="@color/colorTextHint"
             android:textSize="7pt"
             android:fontFamily="monospace"
             android:id="@+id/edtRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Password"
-            android:textColor="@color/colorText"
+            android:hint="@string/hint_password"
+            android:textColor="@color/colorTextStandard"
             android:inputType="textPassword"
-            android:backgroundTint="#169ccc"/>
+            android:backgroundTint="@color/colorAccept"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
         <EditText
-            android:textColorHint="#8e9fa7"
+            android:textColorHint="@color/colorTextHint"
             android:textSize="7pt"
             android:fontFamily="monospace"
             android:id="@+id/edtRegisterConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Confirm Password"
-            android:textColor="@color/colorText"
+            android:hint="@string/hint_confirm_password"
+            android:textColor="@color/colorTextStandard"
             android:inputType="textPassword"
-            android:backgroundTint="#169ccc"/>
+            android:backgroundTint="@color/colorAccept"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="130pt"
         android:layout_height="25pt"
         android:layout_gravity="center">
         <EditText
-            android:textColorHint="#8e9fa7"
+            android:textColorHint="@color/colorTextHint"
             android:textSize="7pt"
             android:fontFamily="monospace"
             android:id="@+id/edtFirstname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Firstname"
+            android:hint="@string/hint_firstname"
             android:inputType="text"
-            android:textColor="@color/colorText"
-            android:backgroundTint="#169ccc"/>
+            android:textColor="@color/colorTextStandard"
+            android:backgroundTint="@color/colorAccept"/>
     </LinearLayout>
     <LinearLayout
         android:fontFamily="monospace"
@@ -103,16 +103,16 @@
         android:layout_height="25pt"
         android:layout_gravity="center">
         <EditText
-            android:textColorHint="#8e9fa7"
+            android:textColorHint="@color/colorTextHint"
             android:textSize="7pt"
             android:fontFamily="monospace"
             android:id="@+id/edtLastname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Lastname"
+            android:hint="@string/hint_lastname"
             android:inputType="text"
-            android:textColor="@color/colorText"
-            android:backgroundTint="#169ccc"/>
+            android:textColor="@color/colorTextStandard"
+            android:backgroundTint="@color/colorAccept"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/layAnimRegister"
@@ -126,11 +126,11 @@
             android:layout_marginLeft="25pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#169ccc"
+            android:textColor="@color/colorAccept"
             android:textStyle="bold"
             android:textSize="10pt"
             android:fontFamily="monospace"
-            android:text="Accept" />
+            android:text="@string/register_accept" />
     <TextView
         android:id="@+id/txvNotificationRegister"
         android:layout_marginTop="3pt"

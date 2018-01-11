@@ -13,23 +13,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="2.5pt"
-            android:background="#dfdddd" />
+            android:background="@color/colorBackListView" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="23pt"
-            android:background="#ffffff"
+            android:background="@color/colorWhite"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="5pt"
                 android:layout_height="match_parent"
-                android:background="#dfdddd" />
+                android:background="@color/colorBackListView" />
 
             <TextView
                 android:id="@+id/txvTaskId"
-                android:layout_width="10pt"
-                android:layout_height="10pt" />
+                android:layout_width="0pt"
+                android:layout_height="0pt" />
 
             <EditText
                 android:id="@+id/edtTasks"
@@ -37,26 +37,26 @@
                 android:layout_height="25pt"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10pt"
-                android:backgroundTint="#f0f0f0"
+                android:backgroundTint="@color/colorBackTintEdtAddTask"
                 android:text="This is my new tasks"
-                android:textColor="#616e74" />
+                android:textColor="@color/colorTextStandard" />
 
             <CheckBox
                 android:id="@+id/ckbStatus"
                 android:layout_width="20pt"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8pt"
-                android:backgroundTint="#616e74" />
+                android:backgroundTint="@color/colorTextStandard" />
 
             <LinearLayout
                 android:layout_width="5pt"
                 android:layout_height="match_parent"
-                android:background="#dfdddd" />
+                android:background="@color/colorBackListView" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1pt"
-            android:background="#dfdddd"></LinearLayout>
+            android:background="@color/colorBackListView" />
     </LinearLayout>
 </LinearLayout>

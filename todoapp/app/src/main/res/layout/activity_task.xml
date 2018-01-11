@@ -10,19 +10,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="7pt"
-        android:background="@color/colorText" />
+        android:background="@color/colorTextStandard" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="22pt"
-        android:background="@color/colorText"
+        android:background="@color/colorTextStandard"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="20pt"
             android:layout_height="match_parent"
             android:layout_marginLeft="5pt"
-            android:background="#ffffff">
+            android:background="@color/colorWhite">
 
             <Button
                 android:layout_width="17pt"
@@ -35,26 +35,26 @@
         <LinearLayout
             android:layout_width="120pt"
             android:layout_height="match_parent"
-            android:background="#ffffff">
+            android:background="@color/colorWhite">
 
             <EditText
                 android:id="@+id/edtAdd"
                 android:layout_width="120pt"
                 android:layout_height="24pt"
                 android:layout_marginLeft="5pt"
-                android:background="@color/colorText"
-                android:backgroundTint="#ffffff"
+                android:background="@color/colorTextStandard"
+                android:backgroundTint="@color/colorWhite"
                 android:fontFamily="monospace"
                 android:hint=" Add items here"
-                android:textColor="#465b65"
-                android:textColorHint="#8e9fa7"
+                android:textColor="@color/colorTextStandard"
+                android:textColorHint="@color/colorTextHint"
                 android:textSize="7pt" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="22pt"
             android:layout_height="match_parent"
-            android:background="#ffffff">
+            android:background="@color/colorWhite">
 
             <Button
                 android:id="@+id/btnAdd"
@@ -62,21 +62,19 @@
                 android:layout_height="18pt"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_add"
-                android:gravity="center"
-                android:textColor="#8e9fa7"
-                android:textSize="15pt" />
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="5pt"
             android:layout_height="match_parent"
-            android:background="@color/colorText" />
+            android:background="@color/colorTextStandard" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20pt"
-        android:background="@color/colorText"
+        android:background="@color/colorTextStandard"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -96,7 +94,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="CLEAR"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorWhite"
                 android:textSize="6pt" />
 
             <LinearLayout
@@ -104,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5pt"
                 android:layout_marginTop="5.5pt"
-                android:background="#8e9fa7"
+                android:background="@color/colorTextHint"
                 android:orientation="horizontal"
                 android:visibility="gone" />
         </LinearLayout>
@@ -122,7 +120,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="COMPLETE"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorWhite"
                 android:textSize="6pt" />
 
             <LinearLayout
@@ -130,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5pt"
                 android:layout_marginTop="5.5pt"
-                android:background="#8e9fa7"
+                android:background="@color/colorTextHint"
                 android:orientation="horizontal"
                 android:visibility="gone" />
         </LinearLayout>
@@ -148,7 +146,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="ACTIVE"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorWhite"
                 android:textSize="6pt" />
 
             <LinearLayout
@@ -156,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5pt"
                 android:layout_marginTop="5.5pt"
-                android:background="#8e9fa7"
+                android:background="@color/colorTextHint"
                 android:orientation="horizontal"
                 android:visibility="gone" />
         </LinearLayout>
@@ -174,7 +172,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="TASKS"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorWhite"
                 android:textSize="6pt" />
 
             <LinearLayout
@@ -182,7 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5pt"
                 android:layout_marginTop="5.5pt"
-                android:background="#8e9fa7"
+                android:background="@color/colorTextHint"
                 android:orientation="horizontal" />
         </LinearLayout>
 
@@ -195,18 +193,7 @@
         android:id="@+id/lsvTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#dfdddd"
-        android:divider="#dfdddd" />
-
-    <TextView
-        android:id="@+id/txvNotificationTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="3pt"
-        android:fontFamily="monospace"
-        android:text=""
-        android:textColor="#fa4141"
-        android:textSize="6pt" />
+        android:background="@color/colorBackListView"
+        android:divider="@color/colorBackListView" />
 </LinearLayout>
 

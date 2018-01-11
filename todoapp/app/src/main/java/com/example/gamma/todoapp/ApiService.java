@@ -55,11 +55,12 @@ public interface ApiService {
     @FormUrlEncoded
     Call<Task> addTask(@Header(Constant.AUTH_KEY) String authToken, @Field(Constant.TASK_USERID) int userId, @Field(Constant.TASK_TASK) String task);
 
+    // Update Task
     @PUT(Constant.URL_UPDATE_TASK)
     @FormUrlEncoded
     Call<ResponseBody> updateTask(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId,@Field(Constant.TASK_TASK) String task, @Field(Constant.TASK_STATUS) String status);
 
+    // Update Status
     @PUT(Constant.URL_UPDATE_TASK)
-    @FormUrlEncoded
-    Call<ResponseBody> updateStatus(@Header(Constant.AUTH_KEY) String authToken, @Field(Constant.TASK_ID) String taskId, @Field(Constant.TASK_STATUS) String status);
+    Call<Task> updateStatus(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId, @Path(Constant.TASK_STATUS) String status);
 }

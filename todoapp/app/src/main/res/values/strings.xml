@@ -1,5 +1,23 @@
 <resources>
+
     <string name="app_name">Todo App</string>
+    <!--Resource string Register-->
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="hint_firstname">Firstname</string>
+    <string name="hint_lastname">Lastname</string>
+    <string name="register_logo">Register ,</string>
+    <string name="register_title">Thank you for using</string>
+    <string name="register_accept">Accept</string>
+    <!--Resource string Login-->
+    <string name="login_app_name">Todos</string>
+    <string name="login_logo">Welcome back ,</string>
+    <string name="login_title">Sign in to continue</string>
+    <string name="login_button_login">Login</string>
+    <string name="login_dont_have_accout">Do not have an account ?</string>
+    <string name="login_button_register">Register</string>
+    <!--Nofitication-->
     <string name="user_required">Username is required</string>
     <string name="user_notfound">Username is not found</string>
     <string name="user_notstrong">Username must be greater than 3</string>
@@ -8,10 +26,13 @@
     <string name="pass_notmatch">Password do not match</string>
     <string name="firstlast_required">Firstname or Lastname is required</string>
     <string name="login_faled">Login faled , please try again</string>
+    <string name="success_register">Register successful</string>
+    <string name="clear_success">Clear successful</string>
+    <string name="add_success">Add successful</string>
+    <!--Error-->
     <string name="error_connection">Some error occurred , check your network connection</string>
     <string name="error_register">Register failed , please try again</string>
-    <string name="success_register">Register successful</string>
     <string name="error_login">Login failed , please try again</string>
     <string name="error_system">Some error occurred : </string>
-    <string name="clear_success">Clear successful</string>
+
 </resources>

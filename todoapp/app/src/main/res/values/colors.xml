@@ -3,8 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorText">#465b65</color>
+    <color name="colorTextStandard">#465b65</color>
     <color name="colorNofiText">#d7473d</color>
     <color name="colorAccept">#169ccc</color>
-    <color name="colorLongClick">#b8c9d1</color>
+    <color name="colorTextLongClick">#b8c9d1</color>
+    <color name="colorTextHint">#8e9fa7</color>
+    <color name="colorRegister">#616e74</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBackListView">#dfdddd</color>
+    <color name="colorBackTintEdtAddTask">#f0f0f0</color>
+
 </resources>
