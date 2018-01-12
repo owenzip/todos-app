@@ -23,7 +23,7 @@ public interface ApiService {
     // User Register
     @POST(Constant.URL_REGISTER)
     @FormUrlEncoded
-    Call<User> register(@Field(Constant.USER_NAME) String username, @Field(Constant.USER_PASS) String password, @Field(Constant.USER_FIRSTNAME) String firstname, @Field(Constant.USER_LASTNAME) String lastname);
+    Call<Void> register(@Field(Constant.USER_NAME) String username, @Field(Constant.USER_PASS) String password, @Field(Constant.USER_FIRSTNAME) String firstname, @Field(Constant.USER_LASTNAME) String lastname);
 
     // User Login with Auth
     @POST(Constant.URL_LOGIN)
@@ -36,19 +36,19 @@ public interface ApiService {
 
     // Get all Task by UserId
     @GET(Constant.URL_GET_AND_DELETE)
-    Call<ResponseBody> getAllTask(@Header(Constant.AUTH_KEY) String authToken, @Path("userId") int userId);
+    Call<ResponseBody> getAllTask(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.USER_ID) int userId);
 
     // Get al Task active
     @GET(Constant.URL_GET_TASK_ACTIVE)
-    Call<ResponseBody> getTaskActive(@Header(Constant.AUTH_KEY) String authToken, @Path("userId") int userId);
+    Call<ResponseBody> getTaskActive(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.USER_ID) int userId);
 
     // Get all Task completed
     @GET(Constant.URL_GET_TASK_COMPLETED)
-    Call<ResponseBody> getTaskCompleted(@Header(Constant.AUTH_KEY) String authToken, @Path("userId") int userId);
+    Call<ResponseBody> getTaskCompleted(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.USER_ID) int userId);
 
     // Delete Tast completed
     @DELETE(Constant.URL_GET_AND_DELETE)
-    Call<ResponseBody> deleteTaskCompleted(@Header(Constant.AUTH_KEY) String authToken, @Path("userId") int userId);
+    Call<ResponseBody> deleteTaskCompleted(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.USER_ID) int userId);
 
     // Add new Task
     @POST(Constant.URL_ADD_TASK)
@@ -61,6 +61,6 @@ public interface ApiService {
     Call<ResponseBody> updateTask(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId,@Field(Constant.TASK_TASK) String task, @Field(Constant.TASK_STATUS) String status);
 
     // Update Status
-    @PUT(Constant.URL_UPDATE_TASK)
+    @PUT(Constant.URL_UPDATE_STATUS)
     Call<Task> updateStatus(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId, @Path(Constant.TASK_STATUS) String status);
 }

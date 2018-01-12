@@ -15,10 +15,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,12 +36,18 @@ import retrofit2.Response;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.edtRegisterUsername) EditText mEdtRegisterUsername;
-    @BindView(R.id.edtRegisterPassword) EditText mEdtRegisterPassword;
-    @BindView(R.id.edtRegisterConfirmPassword) EditText mEdtRegisterConfirmPassword;
-    @BindView(R.id.edtFirstname) EditText mEdtFirstname;
-    @BindView(R.id.edtLastname) EditText mEdtLastname;
-    @BindView(R.id.txvNotificationRegister) TextView mTxvNofiticationRegister;
+    @BindView(R.id.edtRegisterUsername)
+    EditText mEdtRegisterUsername;
+    @BindView(R.id.edtRegisterPassword)
+    EditText mEdtRegisterPassword;
+    @BindView(R.id.edtRegisterConfirmPassword)
+    EditText mEdtRegisterConfirmPassword;
+    @BindView(R.id.edtFirstname)
+    EditText mEdtFirstname;
+    @BindView(R.id.edtLastname)
+    EditText mEdtLastname;
+    @BindView(R.id.txvNotificationRegister)
+    TextView mTxvNofiticationRegister;
     @BindView(R.id.layAnimRegister)
     ViewGroup mLayAnimRegister;
     ApiService mApiservice;
@@ -52,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (mEdtRegisterUsername.length() < 3) {
             mTxvNofiticationRegister.setText(R.string.user_notstrong);
             animTextNofi();
-        } else if (mEdtRegisterUsername.length() < 5) {
+        } else if (mEdtRegisterPassword.length() < 5) {
             mTxvNofiticationRegister.setText(R.string.pass_notstrong);
             animTextNofi();
         } else if (mEdtFirstname.length() < 2 || mEdtLastname.length() < 2) {
@@ -83,21 +98,23 @@ public class RegisterActivity extends AppCompatActivity {
 
     //Check register
     public void checkRegister(String username, String password, String firstname, String lastname) {
-        mApiservice.register(username, password, firstname, lastname).enqueue(new Callback<User>() {
+        mApiservice = ApiUtils.getApiInterface();
+        mApiservice.register(username, password, firstname, lastname).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.putExtra(Constant.INTENT_USER_REGISTER, mEdtRegisterUsername.getText().toString());
                     intent.putExtra(Constant.INTENT_PASS_REGISTER, mEdtRegisterPassword.getText().toString());
                     startActivity(intent);
                 } else {
-                    mTxvNofiticationRegister.setText(R.string.error_register);
+                    mTxvNofiticationRegister.setText(getString(R.string.error_register));
                 }
+
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 mTxvNofiticationRegister.setText(getString(R.string.error_system) + t);
             }
         });
