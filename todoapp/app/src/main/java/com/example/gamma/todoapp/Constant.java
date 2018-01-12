@@ -17,7 +17,7 @@ public class Constant {
     public static final String URL_GET_TASK_COMPLETED = URL_SERVER + "/users/{userId}/tasks/true";
     public static final String URL_GET_TASK_ACTIVE = URL_SERVER + "/users/{userId}/tasks/false";
     public static final String URL_ADD_TASK = URL_SERVER + "/tasks";
-    public static final String URL_UPDATE_TASK = URL_SERVER + "/tasks/{taskid}";
+    public static final String URL_UPDATE_TASK = URL_SERVER + "/tasks/{taskId}";
     public static final String URL_UPDATE_STATUS = URL_SERVER + "/tasks/{taskId}/{status}";
     public static final String URL_GET_PROFILE_USER = URL_SERVER + "/users/{userId}/profile";
     public static final String URL_CHANGE_PASSWORD = URL_SERVER + "/users/{userId}";
