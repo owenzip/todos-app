@@ -15,19 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,20 +27,13 @@ import retrofit2.Response;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.edtRegisterUsername)
-    EditText mEdtRegisterUsername;
-    @BindView(R.id.edtRegisterPassword)
-    EditText mEdtRegisterPassword;
-    @BindView(R.id.edtRegisterConfirmPassword)
-    EditText mEdtRegisterConfirmPassword;
-    @BindView(R.id.edtFirstname)
-    EditText mEdtFirstname;
-    @BindView(R.id.edtLastname)
-    EditText mEdtLastname;
-    @BindView(R.id.txvNotificationRegister)
-    TextView mTxvNofiticationRegister;
-    @BindView(R.id.layAnimRegister)
-    ViewGroup mLayAnimRegister;
+    @BindView(R.id.edtRegisterUsername) EditText mEdtRegisterUsername;
+    @BindView(R.id.edtRegisterPassword) EditText mEdtRegisterPassword;
+    @BindView(R.id.edtRegisterConfirmPassword) EditText mEdtRegisterConfirmPassword;
+    @BindView(R.id.edtFirstname) EditText mEdtFirstname;
+    @BindView(R.id.edtLastname) EditText mEdtLastname;
+    @BindView(R.id.txvNotificationRegister) TextView mTxvNofiticationRegister;
+    @BindView(R.id.layAnimRegister) ViewGroup mLayAnimRegister;
     ApiService mApiservice;
 
     @Override
@@ -110,7 +94,6 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     mTxvNofiticationRegister.setText(getString(R.string.error_register));
                 }
-
             }
 
             @Override

@@ -29,7 +29,8 @@
             <TextView
                 android:id="@+id/txvTaskId"
                 android:layout_width="0pt"
-                android:layout_height="0pt" />
+                android:layout_height="0pt"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/edtTasks"
@@ -40,6 +41,12 @@
                 android:backgroundTint="@color/colorBackTintEdtAddTask"
                 android:text="This is my new tasks"
                 android:textColor="@color/colorTextStandard" />
+
+            <TextView
+                android:id="@+id/txvStatus"
+                android:layout_width="0pt"
+                android:layout_height="0pt"
+                android:visibility="gone"/>
 
             <CheckBox
                 android:id="@+id/ckbStatus"

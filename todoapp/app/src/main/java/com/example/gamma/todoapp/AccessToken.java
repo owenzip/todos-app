@@ -68,7 +68,5 @@ public class AccessToken {
         return jti;
     }
 
-    public void setJti(String jti) {
-        this.jti = jti;
-    }
+    public void setJti(String jti) { this.jti = jti; }
 }

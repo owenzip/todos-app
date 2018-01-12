@@ -39,7 +39,6 @@ public class User {
         this.mLastname = mLastname;
     }
 
-
     public int getmUserId() {
         return mUserId;
     }

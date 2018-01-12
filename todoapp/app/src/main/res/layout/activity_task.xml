@@ -25,6 +25,7 @@
             android:background="@color/colorWhite">
 
             <Button
+                android:id="@+id/btnMenu"
                 android:layout_width="17pt"
                 android:layout_height="17pt"
                 android:layout_gravity="center"

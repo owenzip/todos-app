@@ -13,10 +13,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 import android.view.View;
 
@@ -33,7 +36,7 @@ import retrofit2.Response;
 
 /* Class using for controller Task */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     @BindView(R.id.edtAdd) EditText mEdtAdd;
     @BindView(R.id.lsvTasks) ListView mLsvTask;
@@ -41,6 +44,8 @@ public class TaskActivity extends AppCompatActivity {
     @BindView(R.id.layTabAll) LinearLayout mLayTabAll;
     @BindView(R.id.layTabActive) LinearLayout mLayTabActive;
     @BindView(R.id.layTabCompleted) LinearLayout mLayTabCompleted;
+    @BindView(R.id.btnMenu)
+    Button mBtnMenu;
 
     List<Task> mListTask = new ArrayList<Task>();
     TaskAdapter mTaskAdapter = new TaskAdapter(TaskActivity.this, mListTask);
@@ -54,11 +59,11 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
         mLsvTask.setAdapter(mTaskAdapter);
+
         // Get User Id & Access Token
         Intent intent = getIntent();
         mAccessToken = intent.getStringExtra(Constant.INTENT_TOKEN);
         mUserId = intent.getExtras().getInt(Constant.INTENT_USERID);
-
         mApiService = ApiUtils.getApiInterface();
         getAllTask();
     }
@@ -97,8 +102,7 @@ public class TaskActivity extends AppCompatActivity {
         mLayTabAll.setVisibility(View.VISIBLE);
         mLayTabCompleted.setVisibility(View.GONE);
         mLayTabActive.setVisibility(View.GONE);
-        mLayTabCompleted.setVisibility(View.GONE);
-
+        mLayTabClear.setVisibility(View.GONE);
         getAllTask();
     }
 
@@ -199,11 +203,12 @@ public class TaskActivity extends AppCompatActivity {
     public void onClickAdd(View view) {
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
-        mApiService.addTask(Constant.AUTH_VALUE + mAccessToken, mUserId,mEdtAdd.getText().toString()).enqueue(new Callback<Task>() {
+        mApiService.addTask(Constant.AUTH_VALUE + mAccessToken, mUserId, mEdtAdd.getText().toString()).enqueue(new Callback<Task>() {
             @Override
             public void onResponse(Call<Task> call, Response<Task> response) {
                 getAllTask();
                 Toast.makeText(getApplicationContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
+                mEdtAdd.setText("");
             }
 
             @Override
@@ -211,6 +216,35 @@ public class TaskActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getString(R.string.error_system) + t, Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    @OnClick(R.id.btnMenu)
+    public void onClickMenu(View view) {
+        if (view == mBtnMenu) {
+            showMenu(view);
+        }
+    }
+
+    public void showMenu(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        popup.setOnMenuItemClickListener(this);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.task_menu, popup.getMenu());
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.password:
+                Intent intentUserInfor = new Intent(this, UserInfoActivity.class);
+                startActivity(intentUserInfor);
+                return true;
+            case R.id.logOut:
+                Intent intentLogin = new Intent(this, LoginActivity.class);
+                startActivity(intentLogin);
+                return true;
+        }
+        return false;
     }
 }

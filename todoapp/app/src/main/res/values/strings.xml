@@ -1,12 +1,13 @@
 <resources>
 
-    <string name="app_name">Todo App</string>
+    <string name="app_name">Todos</string>
     <!--Resource string Register-->
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_firstname">Firstname</string>
     <string name="hint_lastname">Lastname</string>
+    <string name="hint_newpassword">New Password</string>
     <string name="register_logo">Register ,</string>
     <string name="register_title">Thank you for using</string>
     <string name="register_accept">Accept</string>
@@ -17,6 +18,16 @@
     <string name="login_button_login">Login</string>
     <string name="login_dont_have_accout">Do not have an account ?</string>
     <string name="login_button_register">Register</string>
+    <!--Resource string User Information-->
+    <string name="info_logo">Profile ,</string>
+    <string name="info_title">Your account infomation</string>
+    <string name="info_userid">User ID</string>
+    <string name="info_change_password">Change password</string>
+    <!--Resource string Change Password-->
+    <string name="change_password_logo">Change password ,</string>
+    <string name="change_password_title">Input your new password</string>
+    <string name="change_password_change">Change</string>
+    <string name="change_password_old">Old Password</string>
     <!--Nofitication-->
     <string name="user_required">Username is required</string>
     <string name="user_notfound">Username is not found</string>
@@ -29,6 +40,8 @@
     <string name="success_register">Register successful</string>
     <string name="clear_success">Clear successful</string>
     <string name="add_success">Add successful</string>
+    <string name="old_pass_required">Old password is not strong</string>
+    <string name="old_pass_incorrected">Old password incorrected</string>
     <!--Error-->
     <string name="error_connection">Some error occurred , check your network connection</string>
     <string name="error_register">Register failed , please try again</string>

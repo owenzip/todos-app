@@ -114,12 +114,11 @@
             android:textColor="@color/colorTextStandard"
             android:backgroundTint="@color/colorAccept"/>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layAnimRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
             android:layout_marginTop="10pt"
             android:id="@+id/btnAccept"
@@ -131,6 +130,12 @@
             android:textSize="10pt"
             android:fontFamily="monospace"
             android:text="@string/register_accept" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layAnimRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/txvNotificationRegister"
         android:layout_marginTop="3pt"
@@ -140,7 +145,6 @@
         android:textSize="6pt"
         android:layout_marginLeft="25pt"
         android:fontFamily="monospace"
-        android:text=""
-        />
+        android:text="" />
     </LinearLayout>
 </LinearLayout>

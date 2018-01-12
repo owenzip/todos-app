@@ -58,9 +58,18 @@ public interface ApiService {
     // Update Task
     @PUT(Constant.URL_UPDATE_TASK)
     @FormUrlEncoded
-    Call<ResponseBody> updateTask(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId,@Field(Constant.TASK_TASK) String task, @Field(Constant.TASK_STATUS) String status);
+    Call<ResponseBody> updateTask(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId, @Field(Constant.TASK_TASK) String task, @Field(Constant.TASK_STATUS) String status);
 
     // Update Status
     @PUT(Constant.URL_UPDATE_STATUS)
     Call<Task> updateStatus(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.TASK_ID) String taskId, @Path(Constant.TASK_STATUS) String status);
+
+    // Get profile User
+    @GET(Constant.URL_GET_PROFILE_USER)
+    Call<User> getProfileUser(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.USER_ID) int userId);
+
+    // Change password
+    @PUT(Constant.URL_CHANGE_PASSWORD)
+    @FormUrlEncoded
+    Call<Void> changePassword(@Header(Constant.AUTH_KEY) String authToken, @Path(Constant.USER_ID) int userId, @Field(Constant.USER_PASS) String password);
 }

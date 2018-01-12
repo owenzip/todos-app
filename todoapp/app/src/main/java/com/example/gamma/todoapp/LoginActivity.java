@@ -34,10 +34,10 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.edtUsername) EditText mEdtUsername;
     @BindView(R.id.edtPassword) EditText mEdtPassword;
     @BindView(R.id.layAnimLogin) ViewGroup mLayAnimLogin;
-    ApiService mApiService;
-    int mUserId;
+    public static String mPasswordEcode;
     public static String mAccessToken;
-
+    public static int mUserId;
+    ApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String usernameRegister = intent.getStringExtra(Constant.INTENT_USER_REGISTER);
         String passwordRegister = intent.getStringExtra(Constant.INTENT_PASS_REGISTER);
-
         mEdtUsername.setText(usernameRegister);
         mEdtPassword.setText(passwordRegister);
-
     }
 
     @OnClick(R.id.btnRegister)
@@ -92,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     String username = mEdtUsername.getText().toString();
                     mAccessToken = response.body().getAccessToken();
                     getUserId(Constant.AUTH_VALUE + mAccessToken, username);
-
+                    mPasswordEcode = mEdtPassword.getText().toString();
                 } else {
                     mTxvAnimNofi.setText(R.string.error_login);
                     animTextNofi();
