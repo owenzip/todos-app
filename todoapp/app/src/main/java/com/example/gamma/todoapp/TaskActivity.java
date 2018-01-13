@@ -179,10 +179,10 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
-        mLayTabClear.setVisibility(View.VISIBLE);
-        mLayTabAll.setVisibility(View.GONE);
-        mLayTabCompleted.setVisibility(View.GONE);
-        mLayTabActive.setVisibility(View.GONE);
+//        mLayTabClear.setVisibility(View.VISIBLE);
+//        mLayTabAll.setVisibility(View.GONE);
+//        mLayTabCompleted.setVisibility(View.GONE);
+//        mLayTabActive.setVisibility(View.GONE);
 
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
@@ -190,6 +190,7 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Toast.makeText(getApplicationContext(), getString(R.string.clear_success), Toast.LENGTH_SHORT).show();
+                getAllTask();
             }
 
             @Override
