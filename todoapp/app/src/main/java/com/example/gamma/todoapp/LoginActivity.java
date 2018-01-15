@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickBtnRegister(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.btnLogin)
@@ -115,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra(Constant.INTENT_TOKEN, mAccessToken);
                     intent.putExtra(Constant.INTENT_USERID, mUserId);
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(LoginActivity.this, R.string.error_login, Toast.LENGTH_SHORT).show();
                 }

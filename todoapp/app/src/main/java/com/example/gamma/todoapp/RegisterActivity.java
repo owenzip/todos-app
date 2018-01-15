@@ -74,6 +74,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.btnRegisterBack)
+    public void onClickBackRegister (View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constant.INTENT_TOKEN, LoginActivity.mAccessToken);
+        intent.putExtra(Constant.INTENT_USERID, LoginActivity.mUserId);
+        startActivity(intent);
+        finish();
+    }
+
     //Animation nofitication Text
     public void animTextNofi() {
         TransitionManager.beginDelayedTransition(mLayAnimRegister);
@@ -91,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
                     intent.putExtra(Constant.INTENT_USER_REGISTER, mEdtRegisterUsername.getText().toString());
                     intent.putExtra(Constant.INTENT_PASS_REGISTER, mEdtRegisterPassword.getText().toString());
                     startActivity(intent);
+                    finish();
                 } else {
                     mTxvNofiticationRegister.setText(getString(R.string.error_register));
                 }

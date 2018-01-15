@@ -56,5 +56,15 @@ public class UserInfoActivity extends AppCompatActivity {
     public void onClickChangePassword(View view) {
         Intent intent = new Intent(this, ChangePasswordActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    @OnClick(R.id.btnProfileBack)
+    public void onClickProfileBack (View view) {
+        Intent intent = new Intent(this,TaskActivity.class);
+        intent.putExtra(Constant.INTENT_TOKEN, LoginActivity.mAccessToken);
+        intent.putExtra(Constant.INTENT_USERID, LoginActivity.mUserId);
+        startActivity(intent);
+        finish();
     }
 }

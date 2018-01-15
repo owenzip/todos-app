@@ -83,10 +83,11 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         tasks.setTask(jo.getString(Constant.TASK_TASK));
                         tasks.setStatus(jo.getString(Constant.TASK_STATUS));
                         mListTask.add(tasks);
-                        mTaskAdapter.notifyDataSetChanged();
                     }
+                    mTaskAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_system) + ex, Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
                 }
             }
 
@@ -128,10 +129,11 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         tasks.setTask(jo.getString(Constant.TASK_TASK));
                         tasks.setStatus(jo.getString(Constant.TASK_STATUS));
                         mListTask.add(tasks);
-                        mTaskAdapter.notifyDataSetChanged();
                     }
+                    mTaskAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_system) + ex, Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
                 }
             }
 
@@ -163,10 +165,11 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         tasks.setTask(jo.getString(Constant.TASK_TASK));
                         tasks.setStatus(jo.getString(Constant.TASK_STATUS));
                         mListTask.add(tasks);
-                        mTaskAdapter.notifyDataSetChanged();
                     }
+                    mTaskAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_system) + ex, Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
                 }
             }
 
@@ -179,11 +182,6 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
-//        mLayTabClear.setVisibility(View.VISIBLE);
-//        mLayTabAll.setVisibility(View.GONE);
-//        mLayTabCompleted.setVisibility(View.GONE);
-//        mLayTabActive.setVisibility(View.GONE);
-
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
         mApiService.deleteTaskCompleted(Constant.AUTH_VALUE + mAccessToken, mUserId).enqueue(new Callback<ResponseBody>() {
@@ -240,10 +238,12 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case R.id.password:
                 Intent intentUserInfor = new Intent(this, UserInfoActivity.class);
                 startActivity(intentUserInfor);
+                finish();
                 return true;
             case R.id.logOut:
                 Intent intentLogin = new Intent(this, LoginActivity.class);
                 startActivity(intentLogin);
+                finish();
                 return true;
         }
         return false;

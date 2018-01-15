@@ -9,7 +9,7 @@ package com.example.gamma.todoapp;
 public class Constant {
     
     // API url
-    public static final String URL_SERVER = "http://192.168.1.7:8080";
+    public static final String URL_SERVER = "http://192.168.1.209:8080";
     public static final String URL_GET_USERID = URL_SERVER + "/users";
     public static final String URL_LOGIN = URL_SERVER + "/oauth/token";
     public static final String URL_REGISTER = URL_SERVER + "/users/register";

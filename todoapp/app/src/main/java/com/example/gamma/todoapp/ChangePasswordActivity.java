@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -54,6 +55,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.btnChangeCancel)
+    public void onClickCancel() {
+        Intent intent = new Intent(this, TaskActivity.class);
+        intent.putExtra(Constant.INTENT_TOKEN, LoginActivity.mAccessToken);
+        intent.putExtra(Constant.INTENT_USERID, LoginActivity.mUserId);
+        startActivity(intent);
+        finish();
+    }
+
     public void changePassword() {
         mApiService = ApiUtils.getApiInterface();
         mApiService.changePassword(Constant.AUTH_VALUE + LoginActivity.mAccessToken, LoginActivity.mUserId, mEdtChangeNewPassword.getText().toString()).enqueue(new Callback<Void>() {
@@ -62,6 +72,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
 

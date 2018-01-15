@@ -130,6 +130,17 @@
             android:textSize="10pt"
             android:fontFamily="monospace"
             android:text="@string/register_accept" />
+        <TextView
+            android:layout_marginTop="10pt"
+            android:id="@+id/btnRegisterBack"
+            android:layout_marginLeft="55pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccept"
+            android:textStyle="bold"
+            android:textSize="10pt"
+            android:fontFamily="monospace"
+            android:text="@string/register_back" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/layAnimRegister"
