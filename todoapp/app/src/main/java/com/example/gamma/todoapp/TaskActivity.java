@@ -62,8 +62,12 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         // Get User Id & Access Token
         Intent intent = getIntent();
-        mAccessToken = intent.getStringExtra(Constant.INTENT_TOKEN);
-        mUserId = intent.getExtras().getInt(Constant.INTENT_USERID);
+        if (intent.hasExtra(Constant.INTENT_TOKEN) && intent.hasExtra(Constant.INTENT_USERID)) {
+            mAccessToken = intent.getStringExtra(Constant.INTENT_TOKEN);
+            mUserId = intent.getExtras().getInt(Constant.INTENT_USERID);
+        } else {
+            Toast.makeText(this, R.string.error_connection, Toast.LENGTH_SHORT).show();
+        }
         mApiService = ApiUtils.getApiInterface();
         getAllTask();
     }

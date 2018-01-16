@@ -47,10 +47,15 @@ public class LoginActivity extends AppCompatActivity {
         mApiService = ApiUtils.getApiInterface();
 
         Intent intent = getIntent();
-        String usernameRegister = intent.getStringExtra(Constant.INTENT_USER_REGISTER);
-        String passwordRegister = intent.getStringExtra(Constant.INTENT_PASS_REGISTER);
-        mEdtUsername.setText(usernameRegister);
-        mEdtPassword.setText(passwordRegister);
+        if (intent.hasExtra(Constant.INTENT_PASS_REGISTER) && intent.hasExtra(Constant.INTENT_USER_REGISTER)) {
+            String usernameRegister = intent.getStringExtra(Constant.INTENT_USER_REGISTER);
+            String passwordRegister = intent.getStringExtra(Constant.INTENT_PASS_REGISTER);
+            mEdtUsername.setText(usernameRegister);
+            mEdtPassword.setText(passwordRegister);
+        } else {
+            mEdtUsername.setText("");
+            mEdtPassword.setText("");
+        }
     }
 
     @OnClick(R.id.btnRegister)
