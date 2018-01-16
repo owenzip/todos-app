@@ -13,6 +13,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -39,7 +42,6 @@ import retrofit2.Response;
 public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     @BindView(R.id.edtAdd) EditText mEdtAdd;
-    @BindView(R.id.lsvTasks) ListView mLsvTask;
     @BindView(R.id.layTabClear) LinearLayout mLayTabClear;
     @BindView(R.id.layTabAll) LinearLayout mLayTabAll;
     @BindView(R.id.layTabActive) LinearLayout mLayTabActive;
@@ -47,8 +49,10 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @BindView(R.id.btnMenu)
     Button mBtnMenu;
 
-    List<Task> mListTask = new ArrayList<Task>();
-    TaskAdapter mTaskAdapter = new TaskAdapter(TaskActivity.this, mListTask);
+    private List<Task> mListTask = new ArrayList<>();
+//    TaskAdapter mTaskAdapter = new TaskAdapter(TaskActivity.this, mListTask);
+    private RecyclerView mRecyclerView;
+    private TaskAdapter mTaskAdapter;
     ApiService mApiService;
     String mAccessToken;
     int mUserId;
@@ -58,7 +62,14 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
-        mLsvTask.setAdapter(mTaskAdapter);
+        //mLsvTask.setAdapter(mTaskAdapter);
+        mRecyclerView = findViewById(R.id.rclTasks);
+        mTaskAdapter = new TaskAdapter(this,mListTask);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mTaskAdapter);
 
         // Get User Id & Access Token
         Intent intent = getIntent();
@@ -204,21 +215,25 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.btnAdd)
     public void onClickAdd(View view) {
-        mListTask.clear();
-        mTaskAdapter.notifyDataSetChanged();
-        mApiService.addTask(Constant.AUTH_VALUE + mAccessToken, mUserId, mEdtAdd.getText().toString()).enqueue(new Callback<Task>() {
-            @Override
-            public void onResponse(Call<Task> call, Response<Task> response) {
-                getAllTask();
-                Toast.makeText(getApplicationContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
-                mEdtAdd.setText("");
-            }
+        if (mEdtAdd.length() < 1) {
+            Toast.makeText(getApplicationContext(), getString(R.string.task_required), Toast.LENGTH_SHORT).show();
+        } else {
+            mListTask.clear();
+            mTaskAdapter.notifyDataSetChanged();
+            mApiService.addTask(Constant.AUTH_VALUE + mAccessToken, mUserId, mEdtAdd.getText().toString()).enqueue(new Callback<Task>() {
+                @Override
+                public void onResponse(Call<Task> call, Response<Task> response) {
+                    getAllTask();
+                    Toast.makeText(getApplicationContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
+                    mEdtAdd.setText("");
+                }
 
-            @Override
-            public void onFailure(Call<Task> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_system) + t, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Task> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_system) + t, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @OnClick(R.id.btnMenu)

@@ -45,6 +45,7 @@
     <string name="add_success">Add successful</string>
     <string name="old_pass_required">Old password is not strong</string>
     <string name="old_pass_incorrected">Old password incorrected</string>
+    <string name="task_required">Task is required</string>
     <!--Error-->
     <string name="error_connection">Some error occurred , check your network connection</string>
     <string name="error_register">Register failed , please try again</string>

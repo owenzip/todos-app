@@ -16,12 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="22pt"
         android:background="@color/colorTextStandard"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="20pt"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5pt"
             android:background="@color/colorWhite">
 
             <Button
@@ -34,7 +34,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="120pt"
+            android:layout_width="125pt"
             android:layout_height="match_parent"
             android:background="@color/colorWhite">
 
@@ -66,135 +66,139 @@
                 android:gravity="center" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="5pt"
-            android:layout_height="match_parent"
-            android:background="@color/colorTextStandard" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20pt"
         android:background="@color/colorTextStandard"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="6pt"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
-            android:layout_width="40pt"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5pt"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txvClear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="CLEAR"
-                android:textColor="@color/colorWhite"
-                android:textSize="6pt" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/layTabClear"
-                android:layout_width="match_parent"
-                android:layout_height="1.5pt"
-                android:layout_marginTop="5.5pt"
-                android:background="@color/colorTextHint"
-                android:orientation="horizontal"
-                android:visibility="gone" />
-        </LinearLayout>
+                android:layout_width="40pt"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5pt"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="40pt"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5pt"
-            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txvClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="CLEAR"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="6pt" />
 
-            <TextView
-                android:id="@+id/txvCompleted"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="COMPLETE"
-                android:textColor="@color/colorWhite"
-                android:textSize="6pt" />
-
-            <LinearLayout
-                android:id="@+id/layTabCompleted"
-                android:layout_width="match_parent"
-                android:layout_height="1.5pt"
-                android:layout_marginTop="5.5pt"
-                android:background="@color/colorTextHint"
-                android:orientation="horizontal"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="40pt"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5pt"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txvActive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="ACTIVE"
-                android:textColor="@color/colorWhite"
-                android:textSize="6pt" />
+                <LinearLayout
+                    android:id="@+id/layTabClear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5pt"
+                    android:layout_marginTop="5.5pt"
+                    android:background="@color/colorTextHint"
+                    android:orientation="horizontal"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layTabActive"
-                android:layout_width="match_parent"
-                android:layout_height="1.5pt"
-                android:layout_marginTop="5.5pt"
-                android:background="@color/colorTextHint"
-                android:orientation="horizontal"
-                android:visibility="gone" />
-        </LinearLayout>
+                android:layout_width="40pt"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5pt"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="40pt"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5pt"
-            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txvCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="COMPLETE"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="6pt" />
 
-            <TextView
-                android:id="@+id/txvAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="TASKS"
-                android:textColor="@color/colorWhite"
-                android:textSize="6pt" />
+                <LinearLayout
+                    android:id="@+id/layTabCompleted"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5pt"
+                    android:layout_marginTop="5.5pt"
+                    android:background="@color/colorTextHint"
+                    android:orientation="horizontal"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layTabAll"
-                android:layout_width="match_parent"
-                android:layout_height="1.5pt"
-                android:layout_marginTop="5.5pt"
-                android:background="@color/colorTextHint"
-                android:orientation="horizontal" />
-        </LinearLayout>
+                android:layout_width="40pt"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5pt"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="5pt"
-            android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/txvActive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="ACTIVE"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="6pt" />
+
+                <LinearLayout
+                    android:id="@+id/layTabActive"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5pt"
+                    android:layout_marginTop="5.5pt"
+                    android:background="@color/colorTextHint"
+                    android:orientation="horizontal"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="40pt"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5pt"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txvAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="TASKS"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="6pt" />
+
+                <LinearLayout
+                    android:id="@+id/layTabAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5pt"
+                    android:layout_marginTop="5.5pt"
+                    android:background="@color/colorTextHint"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/lsvTasks"
+    
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackListView"
-        android:divider="@color/colorBackListView" />
+        android:layout_height="1pt"
+        android:background="@drawable/item_border"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rclTasks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+    </RelativeLayout>
 </LinearLayout>
 
