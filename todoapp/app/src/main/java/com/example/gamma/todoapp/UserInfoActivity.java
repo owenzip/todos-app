@@ -1,3 +1,8 @@
+/**
+ * UserInfoActivity.java
+ * Create by Nhut Nguyen
+ * Date 15/01/2018
+ */
 package com.example.gamma.todoapp;
 
 import android.content.Intent;
@@ -16,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/* Class using for show Profile user */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class UserInfoActivity extends AppCompatActivity {
 
@@ -60,8 +66,8 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnProfileBack)
-    public void onClickProfileBack (View view) {
-        Intent intent = new Intent(this,TaskActivity.class);
+    public void onClickProfileBack(View view) {
+        Intent intent = new Intent(this, TaskActivity.class);
         intent.putExtra(Constant.INTENT_TOKEN, LoginActivity.mAccessToken);
         intent.putExtra(Constant.INTENT_USERID, LoginActivity.mUserId);
         startActivity(intent);

@@ -57,9 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (mEdtFirstname.length() < 2 || mEdtLastname.length() < 2) {
             mTxvNofiticationRegister.setText(R.string.firstlast_required);
             animTextNofi();
-        }
-        //Check Register
-        else {
+        } else {
+            //Check Register
             if (mEdtRegisterPassword.getText().toString().equals(mEdtRegisterConfirmPassword.getText().toString())) {
                 String username = mEdtRegisterUsername.getText().toString();
                 String password = mEdtRegisterPassword.getText().toString();
@@ -75,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnRegisterBack)
-    public void onClickBackRegister (View view) {
+    public void onClickBackRegister(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra(Constant.INTENT_TOKEN, LoginActivity.mAccessToken);
         intent.putExtra(Constant.INTENT_USERID, LoginActivity.mUserId);
@@ -89,7 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
         mTxvNofiticationRegister.setVisibility(View.VISIBLE);
     }
 
-    //Check register
     public void checkRegister(String username, String password, String firstname, String lastname) {
         mApiservice = ApiUtils.getApiInterface();
         mApiservice.register(username, password, firstname, lastname).enqueue(new Callback<Void>() {

@@ -46,7 +46,7 @@
                 android:background="@color/colorTextStandard"
                 android:backgroundTint="@color/colorWhite"
                 android:fontFamily="monospace"
-                android:hint=" Add items here"
+                android:hint="@string/task_add_item_here"
                 android:textColor="@color/colorTextStandard"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="7pt" />
@@ -78,7 +78,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="40pt">
 
             <LinearLayout
                 android:layout_width="40pt"
@@ -92,18 +92,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="CLEAR"
+                    android:text="@string/task_clear"
                     android:textColor="@color/colorWhite"
                     android:textSize="6pt" />
 
-                <LinearLayout
-                    android:id="@+id/layTabClear"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5pt"
-                    android:layout_marginTop="5.5pt"
-                    android:background="@color/colorTextHint"
-                    android:orientation="horizontal"
-                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -118,18 +110,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="COMPLETE"
+                    android:text="@string/task_completed"
                     android:textColor="@color/colorWhite"
                     android:textSize="6pt" />
 
-                <LinearLayout
-                    android:id="@+id/layTabCompleted"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5pt"
-                    android:layout_marginTop="5.5pt"
-                    android:background="@color/colorTextHint"
-                    android:orientation="horizontal"
-                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -144,18 +128,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="ACTIVE"
+                    android:text="@string/task_active"
                     android:textColor="@color/colorWhite"
                     android:textSize="6pt" />
 
-                <LinearLayout
-                    android:id="@+id/layTabActive"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5pt"
-                    android:layout_marginTop="5.5pt"
-                    android:background="@color/colorTextHint"
-                    android:orientation="horizontal"
-                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -170,17 +146,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="TASKS"
+                    android:text="@string/task_all"
                     android:textColor="@color/colorWhite"
                     android:textSize="6pt" />
 
-                <LinearLayout
-                    android:id="@+id/layTabAll"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5pt"
-                    android:layout_marginTop="5.5pt"
-                    android:background="@color/colorTextHint"
-                    android:orientation="horizontal" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -1,3 +1,8 @@
+/**
+ * ChangePasswordActivity.java
+ * Create by Nhut Nguyen
+ * Date 15/01/2018
+ */
 package com.example.gamma.todoapp;
 
 import android.content.Intent;
@@ -5,7 +10,6 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/* Class using for User change password */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class ChangePasswordActivity extends AppCompatActivity {
 
@@ -36,6 +41,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     // Event click button Change Password
     @OnClick(R.id.btnChangeAccept)
     public void changePassword(View view) {
+        // Check textView
         if (mEdtChangeOldPassword.length() < 5) {
             mTxvChangeNofi.setText(R.string.old_pass_required);
         } else if (mEdtChangeNewPassword.length() < 5) {
@@ -43,6 +49,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         } else if (mEdtChangeConfirmPassword.length() < 5) {
             mTxvChangeNofi.setText(R.string.pass_notstrong);
         } else {
+            // Check password math
             if (mEdtChangeOldPassword.getText().toString().equals(LoginActivity.mPasswordEcode)) {
                 if (mEdtChangeNewPassword.getText().toString().equals(mEdtChangeConfirmPassword.getText().toString())) {
                     changePassword();

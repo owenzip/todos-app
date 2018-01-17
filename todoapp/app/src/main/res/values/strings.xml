@@ -12,6 +12,12 @@
     <string name="register_title">Thank you for using</string>
     <string name="register_accept">Accept</string>
     <string name="register_back">Back</string>
+    <!--Resource string Tasks-->
+    <string name="task_add_item_here"> Add items here</string>
+    <string name="task_clear">CLEAR</string>
+    <string name="task_completed">COMPLETED</string>
+    <string name="task_active">ACTIVE</string>
+    <string name="task_all">ALL</string>
     <!--Resource string Login-->
     <string name="login_app_name">Todos</string>
     <string name="login_logo">Welcome back ,</string>

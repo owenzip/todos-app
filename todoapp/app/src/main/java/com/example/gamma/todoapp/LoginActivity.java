@@ -25,7 +25,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 /* Class using for CheckLogin */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class LoginActivity extends AppCompatActivity {

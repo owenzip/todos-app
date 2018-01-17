@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 
@@ -42,15 +44,13 @@ import retrofit2.Response;
 public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     @BindView(R.id.edtAdd) EditText mEdtAdd;
-    @BindView(R.id.layTabClear) LinearLayout mLayTabClear;
-    @BindView(R.id.layTabAll) LinearLayout mLayTabAll;
-    @BindView(R.id.layTabActive) LinearLayout mLayTabActive;
-    @BindView(R.id.layTabCompleted) LinearLayout mLayTabCompleted;
-    @BindView(R.id.btnMenu)
-    Button mBtnMenu;
+    @BindView(R.id.btnMenu) Button mBtnMenu;
+    @BindView(R.id.txvClear) TextView mTxvClear;
+    @BindView(R.id.txvCompleted) TextView mTxvCompleted;
+    @BindView(R.id.txvActive) TextView mTxvActive;
+    @BindView(R.id.txvAll) TextView mTxvAll;
 
     private List<Task> mListTask = new ArrayList<>();
-//    TaskAdapter mTaskAdapter = new TaskAdapter(TaskActivity.this, mListTask);
     private RecyclerView mRecyclerView;
     private TaskAdapter mTaskAdapter;
     ApiService mApiService;
@@ -62,9 +62,9 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
-        //mLsvTask.setAdapter(mTaskAdapter);
+
         mRecyclerView = findViewById(R.id.rclTasks);
-        mTaskAdapter = new TaskAdapter(this,mListTask);
+        mTaskAdapter = new TaskAdapter(this, mListTask);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -115,19 +115,19 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvAll)
     public void onClickTxvAll(View view) {
-        mLayTabAll.setVisibility(View.VISIBLE);
-        mLayTabCompleted.setVisibility(View.GONE);
-        mLayTabActive.setVisibility(View.GONE);
-        mLayTabClear.setVisibility(View.GONE);
         getAllTask();
+        mTxvAll.setTypeface(Typeface.DEFAULT_BOLD);
+        mTxvActive.setTypeface(Typeface.DEFAULT);
+        mTxvCompleted.setTypeface(Typeface.DEFAULT);
+        mTxvClear.setTypeface(Typeface.DEFAULT);
     }
 
     @OnClick(R.id.txvActive)
     public void onClickTxvActive(View view) {
-        mLayTabAll.setVisibility(View.GONE);
-        mLayTabClear.setVisibility(View.GONE);
-        mLayTabActive.setVisibility(View.VISIBLE);
-        mLayTabCompleted.setVisibility(View.GONE);
+        mTxvAll.setTypeface(Typeface.DEFAULT);
+        mTxvActive.setTypeface(Typeface.DEFAULT_BOLD);
+        mTxvCompleted.setTypeface(Typeface.DEFAULT);
+        mTxvClear.setTypeface(Typeface.DEFAULT);
 
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
@@ -161,10 +161,10 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvCompleted)
     public void onClickCompleted(View view) {
-        mLayTabCompleted.setVisibility(View.VISIBLE);
-        mLayTabAll.setVisibility(View.GONE);
-        mLayTabClear.setVisibility(View.GONE);
-        mLayTabActive.setVisibility(View.GONE);
+        mTxvAll.setTypeface(Typeface.DEFAULT);
+        mTxvActive.setTypeface(Typeface.DEFAULT);
+        mTxvCompleted.setTypeface(Typeface.DEFAULT_BOLD);
+        mTxvClear.setTypeface(Typeface.DEFAULT);
 
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
@@ -197,6 +197,11 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
+        mTxvAll.setTypeface(Typeface.DEFAULT);
+        mTxvActive.setTypeface(Typeface.DEFAULT);
+        mTxvCompleted.setTypeface(Typeface.DEFAULT);
+        mTxvClear.setTypeface(Typeface.DEFAULT_BOLD);
+
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
         mApiService.deleteTaskCompleted(Constant.AUTH_VALUE + mAccessToken, mUserId).enqueue(new Callback<ResponseBody>() {
