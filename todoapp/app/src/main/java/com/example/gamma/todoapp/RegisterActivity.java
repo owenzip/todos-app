@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
                     // Follow user register with Fabric
-                    Answers.getInstance().logSignUp(new SignUpEvent().putMethod(mEdtRegisterUsername.getText().toString()));
+                    Answers.getInstance().logSignUp(new SignUpEvent().putMethod(mEdtRegisterUsername.getText().toString()).putSuccess(true));
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.putExtra(Constant.INTENT_USER_REGISTER, mEdtRegisterUsername.getText().toString());
                     intent.putExtra(Constant.INTENT_PASS_REGISTER, mEdtRegisterPassword.getText().toString());
@@ -106,12 +106,16 @@ public class RegisterActivity extends AppCompatActivity {
                     finish();
                 } else {
                     mTxvNofiticationRegister.setText(getString(R.string.error_register));
+                    // Follow user register with Fabric
+                    Answers.getInstance().logSignUp(new SignUpEvent().putMethod(mEdtRegisterUsername.getText().toString()).putSuccess(false));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 mTxvNofiticationRegister.setText(getString(R.string.error_system) + t);
+                // Follow user register with Fabric
+                Answers.getInstance().logSignUp(new SignUpEvent().putMethod(mEdtRegisterUsername.getText().toString()).putSuccess(false));
             }
         });
     }

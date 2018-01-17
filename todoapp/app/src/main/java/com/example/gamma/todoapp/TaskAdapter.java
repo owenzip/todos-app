@@ -20,6 +20,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.InviteEvent;
+
 import java.util.List;
 
 import okhttp3.ResponseBody;

@@ -14,6 +14,9 @@ import android.transition.TransitionManager;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.InviteEvent;
 import com.crashlytics.android.answers.LoginEvent;
-import com.crashlytics.android.answers.SignUpEvent;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.edtUsername) EditText mEdtUsername;
     @BindView(R.id.edtPassword) EditText mEdtPassword;
     @BindView(R.id.layAnimLogin) ViewGroup mLayAnimLogin;
+    @BindView(R.id.btnLogin) TextView mBtnLogin;
     public static String mPasswordEcode;
     public static String mAccessToken;
     public static int mUserId;
@@ -85,6 +87,14 @@ public class LoginActivity extends AppCompatActivity {
             String password = mEdtPassword.getText().toString();
             mApiService = ApiUtils.getApiInterface();
             checkLogin(username, password, Constant.GRANT_TYPE_VALUE);
+            // Animation loading
+            mTxvAnimNofi.setText("");
+            mBtnLogin.setBackgroundResource(R.drawable.ic_loading);
+            mBtnLogin.setText("");
+            mBtnLogin.getLayoutParams().height = 60;
+            mBtnLogin.getLayoutParams().width = 60;
+            Animation animLoading = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_loading);
+            mBtnLogin.startAnimation(animLoading);
         }
     }
 
@@ -109,6 +119,14 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     mTxvAnimNofi.setText(R.string.error_login);
                     animTextNofi();
+                    // Follow user login with Fabric
+                    Answers.getInstance().logLogin(new LoginEvent().putMethod(username).putSuccess(false));
+                    // Animation clear
+                    mBtnLogin.getLayoutParams().height = 60;
+                    mBtnLogin.getLayoutParams().width = 600;
+                    mBtnLogin.setText("Login");
+                    mBtnLogin.setBackgroundResource(0);
+                    mBtnLogin.clearAnimation();
                 }
             }
 
@@ -116,6 +134,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<AccessToken> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, getString(R.string.error_system) + t, Toast.LENGTH_SHORT).show();
                 Answers.getInstance().logLogin(new LoginEvent().putSuccess(false));
+                // Follow user login with Fabric
+                Answers.getInstance().logLogin(new LoginEvent().putMethod(username).putSuccess(false));
+                // Animation clear
+                mBtnLogin.setText("Login");
+                mBtnLogin.getLayoutParams().height = 60;
+                mBtnLogin.getLayoutParams().width = 600;
+                mBtnLogin.setBackgroundResource(0);
+                mBtnLogin.clearAnimation();
             }
         });
     }

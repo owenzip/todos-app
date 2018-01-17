@@ -21,8 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,9 +71,6 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mTaskAdapter);
-
-        // Follow user invite with Fabric
-        Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(mUserId)).putMethod("Invited"));
 
         // Get User Id & Access Token
         Intent intent = getIntent();
@@ -203,16 +198,18 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
-        mTxvAll.setTypeface(Typeface.DEFAULT);
+        mTxvAll.setTypeface(Typeface.DEFAULT_BOLD);
         mTxvActive.setTypeface(Typeface.DEFAULT);
         mTxvCompleted.setTypeface(Typeface.DEFAULT);
-        mTxvClear.setTypeface(Typeface.DEFAULT_BOLD);
+        mTxvClear.setTypeface(Typeface.DEFAULT);
 
         mListTask.clear();
         mTaskAdapter.notifyDataSetChanged();
         mApiService.deleteTaskCompleted(Constant.AUTH_VALUE + mAccessToken, mUserId).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // Follow user invite with Fabric
+                Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(mUserId)).putMethod("Clear Tasks"));
                 Toast.makeText(getApplicationContext(), getString(R.string.clear_success), Toast.LENGTH_SHORT).show();
                 getAllTask();
             }
