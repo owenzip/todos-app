@@ -28,6 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.InviteEvent;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -70,6 +73,9 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mTaskAdapter);
+
+        // Follow user invite with Fabric
+        Answers.getInstance().logInvite(new InviteEvent());
 
         // Get User Id & Access Token
         Intent intent = getIntent();

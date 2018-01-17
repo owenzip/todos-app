@@ -22,6 +22,9 @@
         <activity android:name=".TaskActivity" />
         <activity android:name=".UserInfoActivity" />
         <activity android:name=".ChangePasswordActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="dffff1bf256e0599de4bc7c8630f60173626dde5" />
     </application>
 
 </manifest>

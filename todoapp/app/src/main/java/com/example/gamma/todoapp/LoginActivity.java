@@ -21,6 +21,13 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.InviteEvent;
+import com.crashlytics.android.answers.LoginEvent;
+import com.crashlytics.android.answers.SignUpEvent;
+
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics()); // Add Fabric
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mApiService = ApiUtils.getApiInterface();
@@ -96,6 +104,8 @@ public class LoginActivity extends AppCompatActivity {
                     mAccessToken = response.body().getAccessToken();
                     getUserId(Constant.AUTH_VALUE + mAccessToken, username);
                     mPasswordEcode = mEdtPassword.getText().toString();
+                    // Follow user login with Fabric
+                    Answers.getInstance().logLogin(new LoginEvent());
                 } else {
                     mTxvAnimNofi.setText(R.string.error_login);
                     animTextNofi();
