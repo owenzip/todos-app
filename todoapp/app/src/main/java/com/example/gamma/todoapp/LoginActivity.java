@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     getUserId(Constant.AUTH_VALUE + mAccessToken, username);
                     mPasswordEcode = mEdtPassword.getText().toString();
                     // Follow user login with Fabric
-                    Answers.getInstance().logLogin(new LoginEvent());
+                    Answers.getInstance().logLogin(new LoginEvent().putMethod(username).putSuccess(true));
                 } else {
                     mTxvAnimNofi.setText(R.string.error_login);
                     animTextNofi();
@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<AccessToken> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, getString(R.string.error_system) + t, Toast.LENGTH_SHORT).show();
+                Answers.getInstance().logLogin(new LoginEvent().putSuccess(false));
             }
         });
     }

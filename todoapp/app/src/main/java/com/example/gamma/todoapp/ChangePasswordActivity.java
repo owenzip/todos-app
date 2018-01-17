@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.InviteEvent;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,6 +83,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
+                    // Follow user invite with Fabric
+                    Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(LoginActivity.mUserId)).putMethod("Change password"));
                 }
             }
 

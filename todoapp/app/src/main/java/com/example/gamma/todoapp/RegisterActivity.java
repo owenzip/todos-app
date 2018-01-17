@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
                     // Follow user register with Fabric
-                    Answers.getInstance().logSignUp(new SignUpEvent());
+                    Answers.getInstance().logSignUp(new SignUpEvent().putMethod(mEdtRegisterUsername.getText().toString()));
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.putExtra(Constant.INTENT_USER_REGISTER, mEdtRegisterUsername.getText().toString());
                     intent.putExtra(Constant.INTENT_PASS_REGISTER, mEdtRegisterPassword.getText().toString());

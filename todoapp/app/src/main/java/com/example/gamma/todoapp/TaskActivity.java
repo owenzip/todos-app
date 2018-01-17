@@ -75,7 +75,7 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         mRecyclerView.setAdapter(mTaskAdapter);
 
         // Follow user invite with Fabric
-        Answers.getInstance().logInvite(new InviteEvent());
+        Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(mUserId)).putMethod("Invited"));
 
         // Get User Id & Access Token
         Intent intent = getIntent();
@@ -237,6 +237,8 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     getAllTask();
                     Toast.makeText(getApplicationContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
                     mEdtAdd.setText("");
+                    // Follow user invite with Fabric
+                    Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(mUserId)).putMethod("Add Tasks"));
                 }
 
                 @Override
@@ -271,6 +273,8 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 finish();
                 return true;
             case R.id.logOut:
+                // Follow user invite with Fabric
+                Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(mUserId)).putMethod("Log out"));
                 Intent intentLogin = new Intent(this, LoginActivity.class);
                 startActivity(intentLogin);
                 finish();
