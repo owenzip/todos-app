@@ -20,7 +20,7 @@
     <string name="task_all">ALL</string>
     <!--Resource string Login-->
     <string name="login_app_name">Todos</string>
-    <string name="login_logo">Welcome back ,</string>
+    <string name="login_logo">Welcome back</string>
     <string name="login_title">Sign in to continue</string>
     <string name="login_button_login">Login</string>
     <string name="login_dont_have_accout">Do not have an account ?</string>
@@ -56,6 +56,6 @@
     <string name="error_connection">Some error occurred , check your network connection</string>
     <string name="error_register">Register failed , please try again</string>
     <string name="error_login">Login failed , please try again</string>
-    <string name="error_system">Some error occurred : </string>
+    <string name="error_system">Sorry, Some error occurred</string>
 
 </resources>
