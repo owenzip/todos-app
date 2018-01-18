@@ -20,20 +20,22 @@
             android:layout_gravity="center"
             android:layout_marginTop="10pt"
             android:src="@drawable/ic_todos" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="monospace"
-            android:textStyle="bold"
             android:text="@string/login_app_name"
             android:textColor="@color/colorTextStandard"
-            android:textSize="16pt" />
+            android:textSize="16pt"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10pt"
+            android:layout_marginTop="25pt"
             android:fontFamily="monospace"
             android:text="@string/login_logo"
             android:textColor="@color/colorTextStandard"
@@ -50,7 +52,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layUsernamePassword"
+        android:id="@+id/layBodyLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -61,18 +63,21 @@
             android:layout_width="130pt"
             android:layout_height="20pt"
             android:layout_gravity="center"
+            android:layout_marginTop="2pt"
             android:background="@drawable/item_border">
+
             <ImageView
-                android:layout_marginLeft="7pt"
+                android:layout_width="10pt"
+                android:layout_height="10pt"
                 android:layout_gravity="center"
-                android:layout_width="13pt"
-                android:layout_height="13pt"
-                android:src="@drawable/ic_user"/>
+                android:layout_marginLeft="7pt"
+                android:src="@drawable/ic_user" />
+
             <EditText
-                android:layout_marginLeft="5pt"
                 android:id="@+id/edtUsername"
                 android:layout_width="90pt"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5pt"
                 android:backgroundTint="@color/colorWhite"
                 android:fontFamily="monospace"
                 android:hint="@string/hint_username"
@@ -87,18 +92,19 @@
             android:layout_gravity="center"
             android:layout_marginTop="2pt"
             android:background="@drawable/item_border">
+
             <ImageView
-                android:layout_marginLeft="7pt"
+                android:layout_width="8pt"
+                android:layout_height="8pt"
                 android:layout_gravity="center"
-                android:layout_width="11pt"
-                android:layout_height="11pt"
-                android:src="@drawable/ic_pass"/>
+                android:layout_marginLeft="7pt"
+                android:src="@drawable/ic_pass" />
 
             <EditText
-                android:layout_marginLeft="5pt"
                 android:id="@+id/edtPassword"
                 android:layout_width="90pt"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5pt"
                 android:backgroundTint="@color/colorWhite"
                 android:fontFamily="monospace"
                 android:hint="@string/hint_password"
@@ -110,33 +116,33 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="5pt"
         android:layout_width="match_parent"
         android:layout_height="10pt"
+        android:layout_marginTop="5pt"
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginLeft="20pt"
             android:id="@+id/txvAnim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20pt"
             android:fontFamily="monospace"
             android:textColor="@color/colorNofiText"
             android:textSize="5pt" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="15pt"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="35pt">
+        android:layout_height="35pt"
+        android:orientation="vertical">
 
         <Button
-            android:layout_marginTop="10pt"
-            android:background="@drawable/bg_button"
-            android:layout_gravity="center"
             android:id="@+id/btnLogin"
             android:layout_width="130pt"
             android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:layout_marginTop="10pt"
+            android:background="@drawable/bg_button"
             android:fontFamily="monospace"
             android:text="@string/login_button_login"
             android:textColor="@color/colorWhite"
@@ -146,9 +152,6 @@
     </LinearLayout>
 
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -156,9 +159,9 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="23pt"
             android:fontFamily="monospace"
             android:text="@string/login_dont_have_accout"
@@ -166,10 +169,10 @@
             android:textSize="5pt" />
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="5pt"
             android:fontFamily="monospace"
             android:text="@string/login_button_register"

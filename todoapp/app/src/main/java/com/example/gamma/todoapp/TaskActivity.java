@@ -21,7 +21,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
@@ -50,6 +52,9 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @BindView(R.id.txvCompleted) TextView mTxvCompleted;
     @BindView(R.id.txvActive) TextView mTxvActive;
     @BindView(R.id.txvAll) TextView mTxvAll;
+    @BindView(R.id.layTitleTask) LinearLayout mLayTitleTask;
+    @BindView(R.id.layBodyTask) RelativeLayout mLayBodyTask;
+    @BindView(R.id.layAddTask) LinearLayout mLayAddTask;
 
     private List<Task> mListTask = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -82,6 +87,11 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
         mApiService = ApiUtils.getApiInterface();
         getAllTask();
+
+        // Start animation
+        mLayTitleTask.startAnimation(AnimationEffect.animTopToBottom(getApplicationContext()));
+        mLayBodyTask.startAnimation(AnimationEffect.animLeftToRight(getApplicationContext()));
+        mLayAddTask.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
     }
 
     public void getAllTask() {
@@ -100,6 +110,7 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         tasks.setStatus(jo.getString(Constant.TASK_STATUS));
                         mListTask.add(tasks);
                     }
+                    mLayBodyTask.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
                     mTaskAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_system) + ex, Toast.LENGTH_SHORT).show();
@@ -116,6 +127,7 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvAll)
     public void onClickTxvAll(View view) {
+        mLayBodyTask.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
         getAllTask();
         mTxvAll.setTypeface(Typeface.DEFAULT_BOLD);
         mTxvActive.setTypeface(Typeface.DEFAULT);
@@ -125,6 +137,7 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvActive)
     public void onClickTxvActive(View view) {
+        mLayBodyTask.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
         mTxvAll.setTypeface(Typeface.DEFAULT);
         mTxvActive.setTypeface(Typeface.DEFAULT_BOLD);
         mTxvCompleted.setTypeface(Typeface.DEFAULT);
@@ -162,6 +175,7 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvCompleted)
     public void onClickCompleted(View view) {
+        mLayBodyTask.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
         mTxvAll.setTypeface(Typeface.DEFAULT);
         mTxvActive.setTypeface(Typeface.DEFAULT);
         mTxvCompleted.setTypeface(Typeface.DEFAULT_BOLD);
@@ -198,6 +212,7 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
+        mLayBodyTask.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
         mTxvAll.setTypeface(Typeface.DEFAULT_BOLD);
         mTxvActive.setTypeface(Typeface.DEFAULT);
         mTxvCompleted.setTypeface(Typeface.DEFAULT);

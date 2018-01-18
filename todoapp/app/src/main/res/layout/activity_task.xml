@@ -8,158 +8,158 @@
     tools:context="com.example.gamma.todoapp.TaskActivity">
 
     <LinearLayout
+        android:id="@+id/layTitleTask"
         android:layout_width="match_parent"
-        android:layout_height="7pt"
-        android:background="@color/colorTextStandard" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="22pt"
-        android:background="@color/colorTextStandard"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="20pt"
-            android:layout_height="match_parent"
-            android:background="@color/colorWhite">
-
-            <Button
-                android:id="@+id/btnMenu"
-                android:layout_width="17pt"
-                android:layout_height="17pt"
-                android:layout_gravity="center"
-                android:layout_marginLeft="3pt"
-                android:background="@drawable/ic_menu" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="125pt"
-            android:layout_height="match_parent"
-            android:background="@color/colorWhite">
-
-            <EditText
-                android:id="@+id/edtAdd"
-                android:layout_width="120pt"
-                android:layout_height="24pt"
-                android:layout_marginLeft="5pt"
-                android:background="@color/colorTextStandard"
-                android:backgroundTint="@color/colorWhite"
-                android:fontFamily="monospace"
-                android:hint="@string/task_add_item_here"
-                android:textColor="@color/colorTextStandard"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="7pt" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="22pt"
-            android:layout_height="match_parent"
-            android:background="@color/colorWhite">
-
-            <Button
-                android:id="@+id/btnAdd"
-                android:layout_width="18pt"
-                android:layout_height="18pt"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_add"
-                android:gravity="center" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20pt"
-        android:background="@color/colorTextStandard"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAcceptBold"
             android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="40pt">
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="40pt"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5pt"
-                android:orientation="vertical">
+                android:id="@+id/layAddTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3pt">
 
-                <TextView
-                    android:id="@+id/txvClear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/task_clear"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="6pt" />
+                <LinearLayout
+                    android:layout_width="20pt"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorWhite">
 
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/btnMenu"
+                        android:layout_width="10pt"
+                        android:layout_height="10pt"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="7pt"
+                        android:background="@drawable/ic_menu" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="40pt"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5pt"
-                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="120pt"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorWhite">
 
-                <TextView
-                    android:id="@+id/txvCompleted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/task_completed"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="6pt" />
+                    <EditText
+                        android:id="@+id/edtAdd"
+                        android:layout_width="110pt"
+                        android:layout_height="20pt"
+                        android:layout_marginLeft="5pt"
+                        android:background="@color/colorTextStandard"
+                        android:backgroundTint="@color/colorWhite"
+                        android:fontFamily="monospace"
+                        android:hint="@string/task_add_item_here"
+                        android:textColor="@color/colorTextStandard"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="6pt" />
+                </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="20pt"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorWhite">
 
-            <LinearLayout
-                android:layout_width="40pt"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5pt"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txvActive"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/task_active"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="6pt" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="40pt"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5pt"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txvAll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/task_all"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="6pt" />
-
+                    <Button
+                        android:id="@+id/btnAdd"
+                        android:layout_width="13pt"
+                        android:layout_height="13pt"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_add"
+                        android:gravity="center" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20pt"
+            android:background="@color/colorAcceptBold"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40pt"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="40pt"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3pt"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txvClear"
+                        android:layout_width="13pt"
+                        android:layout_height="12pt"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_clear" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="40pt"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3pt"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txvCompleted"
+                        android:layout_width="11pt"
+                        android:layout_height="11pt"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.8pt"
+                        android:background="@drawable/ic_completed" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="40pt"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3pt"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txvActive"
+                        android:layout_width="11pt"
+                        android:layout_height="11pt"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.8pt"
+                        android:background="@drawable/ic_active" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="40pt"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3pt"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txvAll"
+                        android:layout_width="11pt"
+                        android:layout_height="11pt"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.8pt"
+                        android:background="@drawable/ic_all" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:background="@drawable/item_border" />
     </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1pt"
-        android:background="@drawable/item_border"/>
 
     <RelativeLayout
+        android:id="@+id/layBodyTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -167,7 +167,9 @@
             android:id="@+id/rclTasks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorWhite"
             android:scrollbars="vertical" />
     </RelativeLayout>
+
 </LinearLayout>
 

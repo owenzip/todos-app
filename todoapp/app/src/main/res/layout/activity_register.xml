@@ -4,158 +4,238 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context="com.example.gamma.todoapp.RegisterActivity">
 
     <LinearLayout
+        android:id="@+id/layTitleRegister"
         android:layout_width="match_parent"
-        android:layout_height="50pt">
-        <TextView
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="45pt"
             android:layout_gravity="center"
-            android:layout_marginTop="15pt"
-            android:layout_marginLeft="25pt"
+            android:layout_marginTop="10pt"
+            android:src="@drawable/ic_todos" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12pt"
+            android:layout_gravity="center"
             android:fontFamily="monospace"
+            android:text="@string/app_name"
             android:textColor="@color/colorTextStandard"
-            android:text="@string/register_logo" />
+            android:textSize="8pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="monospace"
+            android:text="@string/register_title"
+            android:textColor="@color/colorTextHint"
+            android:textSize="6pt" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layBodyRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5pt"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:background="@drawable/item_border">
+
+            <ImageView
+                android:layout_width="10pt"
+                android:layout_height="10pt"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:src="@drawable/ic_user" />
+
+            <EditText
+                android:id="@+id/edtRegisterUsername"
+                android:layout_width="90pt"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5pt"
+                android:backgroundTint="@color/colorWhite"
+                android:fontFamily="monospace"
+                android:hint="@string/hint_username"
+                android:textColor="@color/colorTextStandard"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:layout_marginTop="2pt"
+            android:background="@drawable/item_border">
+
+            <ImageView
+                android:layout_width="8pt"
+                android:layout_height="8pt"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:src="@drawable/ic_pass" />
+
+            <EditText
+                android:id="@+id/edtRegisterPassword"
+                android:layout_width="90pt"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5pt"
+                android:backgroundTint="@color/colorWhite"
+                android:fontFamily="monospace"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textColor="@color/colorTextStandard"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:layout_marginTop="2pt"
+            android:background="@drawable/item_border">
+
+            <ImageView
+                android:layout_width="8pt"
+                android:layout_height="8pt"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:src="@drawable/ic_confirm" />
+
+            <EditText
+                android:id="@+id/edtRegisterConfirmPassword"
+                android:layout_width="90pt"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5pt"
+                android:backgroundTint="@color/colorWhite"
+                android:fontFamily="monospace"
+                android:hint="@string/hint_confirm_password"
+                android:inputType="textPassword"
+                android:textColor="@color/colorTextStandard"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:layout_marginTop="2pt"
+            android:background="@drawable/item_border">
+
+            <ImageView
+                android:layout_width="8pt"
+                android:layout_height="10pt"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:src="@drawable/ic_firstname" />
+
+            <EditText
+                android:id="@+id/edtFirstname"
+                android:layout_width="90pt"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5pt"
+                android:backgroundTint="@color/colorWhite"
+                android:fontFamily="monospace"
+                android:hint="@string/hint_firstname"
+                android:textColor="@color/colorTextStandard"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:layout_marginTop="2pt"
+            android:background="@drawable/item_border">
+
+            <ImageView
+                android:layout_width="10pt"
+                android:layout_height="10pt"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:src="@drawable/ic_lastname" />
+
+            <EditText
+                android:id="@+id/edtLastname"
+                android:layout_width="90pt"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5pt"
+                android:backgroundTint="@color/colorWhite"
+                android:fontFamily="monospace"
+                android:hint="@string/hint_lastname"
+                android:textColor="@color/colorTextStandard"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="6pt" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layAnimRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3pt">
+
+        <TextView
+            android:id="@+id/txvNotificationRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22pt"
+            android:fontFamily="monospace"
+            android:textColor="@color/colorNofiText"
+            android:textSize="5pt" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginLeft="25pt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="8pt"
-            android:textColor="@color/colorTextHint"
+        android:layout_height="23pt"
+        android:layout_marginTop="8pt"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_button"
             android:fontFamily="monospace"
-            android:text="@string/register_title" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="10pt"
-        android:layout_width="130pt"
-        android:layout_height="25pt"
-        android:layout_gravity="center">
-        <EditText
-            android:textColorHint="@color/colorTextHint"
-            android:textSize="7pt"
-            android:fontFamily="monospace"
-            android:id="@+id/edtRegisterUsername"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hint_username"
-            android:textColor="@color/colorTextStandard"
-            android:backgroundTint="@color/colorAccept"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="130pt"
-        android:layout_height="25pt"
-        android:layout_gravity="center">
-        <EditText
-            android:textColorHint="@color/colorTextHint"
-            android:textSize="7pt"
-            android:fontFamily="monospace"
-            android:id="@+id/edtRegisterPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hint_password"
-            android:textColor="@color/colorTextStandard"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/colorAccept"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="130pt"
-        android:layout_height="25pt"
-        android:layout_gravity="center">
-        <EditText
-            android:textColorHint="@color/colorTextHint"
-            android:textSize="7pt"
-            android:fontFamily="monospace"
-            android:id="@+id/edtRegisterConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hint_confirm_password"
-            android:textColor="@color/colorTextStandard"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/colorAccept"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="130pt"
-        android:layout_height="25pt"
-        android:layout_gravity="center">
-        <EditText
-            android:textColorHint="@color/colorTextHint"
-            android:textSize="7pt"
-            android:fontFamily="monospace"
-            android:id="@+id/edtFirstname"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hint_firstname"
-            android:inputType="text"
-            android:textColor="@color/colorTextStandard"
-            android:backgroundTint="@color/colorAccept"/>
-    </LinearLayout>
-    <LinearLayout
-        android:fontFamily="monospace"
-        android:layout_width="130pt"
-        android:layout_height="25pt"
-        android:layout_gravity="center">
-        <EditText
-            android:textColorHint="@color/colorTextHint"
-            android:textSize="7pt"
-            android:fontFamily="monospace"
-            android:id="@+id/edtLastname"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hint_lastname"
-            android:inputType="text"
-            android:textColor="@color/colorTextStandard"
-            android:backgroundTint="@color/colorAccept"/>
+            android:text="@string/register_accept"
+            android:textColor="@color/colorWhite"
+            android:textSize="10pt"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <TextView
-            android:layout_marginTop="10pt"
-            android:id="@+id/btnAccept"
-            android:layout_marginLeft="25pt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccept"
-            android:textStyle="bold"
-            android:textSize="10pt"
-            android:fontFamily="monospace"
-            android:text="@string/register_accept" />
-        <TextView
-            android:layout_marginTop="10pt"
-            android:id="@+id/btnRegisterBack"
-            android:layout_marginLeft="55pt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccept"
-            android:textStyle="bold"
-            android:textSize="10pt"
-            android:fontFamily="monospace"
-            android:text="@string/register_back" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layAnimRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:orientation="vertical">
-    <TextView
-        android:id="@+id/txvNotificationRegister"
-        android:layout_marginTop="3pt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorNofiText"
-        android:textSize="6pt"
-        android:layout_marginLeft="25pt"
-        android:fontFamily="monospace"
-        android:text="" />
+
+        <TextView
+            android:id="@+id/btnRegisterBack"
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="@string/register_back"
+            android:textColor="@color/colorTextStandard"
+            android:textSize="10pt"
+            android:textStyle="bold" />
     </LinearLayout>
+
 </LinearLayout>

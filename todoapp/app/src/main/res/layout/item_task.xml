@@ -15,25 +15,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="23pt"
-            android:background="@drawable/item_border"
+            android:background="@drawable/bg_items_task"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/edtTasks"
-                android:layout_width="130pt"
+                android:layout_width="120pt"
                 android:layout_height="25pt"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10pt"
-                android:backgroundTint="@color/colorBackTintEdtAddTask"
+                android:backgroundTint="@color/colorWhite"
                 android:text="This is my new tasks"
                 android:textColor="@color/colorTextStandard" />
 
             <CheckBox
                 android:layout_marginLeft="5pt"
                 android:id="@+id/ckbStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorTextStandard" />
+                android:layout_width="20pt"
+                android:layout_height="20pt"
+                android:button="@drawable/custom_check_box"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/txvStatus"
@@ -48,10 +52,5 @@
                 android:visibility="gone" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1pt"
-            android:background="@color/colorBackListView" />
     </LinearLayout>
 </RelativeLayout>

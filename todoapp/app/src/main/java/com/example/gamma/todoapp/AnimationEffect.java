@@ -24,8 +24,8 @@ public class AnimationEffect {
         return animLeftToRight;
     }
 
-    public static Animation animRightToLeft (Context context) {
-        Animation animRightToLeft = AnimationUtils.loadAnimation(context, R.anim.anim_right_to_left);
-        return animRightToLeft;
+    public static Animation animTopToBottom (Context context) {
+        Animation animTopToBottom = AnimationUtils.loadAnimation(context, R.anim.anim_top_to_bottom);
+        return animTopToBottom;
     }
 }

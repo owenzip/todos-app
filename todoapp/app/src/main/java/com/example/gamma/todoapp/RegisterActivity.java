@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.answers.Answers;
@@ -37,6 +39,10 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.edtLastname) EditText mEdtLastname;
     @BindView(R.id.txvNotificationRegister) TextView mTxvNofiticationRegister;
     @BindView(R.id.layAnimRegister) ViewGroup mLayAnimRegister;
+    @BindView(R.id.layTitleRegister) LinearLayout mLayTitleRegister;
+    @BindView(R.id.layBodyRegister) LinearLayout mLayBodyRegister;
+    @BindView(R.id.btnAccept) Button mBtnAccept;
+    @BindView(R.id.btnRegisterBack) TextView mBtnRegisterBack;
     ApiService mApiservice;
 
     @Override
@@ -44,6 +50,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+
+        // Start animation
+        mLayTitleRegister.startAnimation(AnimationEffect.animTopToBottom(getApplicationContext()));
+        mBtnAccept.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
+        mBtnRegisterBack.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
+        mLayBodyRegister.startAnimation(AnimationEffect.animLeftToRight(getApplicationContext()));
     }
 
     //Event click Register
@@ -53,16 +65,21 @@ public class RegisterActivity extends AppCompatActivity {
         //Check Edittext
         if (mEdtRegisterUsername.length() < 3) {
             mTxvNofiticationRegister.setText(R.string.user_notstrong);
-            animTextNofi();
+            setAnimNofitication();
         } else if (mEdtRegisterPassword.length() < 5) {
             mTxvNofiticationRegister.setText(R.string.pass_notstrong);
-            animTextNofi();
+            setAnimNofitication();
         } else if (mEdtFirstname.length() < 2 || mEdtLastname.length() < 2) {
             mTxvNofiticationRegister.setText(R.string.firstlast_required);
-            animTextNofi();
+            setAnimNofitication();
         } else {
             //Check Register
             if (mEdtRegisterPassword.getText().toString().equals(mEdtRegisterConfirmPassword.getText().toString())) {
+                // Get animation
+                getAnimAcceptClick();
+                mBtnAccept.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
+                mBtnAccept.startAnimation(AnimationEffect.animCircular(getApplicationContext()));
+
                 String username = mEdtRegisterUsername.getText().toString();
                 String password = mEdtRegisterPassword.getText().toString();
                 String firstname = mEdtFirstname.getText().toString();
@@ -71,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                 checkRegister(username, password, firstname, lastname);
             } else {
                 mTxvNofiticationRegister.setText(R.string.pass_notmatch);
-                animTextNofi();
+                setAnimNofitication();
             }
         }
     }
@@ -83,12 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
         intent.putExtra(Constant.INTENT_USERID, LoginActivity.mUserId);
         startActivity(intent);
         finish();
-    }
-
-    //Animation nofitication Text
-    public void animTextNofi() {
-        TransitionManager.beginDelayedTransition(mLayAnimRegister);
-        mTxvNofiticationRegister.setVisibility(View.VISIBLE);
     }
 
     public void checkRegister(String username, String password, String firstname, String lastname) {
@@ -106,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                     finish();
                 } else {
                     mTxvNofiticationRegister.setText(getString(R.string.error_register));
+                    clearAnimLoginClick();
                     // Follow user register with Fabric
                     Answers.getInstance().logSignUp(new SignUpEvent().putMethod(mEdtRegisterUsername.getText().toString()).putSuccess(false));
                 }
@@ -113,10 +125,31 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                mTxvNofiticationRegister.setText(getString(R.string.error_system) + t);
+                mTxvNofiticationRegister.setText(getString(R.string.error_system));
+                clearAnimLoginClick();
                 // Follow user register with Fabric
                 Answers.getInstance().logSignUp(new SignUpEvent().putMethod(mEdtRegisterUsername.getText().toString()).putSuccess(false));
             }
         });
+    }
+
+    public void getAnimAcceptClick () {
+        mTxvNofiticationRegister.setText("");
+        mBtnAccept.setBackgroundResource(R.drawable.ic_loading);
+        mBtnAccept.setText("");
+        mBtnAccept.getLayoutParams().height = 100;
+        mBtnAccept.getLayoutParams().width = 100;
+    }
+
+    public void clearAnimLoginClick () {
+        mBtnAccept.setText("Accept");
+        mBtnAccept.getLayoutParams().height = 130;
+        mBtnAccept.getLayoutParams().width = 850;
+        mBtnAccept.setBackgroundResource(R.drawable.bg_button);
+        mBtnAccept.clearAnimation();
+    }
+
+    public void setAnimNofitication() {
+        mTxvNofiticationRegister.startAnimation(AnimationEffect.animLeftToRight(getApplicationContext()));
     }
 }

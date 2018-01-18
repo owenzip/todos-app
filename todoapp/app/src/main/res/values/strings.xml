@@ -8,7 +8,7 @@
     <string name="hint_firstname">Firstname</string>
     <string name="hint_lastname">Lastname</string>
     <string name="hint_newpassword">New Password</string>
-    <string name="register_logo">Register ,</string>
+    <string name="register_logo">Register</string>
     <string name="register_title">Thank you for using</string>
     <string name="register_accept">Accept</string>
     <string name="register_back">Back</string>
