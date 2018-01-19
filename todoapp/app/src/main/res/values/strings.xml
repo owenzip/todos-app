@@ -26,13 +26,13 @@
     <string name="login_dont_have_accout">Do not have an account ?</string>
     <string name="login_button_register">Register</string>
     <!--Resource string User Information-->
-    <string name="info_logo">Profile ,</string>
+    <string name="info_logo">Profile</string>
     <string name="info_title">Your account infomation</string>
     <string name="info_userid">User ID</string>
     <string name="info_back">Back</string>
-    <string name="info_change_password">Change password</string>
+    <string name="info_change_password">Change pass</string>
     <!--Resource string Change Password-->
-    <string name="change_password_logo">Change password ,</string>
+    <string name="change_password_logo">Change password</string>
     <string name="change_password_title">Input your new password</string>
     <string name="change_password_change">Change</string>
     <string name="change_password_old">Old Password</string>

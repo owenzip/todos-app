@@ -212,7 +212,6 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @OnClick(R.id.txvClear)
     public void onClickClear(View view) {
-        mLayBodyTask.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
         mTxvAll.setTypeface(Typeface.DEFAULT_BOLD);
         mTxvActive.setTypeface(Typeface.DEFAULT);
         mTxvCompleted.setTypeface(Typeface.DEFAULT);
@@ -225,7 +224,6 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 // Follow user invite with Fabric
                 Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(mUserId)).putMethod("Clear Tasks"));
-                Toast.makeText(getApplicationContext(), getString(R.string.clear_success), Toast.LENGTH_SHORT).show();
                 getAllTask();
             }
 
@@ -247,7 +245,6 @@ public class TaskActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 @Override
                 public void onResponse(Call<Task> call, Response<Task> response) {
                     getAllTask();
-                    Toast.makeText(getApplicationContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
                     mEdtAdd.setText("");
                     // Follow user invite with Fabric
                     Answers.getInstance().logInvite(new InviteEvent().putMethod(Integer.toString(mUserId)).putMethod("Add Tasks"));

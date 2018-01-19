@@ -4,170 +4,215 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.gamma.todoapp.UserInfoActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    tools:context="com.example.gamma.todoapp.UserInfoActivity">
+
     <LinearLayout
+        android:id="@+id/layTitleProfile"
         android:layout_width="match_parent"
-        android:layout_height="50pt">
+        android:layout_height="60pt"
+        android:background="@color/colorAcceptBold"
+        android:orientation="vertical">
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15pt"
-            android:layout_marginLeft="20pt"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="@string/info_logo"
+            android:textColor="@color/colorWhite"
+            android:textSize="16pt"
+            android:textStyle="bold" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12pt"
+            android:layout_gravity="center"
             android:fontFamily="monospace"
-            android:textColor="@color/colorTextStandard"
-            android:text="@string/info_logo" />
+            android:gravity="center"
+            android:text="@string/info_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="6pt" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0.5pt"
+        android:background="@drawable/item_border" />
+    <LinearLayout
+        android:id="@+id/layBodyProfile"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginLeft="20pt"
-            android:layout_width="wrap_content"
-            android:layout_height="35pt"
-            android:textSize="8pt"
-            android:textColor="@color/colorTextHint"
-            android:fontFamily="monospace"
-            android:text="@string/info_title" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="130pt"
-        android:layout_height="12pt"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:textSize="7pt"
-            android:gravity="center"
-            android:textAlignment="textStart"
-            android:fontFamily="monospace"
-            android:text="@string/hint_username"
-            android:layout_width="50pt"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorTextHint"
-            tools:ignore="RtlCompat" />
-        <TextView
-            android:textSize="8pt"
-            android:fontFamily="monospace"
-            android:id="@+id/txvProfileUsername"
-            android:layout_width="80pt"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorTextStandard" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="130pt"
-        android:layout_height="12pt"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:textSize="7pt"
-            android:gravity="center"
-            android:textAlignment="textStart"
-            android:fontFamily="monospace"
-            android:text="@string/hint_firstname"
-            android:layout_width="50pt"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorTextHint"
-            tools:ignore="RtlCompat" />
-        <TextView
-            android:textSize="8pt"
-            android:fontFamily="monospace"
-            android:id="@+id/txvProfileFirstname"
-            android:layout_width="80pt"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorTextStandard" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="130pt"
-        android:layout_height="12pt"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:textSize="7pt"
-            android:gravity="center"
-            android:textAlignment="textStart"
-            android:fontFamily="monospace"
-            android:text="@string/hint_lastname"
-            android:layout_width="50pt"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorTextHint"
-            tools:ignore="RtlCompat" />
-        <TextView
-            android:textSize="8pt"
-            android:fontFamily="monospace"
-            android:id="@+id/txvProfileLastname"
 
-            android:layout_width="80pt"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorTextStandard" />
-    </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="5pt"
-        android:layout_width="130pt"
-        android:layout_height="12pt"
+        android:layout_width="100pt"
+        android:layout_height="17pt"
         android:layout_gravity="center"
+        android:layout_marginTop="30pt"
         android:orientation="horizontal">
-        <TextView
-            android:textSize="7pt"
-            android:gravity="center"
-            android:textAlignment="textStart"
-            android:fontFamily="monospace"
-            android:text="@string/info_userid"
-            android:layout_width="50pt"
+
+        <ImageView
+            android:layout_width="12pt"
+            android:layout_height="12pt"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_username_profile" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/colorTextHint"
-            tools:ignore="RtlCompat" />
-        <TextView
-            android:textSize="8pt"
-            android:fontFamily="monospace"
-            android:id="@+id/txvProfileUserId"
-            android:layout_width="80pt"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorTextStandard" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txvProfileUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:layout_marginTop="1pt"
+                android:fontFamily="monospace"
+                android:text="adminitrators"
+                android:textColor="@color/colorTextStandard"
+                android:textSize="7pt" />
+        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="100pt"
+        android:layout_height="17pt"
+        android:layout_gravity="center"
+        android:layout_marginTop="3pt"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="11pt"
+            android:layout_height="11pt"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_firstname_profile" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txvProfileFirstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:layout_marginTop="1pt"
+                android:fontFamily="monospace"
+                android:text="Nhut"
+                android:textColor="@color/colorTextStandard"
+                android:textSize="7pt" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="100pt"
+        android:layout_height="17pt"
+        android:layout_gravity="center"
+        android:layout_marginTop="3pt"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="12pt"
+            android:layout_height="12pt"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_lastname_profile" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txvProfileLastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:layout_marginTop="1pt"
+                android:fontFamily="monospace"
+                android:text="Nguyen"
+                android:textColor="@color/colorTextStandard"
+                android:textSize="7pt" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="100pt"
+        android:layout_height="17pt"
+        android:layout_gravity="center"
+        android:layout_marginTop="3pt"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="12pt"
+            android:layout_height="12pt"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_user_id" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txvProfileUserId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7pt"
+                android:layout_marginTop="1pt"
+                android:fontFamily="monospace"
+                android:text="22"
+                android:textColor="@color/colorTextStandard"
+                android:textSize="7pt"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_marginTop="30pt"
-        android:layout_gravity="center"
-        android:layout_width="130pt"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnProfileChangePassword"
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_button"
+            android:fontFamily="monospace"
+            android:text="@string/info_change_password"
+            android:textColor="@color/colorWhite"
+            android:textSize="10pt"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5pt"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/btnProfileChangePassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccept"
-            android:textSize="9pt"
-            android:fontFamily="monospace"
-            android:text="@string/info_change_password" />
-        <TextView
-            android:layout_marginLeft="25pt"
             android:id="@+id/btnProfileBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccept"
-            android:textSize="9pt"
+            android:layout_width="130pt"
+            android:layout_height="20pt"
+            android:layout_gravity="center"
             android:fontFamily="monospace"
-            android:text="@string/info_back" />
+            android:gravity="center"
+            android:text="@string/register_back"
+            android:textColor="@color/colorTextStandard"
+            android:textSize="10pt"
+            android:textStyle="bold" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/layAnimRegister">
-        <TextView
-            android:id="@+id/txvNotificationRegister"
-            android:layout_marginTop="3pt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorNofiText"
-            android:textSize="6pt"
-            android:layout_marginLeft="25pt"
-            android:fontFamily="monospace" />
-    </LinearLayout>
+
 </LinearLayout>

@@ -11,7 +11,9 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.answers.Answers;
@@ -32,6 +34,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
     @BindView(R.id.edtChangeNewPassword) EditText mEdtChangeNewPassword;
     @BindView(R.id.edtChangeConfirmPassword) EditText mEdtChangeConfirmPassword;
     @BindView(R.id.txvChangeNofi) TextView mTxvChangeNofi;
+    @BindView(R.id.layBodyChangePassword) LinearLayout mLayBodyChangePassword;
+    @BindView(R.id.layTitleChangePassword) LinearLayout mLayTitleChangePassword;
+    @BindView(R.id.layFooterChangePassword) LinearLayout mLayFooterChangePassword;
+    @BindView(R.id.btnChangeAccept) Button mBtnChangeAccept;
     ApiService mApiService;
 
     @Override
@@ -39,28 +45,43 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
         ButterKnife.bind(this);
+
+        //Star animation
+        mLayTitleChangePassword.startAnimation(AnimationEffect.animTopToBottom(getApplicationContext()));
+        mLayBodyChangePassword.startAnimation(AnimationEffect.animLeftToRight(getApplicationContext()));
+        mLayFooterChangePassword.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
+
     }
 
     // Event click button Change Password
     @OnClick(R.id.btnChangeAccept)
     public void changePassword(View view) {
         // Check textView
-        if (mEdtChangeOldPassword.length() < 5) {
+        if (mEdtChangeOldPassword.length() < 1) {
             mTxvChangeNofi.setText(R.string.old_pass_required);
+            setAnimNofitication();
         } else if (mEdtChangeNewPassword.length() < 5) {
             mTxvChangeNofi.setText(R.string.pass_notstrong);
+            setAnimNofitication();
         } else if (mEdtChangeConfirmPassword.length() < 5) {
             mTxvChangeNofi.setText(R.string.pass_notstrong);
+            setAnimNofitication();
         } else {
             // Check password math
             if (mEdtChangeOldPassword.getText().toString().equals(LoginActivity.mPasswordEcode)) {
                 if (mEdtChangeNewPassword.getText().toString().equals(mEdtChangeConfirmPassword.getText().toString())) {
+                    getAnimChangePasswordClick();
+                    mBtnChangeAccept.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
+                    mBtnChangeAccept.startAnimation(AnimationEffect.animCircular(getApplicationContext()));
                     changePassword();
                 } else {
+                    clearAnimChangePassword();
                     mTxvChangeNofi.setText(R.string.pass_notmatch);
+                    setAnimNofitication();
                 }
             } else {
                 mTxvChangeNofi.setText(R.string.old_pass_incorrected);
+                setAnimNofitication();
             }
         }
     }
@@ -90,8 +111,30 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                mTxvChangeNofi.setText(getString(R.string.error_system) + t);
+                clearAnimChangePassword();
+                mTxvChangeNofi.setText(getString(R.string.error_system));
+                setAnimNofitication();
             }
         });
+    }
+
+    public void getAnimChangePasswordClick () {
+        mTxvChangeNofi.setText("");
+        mBtnChangeAccept.setBackgroundResource(R.drawable.ic_loading);
+        mBtnChangeAccept.setText("");
+        mBtnChangeAccept.getLayoutParams().height = 100;
+        mBtnChangeAccept.getLayoutParams().width = 100;
+    }
+
+    public void clearAnimChangePassword () {
+        mBtnChangeAccept.setText(R.string.change_password_change);
+        mBtnChangeAccept.getLayoutParams().height = 130;
+        mBtnChangeAccept.getLayoutParams().width = 850;
+        mBtnChangeAccept.setBackgroundResource(R.drawable.bg_button);
+        mBtnChangeAccept.clearAnimation();
+    }
+
+    public void setAnimNofitication() {
+        mTxvChangeNofi.startAnimation(AnimationEffect.animLeftToRight(getApplicationContext()));
     }
 }

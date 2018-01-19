@@ -11,6 +11,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +31,10 @@ public class UserInfoActivity extends AppCompatActivity {
     @BindView(R.id.txvProfileFirstname) TextView mTxvProfileFirstname;
     @BindView(R.id.txvProfileLastname) TextView mTxvProfileLastname;
     @BindView(R.id.txvProfileUserId) TextView mTxvProfileUserId;
-    ApiService mApiService;
+    @BindView(R.id.btnProfileChangePassword) Button mBtnProfileChangePassword;
+    @BindView(R.id.btnProfileBack) TextView mBtnProfileBack;ApiService mApiService;
+    @BindView(R.id.layTitleProfile) LinearLayout mLayTitleProfile;
+    @BindView(R.id.layBodyProfile) LinearLayout mLayBodyProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,12 @@ public class UserInfoActivity extends AppCompatActivity {
 
         mApiService = ApiUtils.getApiInterface();
         getProfileUser(Constant.AUTH_VALUE + LoginActivity.mAccessToken, LoginActivity.mUserId);
+
+        // Start activity
+        mLayTitleProfile.startAnimation(AnimationEffect.animTopToBottom(getApplicationContext()));
+        mLayBodyProfile.startAnimation(AnimationEffect.animLeftToRight(getApplicationContext()));
+        mBtnProfileChangePassword.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
+        mBtnProfileBack.startAnimation(AnimationEffect.animHideToZoom(getApplicationContext()));
     }
 
     public void getProfileUser(String accessToken, int userId) {
